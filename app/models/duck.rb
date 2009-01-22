@@ -7,7 +7,8 @@ class Duck < ActiveRecord::Base
     DuckStruct.global
   end
 
-  has_many :duck_struct_assignments
+  has_many :duck_struct_assignments,
+    :dependent => :destroy
 
   validates_presence_of :name
   validates_uniqueness_of :name

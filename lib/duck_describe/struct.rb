@@ -3,7 +3,7 @@ module DuckDescribe
 
     include DuckDescribe::Container
 
-    attr_accessor :struct, :struct_name
+    attr_accessor :struct, :struct_name, :struct_record
 
     def self.generate_struct(name, method_array)      
       const_set name, method_array.empty? ? ::Struct.new(nil) : ::Struct.new(*method_array)
@@ -14,7 +14,11 @@ module DuckDescribe
         "DuckDescribe::Struct::#{struct_name.camelize}".constantize :
         DuckDescribe::Struct.generate_struct(struct_name.camelize, method_array)
     end
-    
+
+    def struct_record
+      @struct_record ||= DuckStruct.find_by_name(struct_name)
+    end
+
     def struct
      # @struct ||= 
     end
@@ -37,6 +41,7 @@ module DuckDescribe
     end
 
     def destroy
+      unassign_duck_struct
       children.each do |primitive|
         primitive.destroy
       end
@@ -50,7 +55,26 @@ module DuckDescribe
       super
     end
 
+    def to_xml
+      assign_duck_struct
+      super
+    end
+
     private
+
+    def assign_duck_struct
+      duck_struct_assignment = struct_record.duck_struct_assignments.
+        find(:first, :conditions => {:duck_id => base.duck.id, :path => path})
+      duck_struct_assignment ||= struct_record.duck_struct_assignments.
+        build(:duck => base.duck, :path => path) and 
+        duck_struct_assignment.save      
+    end
+
+    def unassign_duck_struct
+      duck_struct_assignment = struct_record.duck_struct_assignments.
+        find(:first, :conditions => {:duck_id => base.duck.id, :path => path})
+      duck_struct_assignment and duck_struct_assignment.destroy
+    end
 
     def build_struct(node)
       struct_values = node.find('struct/*[@resource-type="Primitive"]').to_a.collect{|primitive_node|
