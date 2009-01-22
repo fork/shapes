@@ -1,0 +1,10 @@
+<%= render :partial => '/duck_describe/ducks/navigation.html.erb' %>
+<%= error_messages_for 'duck' %>
+<% resource_form @duck, @resource, :edit do |form| %>
+    <label for="ident">Ident </label>
+    <%= text_field :resource, :ident %>
+    <label for="description">Description </label>
+    <%= text_area :resource, :description %>
+    <%= @resource.presenter.form %>
+    <%= form.submit %>
+<% end %>

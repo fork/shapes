@@ -1,0 +1,5 @@
+<%= render :partial => '/duck_describe/duck_structs/navigation.html.erb' %>
+
+<% duck_struct_primitive_form @duck_struct_primitive, :edit  do |form| %>
+<%= render :partial => 'form.html.erb', :object => form %>  
+<% end %>
