@@ -1,0 +1,14 @@
+Installation instructions:
+
+Install Engines:
+script/plugin install git://github.com/lazyatom/engines.git
+
+Install DuckDescribe:
+script/plugin install ...
+
+Generate plugin migrations:
+script/generate plugin_migration
+rake db:migrate
+
+Add Routing:
+add map.from_plugin :plugin_name to your Routing
