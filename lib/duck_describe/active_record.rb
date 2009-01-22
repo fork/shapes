@@ -29,6 +29,11 @@ module DuckDescribe
       super
     end
 
+    def destroy
+      unassign_appearance
+      super
+    end
+
     def to_xml
       new_resource and assign_appearance
       record and record.to_duck_xml({:ident => ident, 
@@ -36,10 +41,15 @@ module DuckDescribe
     end
 
     def assign_appearance
-      duck = Duck.find_by_id base.duck_id
       appearance = record.duck_appearances.
-        build(:duck => duck, :path => path)
+        build(:duck => base.duck, :path => path)
       appearance.save
+    end
+
+    def unassign_appearance
+      appearance = record.duck_appearances.
+        find(:first, :conditions => {:duck_id => base.duck.id, :path => path})
+      appearance and appearance.destroy
     end
 
   end
