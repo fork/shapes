@@ -18,7 +18,7 @@ class DuckDescribe::ResourcesController < ActionController::Base
 
   def select
     @duck = Duck.find params[:id]
-    @resource_type_collection = resource_type_hash
+    @resource_type_collection = resource_type_hash(@duck)
   end
 
   def new
@@ -48,9 +48,10 @@ class DuckDescribe::ResourcesController < ActionController::Base
   end
 
   protected
-  def resource_type_hash
+  def resource_type_hash(duck)
     [ DuckDescribe::OPT_GROUP_STRUCT.new('Primitives', primitive_opts),
-      DuckDescribe::OPT_GROUP_STRUCT.new('Structs', struct_opts),
+      DuckDescribe::OPT_GROUP_STRUCT.new('Global Structs', global_struct_opts),
+      DuckDescribe::OPT_GROUP_STRUCT.new('Local Structs', local_struct_opts(duck)),
       DuckDescribe::OPT_GROUP_STRUCT.new('ActiveRecords', record_opts) ]
   end
 
@@ -60,8 +61,14 @@ class DuckDescribe::ResourcesController < ActionController::Base
     end
   end
 
-  def struct_opts
-    DuckStruct.find(:all).collect do |struct|
+  def local_struct_opts(duck)
+    duck.local_duck_structs.collect do |struct|
+      DuckDescribe::OPT_STRUCT.new "Struct;#{struct.name}", struct.name
+    end
+  end
+
+  def global_struct_opts
+    DuckStruct.global.collect do |struct|
       DuckDescribe::OPT_STRUCT.new "Struct;#{struct.name}", struct.name
     end
   end

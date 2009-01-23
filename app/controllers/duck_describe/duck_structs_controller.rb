@@ -8,11 +8,14 @@ class DuckDescribe::DuckStructsController < ActionController::Base
   end
 
   def new
+    @duck = Duck.find params[:duck_id] if params[:duck_id]
     @duck_struct = DuckStruct.new
   end
 
   def create
+    @duck = Duck.find params[:duck_id] if params[:duck_id]
     @duck_struct = DuckStruct.new params[:duck_struct]
+    @duck_struct.duck = @duck
     if @duck_struct.save
       redirect_to duck_structs_path
     else

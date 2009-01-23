@@ -2,12 +2,17 @@ module DuckDescribe::DuckDescribeHelper
 
   def new_resource_link(duck)
     return if !duck || duck.new_record?
-    content_tag(:li, link_to('Add Resource', select_resource_path(duck, duck.base.path)))
+    content_tag(:li, link_to('Add resource', select_resource_path(duck, duck.base.path)))
+  end
+
+  def new_duck_duck_struct_link(duck)
+    return if !duck || duck.new_record?
+    content_tag(:li, link_to('Add local struct', new_duck_duck_struct_path(duck)))
   end
 
   def new_primitive_link(duck_struct)
     return if !duck_struct || duck_struct.new_record?
-    content_tag(:li, link_to('Add Primitive', new_duck_struct_duck_struct_primitive_path(duck_struct)))
+    content_tag(:li, link_to('Add primitive', new_duck_struct_duck_struct_primitive_path(duck_struct)))
   end
 
   def navigation
