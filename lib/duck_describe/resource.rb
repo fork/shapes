@@ -63,7 +63,7 @@ module DuckDescribe
       parent and parent.children.delete self
     end
 
-    #don't update ident and description for structs or records  
+    #don't update ident and description for structs or records
     def update_attributes(params)
       @ident = params[:ident].to_s
       @description = params[:description].to_s
@@ -90,7 +90,7 @@ module DuckDescribe
     def validate
       validate_ident
       validate_ident_uniqueness
-    end    
+    end
     def validate_ident
       @errors << DuckDescribe::Error.new({:path => path, :message => DuckDescribe::IDENT_MATCH_WARNING}) unless ident.match(DuckDescribe::IDENT_MATCH)
     end
@@ -105,7 +105,7 @@ module DuckDescribe
     alias_method :xml_node_name, :dasherized_name
 
     def validate_ident_uniqueness
-      errors << DuckDescribe::Error.new({:path => path, :message => DuckDescribe::IDENT_UNIQUENESS_WARNING}) if parent && 
+      errors << DuckDescribe::Error.new({:path => path, :message => DuckDescribe::IDENT_UNIQUENESS_WARNING}) if parent &&
         parent.children.collect{|child| child.ident if child != self}.include?(ident)
     end
   end

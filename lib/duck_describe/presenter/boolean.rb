@@ -3,12 +3,12 @@ module DuckDescribe
     class Boolean < DuckDescribe::Presenter::Resource
 
       def form
-        content_tag(:label, 'Value') + 
+        content_tag(:label, 'Value') +
         check_box(:resource, :value)
       end
 
       def struct_form
-        content_tag(:label, "Value (#{@resource.ident})") +  
+        content_tag(:label, "Value (#{@resource.ident})") +
         hidden_field("resource[struct][#{@resource.ident}][ident]", @resource.ident) +
         check_box_tag("resource[struct][#{@resource.ident}][value]", '1', @resource.value) +
         hidden_field_tag("resource[struct][#{@resource.ident}][value]", '0')

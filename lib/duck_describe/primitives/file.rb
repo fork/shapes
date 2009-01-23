@@ -1,4 +1,4 @@
-module DuckDescribe  
+module DuckDescribe
   module Primitives
     class File < DuckDescribe::Primitive
 
@@ -94,7 +94,7 @@ module DuckDescribe
       def dimensions
         content_type.match(/^image\//) ? read_dimensions : [nil,nil]
       end
-      
+
       def read_dimensions
         image = ::Magick::Image.read(absolute_path).first
         @width, @height = image.columns.to_i, image.rows.to_i

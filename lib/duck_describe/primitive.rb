@@ -1,6 +1,6 @@
-module DuckDescribe  
+module DuckDescribe
   class Primitive < DuckDescribe::Resource
-    
+
     @primitives = Set.new
     def self.primitives
       @primitives
@@ -9,7 +9,7 @@ module DuckDescribe
     def node_attributes
       super.merge 'resource-type' => 'Primitive'
     end
-    
+
     def self.inherited(descendant)
       @primitives << descendant
     end

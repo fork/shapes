@@ -20,10 +20,10 @@ module ActiveRecord
     end
 
     def serialize
-      args = [@record.class.to_s.underscore.dasherize, 
-        {'resource-type' => "ActiveRecord", 
-        'record-id' => @record.id, 
-        :ident => options[:ident], 
+      args = [@record.class.to_s.underscore.dasherize,
+        {'resource-type' => "ActiveRecord",
+        'record-id' => @record.id,
+        :ident => options[:ident],
         :description => options[:description]}]
 
       builder.tag!(*args) do
@@ -116,7 +116,7 @@ module ActiveRecord
       end
 
       protected
-      
+
       def compute_type
         type = @record.class.serialized_attributes.has_key?(name) ? :yaml : @record.class.columns_hash[name].type
 

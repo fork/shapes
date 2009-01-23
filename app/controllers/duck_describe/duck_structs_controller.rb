@@ -40,7 +40,7 @@ class DuckDescribe::DuckStructsController < ActionController::Base
   def destroy
     @duck_struct = DuckStruct.find params[:id]
     if @duck_struct.destroy
-      flash[:notice] = 'Duck Struct was successfully deleted.'    
+      flash[:notice] = 'Duck Struct was successfully deleted.'
     else
       flash[:warning] = 'Cannot delete Duck Struct.'
     end

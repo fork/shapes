@@ -1,5 +1,5 @@
 module DuckDescribe
-  module Builder    
+  module Builder
     class ActiveRecordFromXml
       def build_object(node)
         active_record = DuckDescribe::ActiveRecord.new hash

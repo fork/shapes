@@ -12,7 +12,7 @@ class DuckDescribe::ResourcesController < ActionController::Base
     @duck = Duck.find params[:id]
     @resource = @duck.base.find_by_path params[:path]
     @resource.update_attributes params[:resource]
-    @duck.save and redirect_to duck_path(@duck) or 
+    @duck.save and redirect_to duck_path(@duck) or
       (@resource.install_presenter(self) and render :action => :edit)
   end
 
@@ -36,7 +36,7 @@ class DuckDescribe::ResourcesController < ActionController::Base
         constantize.new(params['resource'].merge({:type => what.last})).build_resource
     parent = @duck.base.find_by_path params[:parent_path]
     parent << @resource
-    @duck.save and redirect_to duck_path(@duck) or 
+    @duck.save and redirect_to duck_path(@duck) or
       (@resource.install_presenter(self) and render :action => :new)
   end
 

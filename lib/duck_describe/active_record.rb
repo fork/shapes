@@ -1,4 +1,4 @@
-module DuckDescribe  
+module DuckDescribe
   class ActiveRecord < DuckDescribe::Resource
 
     attr_accessor :record_id, :record_type, :record

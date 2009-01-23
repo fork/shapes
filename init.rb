@@ -9,7 +9,7 @@ require "#{ File.dirname __FILE__ }/lib/xml_serializer"
 %w[array boolean datetime enum file float integer string].each do |primitive|
   require "#{ File.dirname __FILE__ }/lib/duck_describe/primitives/#{ primitive }.rb"
 end
- 
+
 # make rmagick dependency optional
 require 'RMagick' rescue nil
 

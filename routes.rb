@@ -7,14 +7,14 @@ with_options :controller => 'duck_describe/resources' do |resources|
   resources.delete_resource 'duck_describe/ducks/:id/delete_resource/:path',        :action => 'delete'
 end
 
-resources :ducks, 
-  :controller => 'duck_describe/ducks', 
+resources :ducks,
+  :controller => 'duck_describe/ducks',
   :path_prefix => '/duck_describe' do |duck|
   duck.resources :duck_struct,
     :controller => 'duck_describe/duck_structs'
 end
 
-resources :duck_structs, 
+resources :duck_structs,
   :path_prefix => '/duck_describe',
   :controller => 'duck_describe/duck_structs' do |duck_structs|
   duck_structs.resources :duck_struct_primitives,

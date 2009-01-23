@@ -22,7 +22,7 @@ class Duck < ActiveRecord::Base
   after_create :cache_xml
   after_update :expire_cache, :cache_xml
   after_destroy :expire_cache, :destroy_resources
-    
+
   has_many :duck_appearances,
     :dependent => :destroy
 
@@ -42,7 +42,7 @@ class Duck < ActiveRecord::Base
     filename = name_changed? ? name_was : name
     FileUtils.rm_f(File.join(cache_dir_path, "#{filename}.xml"))
   end
-  
+
   def self.find_and_install_presenter(name, controller, conditions = {})
     duck = find_or_initialize_by_name(:name => name, *conditions)
     duck.base.install_presenter controller
@@ -70,7 +70,7 @@ class Duck < ActiveRecord::Base
     FileUtils.makedirs DuckDescribe::CACHE_PATH
     DuckDescribe::CACHE_PATH
   end
-  
+
   def cache_file_path
     File.join cache_dir_path, "#{name}.xml"
   end

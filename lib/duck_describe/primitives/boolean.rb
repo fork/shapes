@@ -1,4 +1,4 @@
-module DuckDescribe  
+module DuckDescribe
   module Primitives
     class Boolean < DuckDescribe::Primitive
       attr_accessor :value

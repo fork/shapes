@@ -1,7 +1,7 @@
 module DuckDescribe
   module Presenter
     class Array < DuckDescribe::Presenter::Resource
-      
+
       attr_reader :form, :struct_form
 
       def to_list

@@ -1,4 +1,4 @@
-module DuckDescribe  
+module DuckDescribe
   class Struct < DuckDescribe::Resource
 
     include DuckDescribe::Container
@@ -19,9 +19,9 @@ module DuckDescribe
       @struct_record ||= DuckStruct.find_by_name(struct_name)
     end
 
-    # TODO 
+    # TODO
     def struct
-     # @struct ||= 
+     # @struct ||=
     end
 
     def node_attributes
@@ -33,7 +33,7 @@ module DuckDescribe
       self.struct = build_struct(@xml_node)
       super
     end
-  
+
     def update_attributes(params)
       params[:struct] and params[:struct].each do |key, value|
         children.select{|p| p.ident == key}.first.update_attributes value
@@ -67,8 +67,8 @@ module DuckDescribe
       duck_struct_assignment = struct_record.duck_struct_assignments.
         find(:first, :conditions => {:duck_id => base.duck.id, :path => path})
       duck_struct_assignment ||= struct_record.duck_struct_assignments.
-        build(:duck => base.duck, :path => path) and 
-        duck_struct_assignment.save      
+        build(:duck => base.duck, :path => path) and
+        duck_struct_assignment.save
     end
 
     def unassign_duck_struct

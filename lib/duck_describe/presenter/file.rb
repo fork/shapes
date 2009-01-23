@@ -9,7 +9,7 @@ module DuckDescribe
       end
 
       def struct_form
-        content_tag(:label, "File (#{@resource.ident})") + 
+        content_tag(:label, "File (#{@resource.ident})") +
         hidden_field("resource[struct][#{@resource.ident}][ident]", @resource.ident) +
         file_field_tag("resource[struct][#{@resource.ident}][value]") +
         check_box_tag("resource[struct][#{@resource.ident}][remove_file]")

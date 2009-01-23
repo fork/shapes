@@ -1,4 +1,4 @@
-module DuckDescribe  
+module DuckDescribe
   module Primitives
     class String < DuckDescribe::Primitive
       attr_accessor :value
@@ -15,7 +15,7 @@ module DuckDescribe
         @value = @xml_node.content
         super
       end
- 
+
       def update_attributes(params)
         @value = params[:value].to_s
         super

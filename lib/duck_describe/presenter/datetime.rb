@@ -3,12 +3,12 @@ module DuckDescribe
     class Datetime < DuckDescribe::Presenter::Resource
 
       def form
-        content_tag(:label, 'Datetime') + 
+        content_tag(:label, 'Datetime') +
         select_datetime(@resource.value, :prefix => "resource[value]", :start_year => Time.new.year.to_i+10, :end_year => 1900)
       end
-      
+
       def struct_form
-        content_tag(:label, "Datetime (#{@resource.ident})") +  
+        content_tag(:label, "Datetime (#{@resource.ident})") +
         hidden_field("resource[struct][#{@resource.ident}][ident]", @resource.ident) +
         select_datetime(@resource.value, :prefix => "resource[struct][#{@resource.ident}][value]", :start_year => Time.new.year.to_i+10, :end_year => 1900)
       end

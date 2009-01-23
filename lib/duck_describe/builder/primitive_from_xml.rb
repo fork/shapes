@@ -1,5 +1,5 @@
 module DuckDescribe
-  module Builder    
+  module Builder
     class PrimitiveFromXml
       def build_object(node)
         primitive = "DuckDescribe::Primitives::#{node.name.camelize}".constantize.new

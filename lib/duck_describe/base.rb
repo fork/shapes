@@ -2,7 +2,7 @@ module DuckDescribe
   class Base < DuckDescribe::Resource
 
     include DuckDescribe::Container
-      
+
     attr_reader :xml, :ident, :duck_id, :duck
 
     def initialize(xml, ident, duck_id)
@@ -19,7 +19,7 @@ module DuckDescribe
     def duck
       @duck ||= Duck.find_by_id duck_id
     end
-    
+
     def from_xml
       @children = xml_doc.find('//base/*').collect{|child_node|
         build_child_from_xml child_node
@@ -32,7 +32,7 @@ module DuckDescribe
         add_node_content
       end
     end
-    
+
     protected
     # Returns stored XML document or generates a new one on-the-fly
     def xml_doc

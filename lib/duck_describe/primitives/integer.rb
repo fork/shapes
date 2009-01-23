@@ -1,4 +1,4 @@
-module DuckDescribe  
+module DuckDescribe
   module Primitives
     class Integer < DuckDescribe::Primitive
       attr_accessor :value
@@ -10,7 +10,7 @@ module DuckDescribe
       def node_attributes
         {'value' => value.to_s}.merge(super)
       end
-    
+
       def read_from_node
         @value = @xml_node['value'].to_i
         super

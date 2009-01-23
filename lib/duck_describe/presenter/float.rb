@@ -3,12 +3,12 @@ module DuckDescribe
     class Float < DuckDescribe::Presenter::Resource
 
       def form
-        content_tag(:label, 'Value') + 
+        content_tag(:label, 'Value') +
         text_area(:resource, :value)
       end
-      
+
       def struct_form
-        content_tag(:label, "Value (#{@resource.ident})") +  
+        content_tag(:label, "Value (#{@resource.ident})") +
         hidden_field("resource[struct][#{@resource.ident}][ident]", @resource.ident) +
         text_field_tag("resource[struct][#{@resource.ident}][value]", @resource.value)
       end

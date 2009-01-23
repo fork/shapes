@@ -1,12 +1,12 @@
 class DuckDescribe::DucksController < ActionController::Base
-  
+
   def index
     @ducks = Duck.find :all
   end
-  
+
   def new
     @duck = Duck.new
-  end  
+  end
   def create
     @duck = Duck.new params[:duck]
     if @duck.save
@@ -15,10 +15,10 @@ class DuckDescribe::DucksController < ActionController::Base
       render :action => 'new'
     end
   end
-  
+
   def edit
     @duck = Duck.find params[:id]
-  end  
+  end
   def update
     @duck = Duck.find params[:id]
     @duck.update_attributes params[:duck]
@@ -28,18 +28,18 @@ class DuckDescribe::DucksController < ActionController::Base
       render :action => 'edit'
     end
   end
-  
+
   def destroy
     @duck = Duck.find params[:id]
     @duck.destroy unless @duck.nil?
     redirect_to ducks_path
   end
-  
+
   def show
     @duck = Duck.find params[:id]
     @duck.base.install_presenter self
-  end 
-  
+  end
+
   def xml
     respond_to do |format|
       format.xml do
@@ -49,5 +49,5 @@ class DuckDescribe::DucksController < ActionController::Base
       end
     end
     render :nothing => true
-  end 
+  end
 end

@@ -8,7 +8,7 @@ module DuckDescribe
         struct.description = hash[:description]
         struct.struct_name = hash[:type]
         build_children(hash).each do |child|
-          struct << child 
+          struct << child
         end
         struct
       end

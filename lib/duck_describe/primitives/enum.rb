@@ -1,4 +1,4 @@
-module DuckDescribe  
+module DuckDescribe
   module Primitives
     class Enum < DuckDescribe::Primitive
 
@@ -21,7 +21,7 @@ module DuckDescribe
           xml_builder.tag! :option, {:value => value}
         }
       end
-      
+
       def options
         values = @value.split Regexp.new(separator)
         values.each { |option| option.strip! }

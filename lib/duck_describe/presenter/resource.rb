@@ -29,25 +29,25 @@ module DuckDescribe
           child.presenter.to_list
         }.to_s
       end
-      
+
       def to_html(options, &block)
         resource.path
       end
 
       protected
       def link_to_delete
-        link_to('Delete', controller.send(:delete_resource_path, 
+        link_to('Delete', controller.send(:delete_resource_path,
           :id => resource.base.duck_id, :path => resource.path),
           :method => :delete)
       end
 
       def link_to_edit
-        link_to('Edit', controller.send(:edit_resource_path, 
+        link_to('Edit', controller.send(:edit_resource_path,
           :id => resource.base.duck_id, :path => resource.path))
       end
-      
+
       def link_to_select_resource
-        link_to('New resource', controller.send(:select_resource_path, 
+        link_to('New resource', controller.send(:select_resource_path,
           :id => resource.base.duck_id, :parent_path => resource.path))
       end
 

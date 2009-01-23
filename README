@@ -14,5 +14,5 @@ rake db:migrate
 Add Routing:
 add "map.from_plugin :plugin_name" to your Routing
 
-Require libxml in your environment.rb  
+Require libxml in your environment.rb
 require 'xml/libxml'

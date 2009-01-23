@@ -3,17 +3,17 @@ module DuckDescribe
     class Enum < DuckDescribe::Presenter::Resource
 
       def form
-        content_tag(:label, 'Text') + 
-        text_area(:resource, :value) + 
-        content_tag(:label, 'Separator') + 
+        content_tag(:label, 'Text') +
+        text_area(:resource, :value) +
+        content_tag(:label, 'Separator') +
         text_field(:resource, :separator)
       end
-      
+
       def struct_form
-        content_tag(:label, "Text (#{@resource.ident})") +  
+        content_tag(:label, "Text (#{@resource.ident})") +
         hidden_field("resource[struct][#{@resource.ident}][ident]", @resource.ident) +
         text_field_tag("resource[struct][#{@resource.ident}][value]", @resource.value) +
-        content_tag(:label, "Separator (#{@resource.ident})") +  
+        content_tag(:label, "Separator (#{@resource.ident})") +
         text_field_tag("resource[struct][#{@resource.ident}][separator]", @resource.separator)
       end
 

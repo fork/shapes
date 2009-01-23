@@ -1,4 +1,4 @@
-module DuckDescribe  
+module DuckDescribe
   module Primitives
     class Array < DuckDescribe::Primitive
       include DuckDescribe::Container

@@ -1,4 +1,4 @@
-module DuckDescribe  
+module DuckDescribe
   module Primitives
     class Datetime < DuckDescribe::Primitive
       attr_accessor :value
@@ -24,7 +24,7 @@ module DuckDescribe
         @value = params_to_datetime params['value']
         super
       end
-      
+
       protected
       def params_to_datetime(params)
         params = params.inject({}) { |m, p| m.merge p.first => p.last.to_i }
