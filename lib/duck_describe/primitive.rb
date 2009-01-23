@@ -1,17 +1,17 @@
 module DuckDescribe  
   class Primitive < DuckDescribe::Resource
     
-    @primitives = []
-    class << self
-      attr_reader :primitives
+    @primitives = Set.new
+    def self.primitives
+      @primitives
     end
 
     def node_attributes
-      {'resource-type' => 'Primitive'}.merge(super)
+      super.merge 'resource-type' => 'Primitive'
     end
     
     def self.inherited(descendant)
-      (@primitives << descendant).uniq!
+      @primitives << descendant
     end
 
   end

@@ -1,23 +1,25 @@
 module DuckDescribe
   class Resource
 
-    attr_accessor :ident, :description, :xml_node, :new_resource, :xml_builder, :parent, :options
-    attr_reader :presenter, :path, :from_xml, :add_node_content, :errors
-    alias_method :new_resource?, :new_resource
+    attr_accessor :ident, :description, :xml_node, :xml_builder, :parent
+    attr_reader :presenter, :path, :from_xml, :add_node_content, :errors, :children, :options
 
     def initialize(*args)
-      @new_resource = true
+      @children, @errors, @new_resource = [], [], true
       @options = args.extract_options!
-      @errors = []
     end
 
     def children
       @children ||= []
+      # FIXME: Do this without exception!
+      #"#{ @parent.path unless @parent == self }##{ ident }"
     end
 
     def path
+      # FIXME: Do this without exception!
+      #"#{ @parent.path unless @parent == self }##{ ident }"
       # rescue base path
-      "#{parent.path rescue ''}##{ident}"
+      "#{@parent.path rescue ''}##{ident}"
     end
 
     def find_by_path(resource_path)
@@ -30,12 +32,12 @@ module DuckDescribe
 
     def xml_builder
       @xml_builder ||= begin
-        options[:indent] ||= 2
-        builder = options[:builder] ||= ::Builder::XmlMarkup.new(:indent => 2)
+        @options[:indent] ||= 2
+        builder = @options[:builder] ||= ::Builder::XmlMarkup.new(:indent => 2)
 
-        unless options[:skip_instruct]
+        unless @options[:skip_instruct]
           builder.instruct!
-          options[:skip_instruct] = true
+          @options[:skip_instruct] = true
         end
 
         builder
@@ -53,7 +55,7 @@ module DuckDescribe
     end
 
     def base
-      self.is_a?(DuckDescribe::Base) ? self : parent.base
+      @parent.base
     end
 
     def destroy
@@ -68,9 +70,14 @@ module DuckDescribe
     end
 
     def read_from_node
-      @ident = @xml_node['ident']
-      @description = @xml_node['description']
+      @ident        = @xml_node['ident']
+      @description  = @xml_node['description']
+      @new_resource = false
     end
+
+    def new_resource?
+      @new_resource
+     end
 
     def install_presenter(controller)
       @presenter = "DuckDescribe::Presenter::#{self.class.name.demodulize}".constantize.new self, controller
@@ -98,7 +105,7 @@ module DuckDescribe
     alias_method :xml_node_name, :dasherized_name
 
     def validate_ident_uniqueness
-      errors << DuckDescribe::Error.new({:path => path, :message => 'Ident must be unique.'}) if parent && 
+      errors << DuckDescribe::Error.new({:path => path, :message => DuckDescribe::IDENT_UNIQUENESS_WARNING}) if parent && 
         parent.children.collect{|child| child.ident if child != self}.include?(ident)
     end
   end

@@ -9,6 +9,12 @@ module DuckDescribe
   #        :select_name => proc { |p| "#{p.name} - #{p.id}"}
   #    }
   #  }
-  end
+  #end
+  # Idea:
+  # acts_as_duck 'DuckStruct',
+  #   :include => :duck_struct_primitives,
+  #   :scope => {},
+  #   :select_name => proc { |p| "#{p.name} - #{p.id}"}
+
 end
 

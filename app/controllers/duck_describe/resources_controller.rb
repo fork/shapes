@@ -49,33 +49,33 @@ class DuckDescribe::ResourcesController < ActionController::Base
 
   protected
   def resource_type_hash(duck)
-    [ DuckDescribe::OPT_GROUP_STRUCT.new('Primitives', primitive_opts),
-      DuckDescribe::OPT_GROUP_STRUCT.new('Global Structs', global_struct_opts),
-      DuckDescribe::OPT_GROUP_STRUCT.new('Local Structs', local_struct_opts(duck)),
-      DuckDescribe::OPT_GROUP_STRUCT.new('ActiveRecords', record_opts) ]
+    [ DuckDescribe::SELECT_OPTION_GROUP_STRUCT.new('Primitives', primitive_opts),
+      DuckDescribe::SELECT_OPTION_GROUP_STRUCT.new('Global Structs', global_struct_opts),
+      DuckDescribe::SELECT_OPTION_GROUP_STRUCT.new('Local Structs', local_struct_opts(duck)),
+      DuckDescribe::SELECT_OPTION_GROUP_STRUCT.new('ActiveRecords', record_opts) ]
   end
 
   def primitive_opts
     DuckDescribe::Primitive.primitives.collect do |primitive|
-      DuckDescribe::OPT_STRUCT.new "Primitive;#{primitive.name.demodulize}", primitive.name.demodulize
+      DuckDescribe::SELECT_OPTION_STRUCT.new "Primitive;#{primitive.name.demodulize}", primitive.name.demodulize
     end
   end
 
   def local_struct_opts(duck)
     duck.local_duck_structs.collect do |struct|
-      DuckDescribe::OPT_STRUCT.new "Struct;#{struct.name}", struct.name
+      DuckDescribe::SELECT_OPTION_STRUCT.new "Struct;#{struct.name}", struct.name
     end
   end
 
   def global_struct_opts
     DuckStruct.global.collect do |struct|
-      DuckDescribe::OPT_STRUCT.new "Struct;#{struct.name}", struct.name
+      DuckDescribe::SELECT_OPTION_STRUCT.new "Struct;#{struct.name}", struct.name
     end
   end
 
   def record_opts
     DuckDescribe.config.keys.collect do |key|
-      DuckDescribe::OPT_STRUCT.new "ActiveRecord;#{key}", key
+      DuckDescribe::SELECT_OPTION_STRUCT.new "ActiveRecord;#{key}", key
     end
   end
 end

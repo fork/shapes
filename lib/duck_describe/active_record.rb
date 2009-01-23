@@ -18,8 +18,8 @@ module DuckDescribe
     end
 
     def read_from_node
-      @record_id = @xml_node['record-id']
-      @record_type = @xml_node.name.underscore.camelize
+      @record_id    = @xml_node['record-id']
+      @record_type  = @xml_node.name.underscore.camelize
       super
     end
 
@@ -35,9 +35,14 @@ module DuckDescribe
     end
 
     def to_xml
-      new_resource and assign_appearance
-      record and record.to_duck_xml({:ident => ident, 
-        :description => description, :builder => xml_builder})
+      assign_appearance if new_resource?
+
+      attributes = {
+        :ident        => ident,
+        :description  => description,
+        :builder      => xml_builder
+      }
+      record.to_duck_xml attributes if record
     end
 
     def assign_appearance

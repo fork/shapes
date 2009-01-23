@@ -10,18 +10,19 @@ module ActiveRecord #:nodoc:
   end
   module Acts #:nodoc:
     module Duck #:nodoc:
-      module ClassMethods       
-      
-        def acts_as_duck
-          options = DuckDescribe.config[self.name]
+      module ClassMethods
 
-          write_inheritable_attribute(:acts_as_duck_options, 
-            options.merge({
-              :to_duck_xml_options => options[:to_duck_xml_options],
-              :scope => options.delete(:scope) || {},
-              :select_name => options.delete(:select_name) || :id
-            })
-          )
+        DEFAULTS = {
+          :to_duck_xml_options  => nil,
+          :scope                => {},
+          :select_name          => :id
+        }
+
+        def acts_as_duck(options = {})
+          options = DEFAULTS.merge options
+
+          # FIXME: Inheritance FAILS
+          write_inheritable_attribute :acts_as_duck_options, options
           class_inheritable_reader :acts_as_duck_options
 
           define_method(:name_for_select) do
@@ -31,6 +32,14 @@ module ActiveRecord #:nodoc:
               acts_as_duck_options[:select_name].call(self).to_s
             end
           end
+          #TODO:
+          # if options[:select_name].is_a? Symbol
+          #  class_eval %Q"def name_for_select
+          #    #{ acts_as_duck_options[:select_name] }.to_s
+          #  end"
+          #elsif options[:select_name].is_a? Proc
+          #  define_method :name_for_select, &options[:select_name]
+          #end
 
           has_many :duck_appearances,
             :as => :appearance,
@@ -38,12 +47,15 @@ module ActiveRecord #:nodoc:
           has_many :ducks,
             :through => :duck_appearances
 
-          after_update {|record| 
-            record.ducks.each(&:expire_cache)
-          }
-          after_destroy {|record| 
-            record.ducks.each(&:expire_cache)
-          }
+          # TODO: Move this into instance methods
+          after_update do |record|
+            record.ducks.each { |duck| duck.expire_cache }
+          end
+          # TODO: Move this into instance methods
+          after_destroy do |record|
+            record.ducks.each { |duck| duck.expire_cache }
+          end
+
         end
 
         def find_in_scope

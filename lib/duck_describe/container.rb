@@ -1,5 +1,5 @@
 module DuckDescribe
-  require 'duck_describe/resource'
+
   module Container
 
     def build_child_from_xml(node)
@@ -11,10 +11,11 @@ module DuckDescribe
     end
 
     def <<(child)
-      children << child
       child.parent = self
+      children << child
     end
 
+    # FIXME: refactor Magic Number
     def from_xml
       @xml_node.find('*[@resource-type="Struct"]|*[@resource-type="Primitive"]|*[@resource-type="ActiveRecord"]').collect{|child_node|
         build_child_from_xml child_node
@@ -22,7 +23,7 @@ module DuckDescribe
     end
 
     def destroy
-      children.map(&:destroy)
+      children.each { |child| child.destroy }
       super
     end
 

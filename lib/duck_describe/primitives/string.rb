@@ -3,7 +3,7 @@ module DuckDescribe
     class String < DuckDescribe::Primitive
       attr_accessor :value
       def initialize(options = {})
-        @value = options[:value] ? options[:value].strip : ''
+        @value = options[:value].to_s
         super
       end
 
@@ -17,7 +17,7 @@ module DuckDescribe
       end
  
       def update_attributes(params)
-        @value = params[:value].strip if params[:value]
+        @value = params[:value].to_s
         super
       end
      end

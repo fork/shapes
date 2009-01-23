@@ -8,17 +8,9 @@ module DuckDescribe
       end
 
       def node_attributes
-        {'value' => value.to_s}.merge(super)
+        super.merge 'value' => value.to_s
       end
 
-      def value_to_boolean(value)
-        if value == true || value == false
-          value
-        else
-          %w(true t 1 on).include?(value.to_s.downcase)
-        end
-      end      
- 
       def read_from_node
         @value = value_to_boolean(@xml_node[:value])
         super
@@ -28,6 +20,16 @@ module DuckDescribe
         @value = value_to_boolean(params[:value])
         super
       end
+
+      protected
+      def value_to_boolean(value)
+        if value == true || value == false
+          value
+        else
+          %w(true t 1 on).include?(value.to_s.downcase)
+        end
+      end
+
     end
   end
 end

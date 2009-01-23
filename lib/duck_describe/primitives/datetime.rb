@@ -12,7 +12,7 @@ module DuckDescribe
       end
 
       def node_attributes
-        {'value' => value.to_s}.merge(super)
+        super.merge 'value' => value.to_s
       end
 
       def read_from_node
@@ -25,8 +25,11 @@ module DuckDescribe
         super
       end
       
+      protected
       def params_to_datetime(params)
-        DateTime.civil(params['year'].to_i, params['month'].to_i, params['day'].to_i, params['hour'].to_i, params['minute'].to_i)
+        params = params.inject({}) { |m, p| m.merge p.first => p.last.to_i }
+        values = params.values_at 'year', 'month', 'day', 'hour', 'minute'
+        DateTime.civil values
       end
     end
   end

@@ -16,8 +16,7 @@ class DuckStructPrimitive < ActiveRecord::Base
   protected
   
   def format_of_primitive
-    !DuckDescribe::Primitive.primitives.collect.
-      include? primitive or
+    DuckDescribe::Primitive.primitives.map(&:to_s).map(&:demodulize).include? primitive or
       errors.add :primitive, 'Wrong primitive format'
   end
 end

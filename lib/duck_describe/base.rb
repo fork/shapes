@@ -11,7 +11,11 @@ module DuckDescribe
       @collected_errors = []
       from_xml
     end
-    
+
+    def base
+      self
+    end
+
     def duck
       @duck ||= Duck.find_by_id duck_id
     end
@@ -32,7 +36,7 @@ module DuckDescribe
     protected
     # Returns stored XML document or generates a new one on-the-fly
     def xml_doc
-      @xml_doc ||= if @xml && !@xml.blank?
+       @xml_doc ||= unless @xml.blank?
         ::XML::Parser.string(@xml).parse
       else
         doc       = ::XML::Document.new
@@ -40,7 +44,7 @@ module DuckDescribe
         doc
       end
     rescue
-      raise 'Document did not parse'
+      raise RuntimeError, 'expected document to parse'
     end
 
   end

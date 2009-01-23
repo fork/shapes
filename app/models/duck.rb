@@ -32,7 +32,6 @@ class Duck < ActiveRecord::Base
 
   # write xml to filesystem
   def cache_xml
-    return if File.exist? cache_file_path
     file = File.new cache_file_path, 'w'
     file.puts xml
     file.close
@@ -51,15 +50,15 @@ class Duck < ActiveRecord::Base
   end
 
   def show(path, options = {}, &block)
-    resource = base.find_by_path(path)
-    if resource 
-      block_given? ? resource.presenter.to_html(options, &block) : resource.presenter.to_html(options)
+    if resource = base.find_by_path(path)
+      resource.presenter.to_html options, &block
     else
       path
     end
   end
 
   protected
+  # FIXME: Resource.validate should accept a parameter (the instance error object) and write directly to it.
   def validate_duck
     base.validate
     base.errors.collect{|error|

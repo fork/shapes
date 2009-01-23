@@ -5,7 +5,7 @@ module DuckDescribe
 
     attr_accessor :struct, :struct_name, :struct_record
 
-    def self.generate_struct(name, method_array)      
+    def self.generate_struct(name, method_array)
       const_set name, method_array.empty? ? ::Struct.new(nil) : ::Struct.new(*method_array)
     end
 
@@ -19,12 +19,13 @@ module DuckDescribe
       @struct_record ||= DuckStruct.find_by_name(struct_name)
     end
 
+    # TODO 
     def struct
      # @struct ||= 
     end
 
     def node_attributes
-      {'resource-type' => 'Struct'}.merge super
+      super.merge 'resource-type' => 'Struct'
     end
 
     def read_from_node
@@ -76,6 +77,7 @@ module DuckDescribe
       duck_struct_assignment and duck_struct_assignment.destroy
     end
 
+    # FIXME: add docs here (with example?)
     def build_struct(node)
       struct_values = node.find('struct/*[@resource-type="Primitive"]').to_a.collect{|primitive_node|
         [ primitive_node['ident'].to_sym, "DuckDescribe::Builder::#{primitive_node['resource-type']}".
