@@ -9,7 +9,8 @@ class DuckStruct < ActiveRecord::Base
   has_many :duck_struct_primitives,
     :dependent => :destroy
 
-  has_many :duck_struct_assignments
+  has_many :duck_struct_assignments,
+    :dependent => :destroy
   has_many :ducks,
     :through => :duck_struct_assignments
 
@@ -19,7 +20,11 @@ class DuckStruct < ActiveRecord::Base
 
   alias_method :primitives, :duck_struct_primitives
 
-  def struct_class    
+  def global
+    find_by_duck_id nil
+  end
+
+  def struct_class
     method_array = duck_struct_primitives.collect do |duck_struct_primitive|
       duck_struct_primitive.ident.to_sym
     end
