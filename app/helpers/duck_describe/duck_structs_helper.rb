@@ -1,5 +1,7 @@
 module DuckDescribe::DuckStructsHelper
-    
+
+  include DuckDescribe::DuckDescribeHelper
+
   def duck_struct_form(duck_struct, type, &block)
     path, method = (type == :edit) ? 
       [duck_struct_path(duck_struct), :put] : 

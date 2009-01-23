@@ -1,4 +1,4 @@
-<%= render :partial => '/duck_describe/ducks/navigation.html.erb' %>
+<%= navigation %>
 <%= error_messages_for  'duck' %>
 <% resource_form @duck, @resource, :new do |form| %>
     <%= hidden_field_tag 'type', params[:type] %>
