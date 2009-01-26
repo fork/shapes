@@ -64,11 +64,7 @@ module DuckDescribe
     private
 
     def assign_struct
-      p struct_record
-      p struct_record.duck_assignments.build(:duck => base.duck, :path => path)
-      assignment = struct_record.duck_assignments.
-        find(:first, :conditions => {:duck_id => base.duck.id, :path => path})
-      assignment ||= struct_record.duck_assignments.
+      struct_record.duck_assignments.
         build(:duck => base.duck, :path => path) and
       assignment.save
     end

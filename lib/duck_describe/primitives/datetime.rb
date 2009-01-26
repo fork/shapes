@@ -29,7 +29,7 @@ module DuckDescribe
       def params_to_datetime(params)
         params = params.inject({}) { |m, p| m.merge p.first => p.last.to_i }
         values = params.values_at 'year', 'month', 'day', 'hour', 'minute'
-        DateTime.civil values
+        DateTime.civil *values
       end
     end
   end
