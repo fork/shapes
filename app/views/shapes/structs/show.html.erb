@@ -1,0 +1,3 @@
+<%= navigation %>
+Name: <%= @shape_struct.name %><br />
+<ul><%= render :partial => "/shapes/structs/struct_primitive.html.erb", :collection => @shape_struct.shape_struct_primitives %></ul>

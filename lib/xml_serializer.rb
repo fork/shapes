@@ -1,15 +1,15 @@
 module ActiveRecord
   module Serialization
 
-    def to_duck_xml(options = {}, &block)
-      options = options.merge(acts_as_duck_options) if self.class.method_defined?(:acts_as_duck_options)
-      serializer = DuckXmlSerializer.new(self, options)
+    def to_shape_xml(options = {}, &block)
+      options = options.merge(acts_as_shape_options) if self.class.method_defined?(:acts_as_shape_options)
+      serializer = ShapeXmlSerializer.new(self, options)
       block_given? ? serializer.to_s(&block) : serializer.to_s
     end
 
   end
 
-  class DuckXmlSerializer < ActiveRecord::Serialization::Serializer
+  class ShapeXmlSerializer < ActiveRecord::Serialization::Serializer
 
     def builder
       @builder ||= begin
@@ -77,13 +77,13 @@ module ActiveRecord
           builder.tag!('array', 'resource-type' => 'Primitive', :ident => tag) do
             association_name = association.to_s.singularize
             records.each do |record|
-              record.to_duck_xml opts
+              record.to_shape_xml opts
             end
           end
         end
       else
         if record = @record.send(association)
-          record.to_duck_xml
+          record.to_shape_xml
         end
       end
     end
@@ -105,7 +105,7 @@ module ActiveRecord
       end
 
       def add_primitive
-        primitive = DuckDescribe::Builder::Primitive.
+        primitive = Shapes::Builder::Primitive.
           new(attribute_hash).build_resource
         primitive.xml_builder = options[:xml_builder]
         primitive.to_xml
