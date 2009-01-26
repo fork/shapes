@@ -41,11 +41,10 @@ module ActiveRecord #:nodoc:
           #  define_method :name_for_select, &options[:select_name]
           #end
 
-          has_many :duck_appearances,
-            :as => :appearance,
+          has_many :duck_assignments,
             :dependent => :destroy
           has_many :ducks,
-            :through => :duck_appearances
+            :through => :duck_assignments
 
           # TODO: Move this into instance methods
           after_update do |record|

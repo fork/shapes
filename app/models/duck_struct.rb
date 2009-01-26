@@ -9,10 +9,11 @@ class DuckStruct < ActiveRecord::Base
   has_many :duck_struct_primitives,
     :dependent => :destroy
 
-  has_many :duck_struct_assignments,
+  has_many :duck_assignments,
+    :as => :resource,
     :dependent => :destroy
   has_many :ducks,
-    :through => :duck_struct_assignments
+    :through => :duck_assignments
 
   named_scope :global, :conditions => {:duck_id => nil}
 

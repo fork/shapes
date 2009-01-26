@@ -42,7 +42,7 @@ module DuckDescribe
     end
 
     def destroy
-      unassign_duck_struct
+      free_struct
       children.each do |primitive|
         primitive.destroy
       end
@@ -57,24 +57,26 @@ module DuckDescribe
     end
 
     def to_xml
-      assign_duck_struct
+      assign_struct
       super
     end
 
     private
 
-    def assign_duck_struct
-      duck_struct_assignment = struct_record.duck_struct_assignments.
+    def assign_struct
+      p struct_record
+      p struct_record.duck_assignments.build(:duck => base.duck, :path => path)
+      assignment = struct_record.duck_assignments.
         find(:first, :conditions => {:duck_id => base.duck.id, :path => path})
-      duck_struct_assignment ||= struct_record.duck_struct_assignments.
+      assignment ||= struct_record.duck_assignments.
         build(:duck => base.duck, :path => path) and
-        duck_struct_assignment.save
+      assignment.save
     end
 
-    def unassign_duck_struct
-      duck_struct_assignment = struct_record.duck_struct_assignments.
+    def free_struct
+      assignment = struct_record.duck_assignments.
         find(:first, :conditions => {:duck_id => base.duck.id, :path => path})
-      duck_struct_assignment and duck_struct_assignment.destroy
+      assignment and assignment.destroy
     end
 
     # FIXME: add docs here (with example?)

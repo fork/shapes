@@ -30,12 +30,12 @@ module DuckDescribe
     end
 
     def destroy
-      unassign_appearance
+      free_record
       super
     end
 
     def to_xml
-      assign_appearance if new_resource?
+      assign_record if new_resource?
 
       attributes = {
         :ident        => ident,
@@ -45,16 +45,16 @@ module DuckDescribe
       record.to_duck_xml attributes if record
     end
 
-    def assign_appearance
-      appearance = record.duck_appearances.
+    def assign_record
+      assignment = record.duck_assignments.
         build(:duck => base.duck, :path => path)
-      appearance.save
+      assignment.save
     end
 
-    def unassign_appearance
-      appearance = record.duck_appearances.
+    def free_record
+      assignment = record.duck_assignments.
         find(:first, :conditions => {:duck_id => base.duck.id, :path => path})
-      appearance and appearance.destroy
+      assignment and assignment.destroy
     end
 
   end

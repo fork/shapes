@@ -62,7 +62,7 @@ class DuckDescribe::ResourcesController < ActionController::Base
   end
 
   def local_struct_opts(duck)
-    duck.local_duck_structs.collect do |struct|
+    duck.local_structs.collect do |struct|
       DuckDescribe::SELECT_OPTION_STRUCT.new "Struct;#{struct.name}", struct.name
     end
   end

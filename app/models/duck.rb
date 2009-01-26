@@ -1,14 +1,18 @@
 class Duck < ActiveRecord::Base
 
-  has_many :local_duck_structs, :class_name => 'DuckStruct',
+  has_many :local_structs, 
+    :class_name => 'DuckStruct',
     :dependent => :destroy
 
   def global_duck_structs
     DuckStruct.global
   end
 
-  has_many :duck_struct_assignments,
+  has_many :duck_assignments,
     :dependent => :destroy
+  has_many :resources,
+    :through => :duck_assignments,
+    :source => :resource
 
   validates_presence_of :name
   validates_uniqueness_of :name
@@ -22,9 +26,6 @@ class Duck < ActiveRecord::Base
   after_create :cache_xml
   after_update :expire_cache, :cache_xml
   after_destroy :expire_cache, :destroy_resources
-
-  has_many :duck_appearances,
-    :dependent => :destroy
 
   composed_of :base,
     :class_name => 'DuckDescribe::Base',
