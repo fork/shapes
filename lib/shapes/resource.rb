@@ -86,6 +86,11 @@ module Shapes
       }
     end
 
+    def dasherized_name
+      underscored_name.dasherize
+    end
+    alias_method :xml_node_name, :dasherized_name
+
     protected
     def validate
       validate_ident
@@ -98,11 +103,6 @@ module Shapes
     def underscored_name
       self.class.name.demodulize.underscore
     end
-
-    def dasherized_name
-      underscored_name.dasherize
-    end
-    alias_method :xml_node_name, :dasherized_name
 
     def validate_ident_uniqueness
       errors << Shapes::Error.new({:path => path, :message => Shapes::IDENT_UNIQUENESS_WARNING}) if parent &&

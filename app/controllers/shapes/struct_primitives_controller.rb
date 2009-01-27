@@ -21,20 +21,6 @@ class Shapes::StructPrimitivesController < ActionController::Base
     end
   end
 
-  def edit
-    @shape_struct_primitive = ShapeStructPrimitive.find params[:id]
-  end
-
-  def update
-    @shape_struct_primitive = ShapeStructPrimitive.find params[:id]
-    if(@shape_struct_primitive.update_attributes(params[:shape_struct_primitive]))
-      flash[:notice] = 'Shape Struct Primitive was successfully updated.'
-      redirect_to shape_struct_path(@shape_struct_primitive.shape_struct)
-    else
-      render :action => 'edit'
-    end
-  end
-
   def destroy
     @shape_struct_primitive = ShapeStructPrimitive.find params[:id]
     @shape_struct = @shape_struct_primitive.shape_struct

@@ -23,20 +23,6 @@ class Shapes::StructsController < ActionController::Base
     end
   end
 
-  def edit
-    @shape_struct = ShapeStruct.find params[:id]
-  end
-
-  def update
-    @shape_struct = ShapeStruct.find params[:id]
-    if @shape_struct.update_attributes(params[:shape_struct])
-      flash[:notice] = 'Shape Struct was successfully updated.'
-      redirect_to shape_structs_path
-    else
-       render :action => 'edit'
-    end
-  end
-
   def destroy
     @shape_struct = ShapeStruct.find params[:id]
     if @shape_struct.destroy
