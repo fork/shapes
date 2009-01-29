@@ -23,25 +23,22 @@ class Shape < ActiveRecord::Base
   before_update {|shape| shape.xml = shape.base.to_xml}
   after_create {|shape| shape.xml = shape.base.to_xml}
 
-  after_create :cache_xml
-  after_update :expire_cache, :cache_xml
+  after_update :expire_cache
   after_destroy :expire_cache, :destroy_resources
 
   composed_of :base,
     :class_name => 'Shapes::Base',
     :mapping => [ %w(xml xml), %w(name ident), %w(id shape_id) ]
 
-  # write xml to filesystem
-  def cache_xml
-    file = File.new cache_file_path, 'w'
-    file.puts xml
-    file.close
-  end
-
   # expire cache also for dirty objects
   def expire_cache
     filename = name_changed? ? name_was : name
-    FileUtils.rm_f(File.join(cache_dir_path, "#{filename}.xml"))
+    FileUtils.rm_rf(File.join(Shapes.cache_dir_path, filename))
+    FileUtils.rm_f(File.join(Shapes.cache_dir_path, "#{filename}.xml"))
+  end
+  
+  def cache_xml
+    base.cache_xml
   end
 
   def self.find_and_install_presenter(name, controller, conditions = {})
@@ -65,15 +62,6 @@ class Shape < ActiveRecord::Base
     base.errors.collect{|error|
       errors.add_to_base(error.show_message)
     }
-  end
-
-  def cache_dir_path
-    FileUtils.makedirs Shapes::CACHE_PATH
-    Shapes::CACHE_PATH
-  end
-
-  def cache_file_path
-    File.join cache_dir_path, "#{name}.xml"
   end
 
   def destroy_resources

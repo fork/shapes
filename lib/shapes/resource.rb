@@ -58,6 +58,15 @@ module Shapes
       @parent.base
     end
 
+    # write xml to filesystem
+    def cache_xml
+      write_xml = to_xml
+      file = File.new "#{cache_file_path}.xml", 'w'
+      file.puts write_xml
+      file.close
+      write_xml
+    end
+
     def destroy
       #primitives in structs are without parent
       parent and parent.children.delete self
@@ -108,5 +117,12 @@ module Shapes
       errors << Shapes::Error.new({:path => path, :message => Shapes::IDENT_UNIQUENESS_WARNING}) if parent &&
         parent.children.collect{|child| child.ident if child != self}.include?(ident)
     end
+
+    def cache_file_path
+      path_to_file = File.join Shapes.cache_dir_path, *path.split('#').delete_if {|x| x.blank?}
+      FileUtils.makedirs File.dirname(path_to_file)
+      path_to_file
+    end
+
   end
 end

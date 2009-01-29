@@ -41,13 +41,15 @@ class Shapes::ShapesController < Shapes::ShapesBase
   end
 
   def xml
-    respond_to do |format|
-      format.xml do
-        @shape = Shape.find_by_name params[:ident]
-        @shape.cache_xml
-        render :xml => @shape.xml and return false
-      end
+    path = params[:path].collect{|ident| ident.gsub(/\.xml/, '')} || nil
+    @shape = Shape.find_by_name path.first
+    if path.empty? && @shape
+      xml = @shape.cache_xml
+    elsif !path.blank? && @shape
+      resource = @shape.base.find_by_path(path * '#')
+      xml = resource.cache_xml if resource
     end
-    render :nothing => true
+    xml ? render(:xml => xml) :
+      render(:text => '', :status => 404)
   end
 end

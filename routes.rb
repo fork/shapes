@@ -21,5 +21,5 @@ resources :shape_structs,
       :controller => 'shapes/struct_primitives'
 end
 
-connect 'shapes/xml/:ident.:format',
+connect 'shapes/xml/*path',
   :controller => 'shapes/shapes', :action => 'xml'

@@ -19,4 +19,10 @@ module Shapes
       base.acts_as_shape options
     end
   end
+
+  def self.cache_dir_path
+    FileUtils.makedirs Shapes::CACHE_PATH
+    Shapes::CACHE_PATH
+  end
+
 end
