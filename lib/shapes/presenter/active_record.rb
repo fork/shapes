@@ -2,12 +2,6 @@ module Shapes
   module Presenter
     class ActiveRecord < Shapes::Presenter::Resource
 
-      def to_list
-          content_tag :ul ,
-            content_tag(:li,
-              ["ActiveRecord: #{resource.ident}" , link_to_edit, link_to_delete] * ' ') << tree_to_list
-      end
-
       def form
         content_tag(:label, 'Select ActiveRecord') +
         select(:resource, :record_id, @resource.options_for_select) +
@@ -22,6 +16,10 @@ module Shapes
         else
           "#{resource.record.class.name} - #{resource.path}"
         end
+      end
+
+      def class_name
+        "shapesActiveRecord #{super}"
       end
 
     end

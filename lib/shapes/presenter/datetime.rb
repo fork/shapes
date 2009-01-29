@@ -1,6 +1,6 @@
 module Shapes
   module Presenter
-    class Datetime < Shapes::Presenter::Resource
+    class Datetime < Shapes::Presenter::Primitive
 
       def form
         content_tag(:label, 'Datetime') +

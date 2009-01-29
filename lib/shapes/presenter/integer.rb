@@ -1,6 +1,6 @@
 module Shapes
   module Presenter
-    class Integer < Shapes::Presenter::Resource
+    class Integer < Shapes::Presenter::Primitive
 
       def form
         content_tag(:label, 'Value') +

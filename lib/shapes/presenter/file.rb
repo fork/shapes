@@ -1,6 +1,6 @@
 module Shapes
   module Presenter
-    class File < Shapes::Presenter::Resource
+    class File < Shapes::Presenter::Primitive
 
       def form
         content_tag(:label, 'File') +

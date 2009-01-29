@@ -10,31 +10,36 @@ module Shapes
       include ActionView::Helpers::DateHelper
       include ActionView::Helpers::AssetTagHelper
 
-      attr_reader :resource, :controller
+      attr_reader :resource, :controller, :link_to_select_resource
 
       def initialize(resource, controller)
         @resource, @controller = resource, controller
       end
 
       def to_list
-        content_tag :ul ,
-          content_tag(:li,
-            ["Primitive: #{resource.ident}" , link_to_edit, link_to_delete] * ' ') << tree_to_list
+        container_ul = yield(self) if block_given?
+        content_tag(:li,
+          ["#{self.class.name.demodulize}: #{resource.ident}" , link_to_edit, link_to_select_resource, link_to_delete] * ' ' + container_ul.to_s , li_attributes)
       end
+
       #link_to needs...
       def protect_against_forgery?() false end
-
-      def tree_to_list
-        resource.children.collect{|child|
-          child.presenter.to_list
-        }.to_s
-      end
 
       def to_html(options, &block)
         resource.path
       end
 
       protected
+
+      def path_to_css_selector(path)
+        #need underscores in selector to ensure uniqueness of css id
+        path.split(/#/).delete_if { |x| x.blank? }.collect {|x| x.camelize(:lower) } * '_'
+      end
+
+      def li_attributes
+        {:class => class_name, :id => "#{path_to_css_selector(resource.path)}Li", :path => resource.path}
+      end
+
       def link_to_delete
         link_to('Delete', controller.send(:delete_resource_path,
           :id => resource.base.shape_id, :path => resource.path),
@@ -46,10 +51,7 @@ module Shapes
           :id => resource.base.shape_id, :path => resource.path))
       end
 
-      def link_to_select_resource
-        link_to('New resource', controller.send(:select_resource_path,
-          :id => resource.base.shape_id, :parent_path => resource.path))
-      end
+      def class_name; "shapesResource"; end
 
     end
   end

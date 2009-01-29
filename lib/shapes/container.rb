@@ -15,6 +15,10 @@ module Shapes
       children << child
     end
 
+    def sort_children(id_array)
+      @children = id_array.collect {|id| children[id.to_i]}
+    end
+
     # FIXME: refactor Magic Number
     def from_xml
       @xml_node.find('*[@resource-type="Struct"]|*[@resource-type="Primitive"]|*[@resource-type="ActiveRecord"]').collect{|child_node|

@@ -1,6 +1,6 @@
 module Shapes
   module Presenter
-    class Enum < Shapes::Presenter::Resource
+    class Enum < Shapes::Presenter::Primitive
 
       def form
         content_tag(:label, 'Text') +

@@ -1,6 +1,4 @@
-class Shapes::StructsController < ActionController::Base
-
-  layout 'application'
+class Shapes::StructsController < Shapes::ShapesBase
 
   def index
     @shape_structs = ShapeStruct.find :all

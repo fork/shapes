@@ -1,6 +1,6 @@
 module Shapes
   module Presenter
-    class String < Shapes::Presenter::Resource
+    class String < Shapes::Presenter::Primitive
 
       def form
         content_tag(:label, 'Text') +

@@ -1,4 +1,4 @@
-class Shapes::ShapesController < ActionController::Base
+class Shapes::ShapesController < Shapes::ShapesBase
 
   def index
     @shapes = Shape.find :all

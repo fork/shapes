@@ -1,4 +1,4 @@
-class Shapes::ResourcesController < ActionController::Base
+class Shapes::ResourcesController < Shapes::ShapesBase
 
   verify :method => :post, :only => [:create, :update]
 
@@ -45,6 +45,15 @@ class Shapes::ResourcesController < ActionController::Base
     resource = shape.base.find_by_path params[:path]
     resource.destroy
     shape.save and redirect_to shape_path(shape)
+  end
+
+  def reorder_resource_with_prototype
+    shape = Shape.find_by_id params.delete(:shape_id)
+    resource = shape.base.find_by_path params.delete(:path)
+    bla = params.select {|key, value| key.match(/Ul$/) }.first.last
+    resource.sort_children bla
+    shape.save
+    render :nothing => true
   end
 
   protected

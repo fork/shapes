@@ -1,6 +1,6 @@
 module Shapes
   module Presenter
-    class Boolean < Shapes::Presenter::Resource
+    class Boolean < Shapes::Presenter::Primitive
 
       def form
         content_tag(:label, 'Value') +

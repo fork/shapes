@@ -1,6 +1,4 @@
-class Shapes::StructPrimitivesController < ActionController::Base
-
-  layout 'application'
+class Shapes::StructPrimitivesController < Shapes::ShapesBase
 
   before_filter :assign_primitive_opts,
     :only => [:edit, :update, :new, :create]

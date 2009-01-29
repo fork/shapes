@@ -1,6 +1,6 @@
 module Shapes
   module Presenter
-    class Float < Shapes::Presenter::Resource
+    class Float < Shapes::Presenter::Primitive
 
       def form
         content_tag(:label, 'Value') +
@@ -14,7 +14,7 @@ module Shapes
       end
 
       def to_html(options, &block)
-       resource.value.to_s
+        resource.value.to_s
       end
 
     end
