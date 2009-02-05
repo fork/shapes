@@ -12,3 +12,5 @@ target = File.join RAILS_ROOT, %w[config shapes_config.rb]
 
 FileUtils.cp source, target, :verbose => true
 
+puts 'Run script/generate plugin_migration to generate the migration.'
+puts 'Run rake db:migrate to migrate.'
