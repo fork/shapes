@@ -1,3 +1,5 @@
+connect '/shapes', :controller => 'shapes/shapes'
+
 with_options :controller => 'shapes/resources' do |resources|
   resources.new_resource    'shapes/:id/new_resource/:parent_path',    :action => 'new'
   resources.create_resource 'shapes/:id/create_resource/:parent_path', :action => 'create'
