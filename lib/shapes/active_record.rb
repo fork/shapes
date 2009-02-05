@@ -7,14 +7,19 @@ module Shapes
       record_type.constantize
     end
 
+    # Returns record for record_id in scope.
+    #
+    # Author: Florian Aßmann (flazy@fork.de) [2009-02-05]
     def record
-      @record ||= active_record_class.find_by_id record_id
+      @record ||= active_record_class.shape_scope(base).find_by_id record_id
     end
 
+    # Returns nested array of scoped records to use with options_for_select.
+    #
+    # Author: Florian Aßmann (flazy@fork.de) [2009-02-05]
     def options_for_select
-      active_record_class.find_in_scope.collect{ |active_record|
-        [active_record.name_for_select, active_record.id.to_s]
-      }
+      active_record_class.shape_scope(base).
+      map { |active_record| [ active_record.shape_name, active_record.id ] }
     end
 
     def read_from_node
