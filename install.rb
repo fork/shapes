@@ -8,7 +8,7 @@ rails_root = File.join ROOT, %w[ .. .. .. ]
 RAILS_ROOT = File.expand_path rails_root
   
 source = File.join ROOT, 'install', 'config.rb'
-target = File.join RAILS_ROOT, %w[config shape_config.rb]
+target = File.join RAILS_ROOT, %w[config shapes_config.rb]
 
 FileUtils.cp source, target, :verbose => true
 
