@@ -1,3 +1,4 @@
+require 'xml/libxml'
 require 'active_record'
 require "#{ File.dirname __FILE__ }/lib/acts/shape/instance_methods"
 require "#{ File.dirname __FILE__ }/lib/shapes"
