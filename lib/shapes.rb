@@ -20,14 +20,16 @@ module Shapes
     :select_name          => :id
   }
 
-  @@config = {}
-
+  @config = {}
+  def self.config
+    @config
+  end
   # Stores configuration of class with given <tt>class_name</tt> for later
   # use (see Shapes.extend_model).
   #
   # Author: Florian Aßmann (flazy@fork.de) [2009-02-05]
   def self.acts_as_shape(class_name, opts = {})
-    @@config[class_name] = DEFAULT_OPTS.merge opts
+    @config[class_name] = DEFAULT_OPTS.merge opts
   end
 
   # Author: Florian Aßmann (flazy@fork.de) [2009-02-05]
