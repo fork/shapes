@@ -1,3 +1,4 @@
+require 'xml/libxml'
 require 'active_record'
 require "#{ File.dirname __FILE__ }/lib/shapes"
 require "#{ File.dirname __FILE__ }/lib/shapes/container"
