@@ -1,0 +1,19 @@
+= Plugin requirements
+
+Rails Engines: http://rails-engines.org/
+libxml: http://libxml.rubyforge.org/
+Ruby on Rails >= 2.1: http://rubyonrails.org/
+
+= Installing the plugin
+
+Install Shapes:
+  $ script/plugin install ...
+
+Generate plugin migrations:
+  $ script/generate plugin_migration
+  $ rake db:migrate
+
+Add Routing to your <tt>config/routes.rb</tt>:
+  map.from_plugin :plugin_name 
+
+
