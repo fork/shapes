@@ -3,6 +3,8 @@ module Shapes
 
     attr_accessor :record_id, :record_type, :record
 
+    # Returns class name of record
+    # Author: hm@fork.de
     def active_record_class
       record_type.constantize
     end
@@ -50,12 +52,16 @@ module Shapes
       record.to_shape_xml attributes if record
     end
 
+    # assigns record to Shape
+    # Author: hm@fork.de
     def assign_record
       assignment = record.shape_assignments.
         build(:shape => base.shape, :path => path)
       assignment.save
     end
 
+    # destroys assignments
+    # Author: hm@fork.de
     def free_record
       assignment = record.shape_assignments.
         find(:first, :conditions => {:shape_id => base.shape.id, :path => path})

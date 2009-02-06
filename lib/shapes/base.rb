@@ -12,14 +12,19 @@ module Shapes
       from_xml
     end
 
+    # overwrites the base method of Shapes::Resource that would call the base method of the parent resource
+    # Author: hm@fork.de
     def base
       self
     end
 
+    # Author: hm@fork.de
     def shape
       @shape ||= Shape.find_by_id shape_id
     end
 
+    # builds the objecttree defined by the resource xml node
+    # Author: hm@fork.de
     def from_xml
       @children = xml_doc.find('//base/*').collect{|child_node|
         build_child_from_xml child_node

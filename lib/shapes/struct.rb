@@ -63,12 +63,16 @@ module Shapes
 
     private
 
+    # assigns Struct to Shape
+    # Author: hm@fork.de
     def assign_struct
       assignment = struct_record.shape_assignments.
         build(:shape => base.shape, :path => path) and
       assignment.save
     end
 
+    # destroys assignment
+    # Author: hm@fork.de
     def free_struct
       assignment = struct_record.shape_assignments.
         find(:first, :conditions => {:shape_id => base.shape.id, :path => path})

@@ -11,10 +11,10 @@ module Shapes
 
     def children
       @children ||= []
-      # FIXME: Do this without exception!
-      #"#{ @parent.path unless @parent == self }##{ ident }"
     end
 
+    # builds a path based on the idents up to the base resource, separated by #
+    # Author: hm@fork.de
     def path
       # FIXME: Do this without exception!
       #"#{ @parent.path unless @parent == self }##{ ident }"
@@ -22,6 +22,8 @@ module Shapes
       "#{@parent.path rescue ''}##{ident}"
     end
 
+    # accepts a string ("#foo#bar#foobar") and tries to find the appropriate resource in the branch
+    # Author: hm@fork.de
     def find_by_path(resource_path)
       idents = resource_path.split(/#/).delete_if {|x| x.blank? }
       return unless ident.eql?(idents.shift)
@@ -30,6 +32,8 @@ module Shapes
       child and child.find_by_path(idents * '#')
     end
 
+    # generates a new XML Builder for the specific resource
+    # Author: hm@fork.de
     def xml_builder
       @xml_builder ||= begin
         @options[:indent] ||= 2
@@ -59,6 +63,7 @@ module Shapes
     end
 
     # write xml to filesystem
+    # Author: hm@fork.de
     def cache_xml
       write_xml = to_xml
       file = File.new "#{cache_file_path}.xml", 'w'
@@ -67,6 +72,8 @@ module Shapes
       write_xml
     end
 
+    # deletes the assignment from the parent object
+    # Author: hm@fork.de
     def destroy
       #primitives in structs are without parent
       parent and parent.children.delete self
@@ -86,8 +93,10 @@ module Shapes
 
     def new_resource?
       @new_resource
-     end
+    end
 
+    # installs presenter for self and all children
+    # Author: hm@fork.de
     def install_presenter(controller)
       @presenter = "Shapes::Presenter::#{self.class.name.demodulize}".constantize.new self, controller
       children.collect{|children|
