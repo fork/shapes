@@ -26,6 +26,8 @@ class Shapes::ResourcesController < Shapes::ShapesBase
     what = params[:type].split(';')
     @resource = "Shapes::Builder::#{what.first.camelize}".
         constantize.new(params.merge({:type => what.last})).build_resource
+    parent = @shape.base.find_by_path params[:parent_path]
+    parent << @resource
     @resource.install_presenter(self)
   end
 
