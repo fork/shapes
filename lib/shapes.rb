@@ -42,13 +42,13 @@ module Shapes
     base.after_update :expire_shapes_cache
     base.after_destroy :expire_shapes_cache
   end
-  # Author: Florian Aßmann (flazy@fork.de) [2009-02-05]
-  def self.install_method(base, method_name, getter)
-    case getter
+  # Author: Florian Aßmann (flazy@fork.de) [2009-02-06]
+  def self.install_method(base, method_name, method)
+    case method
     when String, Symbol
-      base.class_eval %Q"def #{ method_name }; #{ getter } end"
+      base.class_eval %Q"def #{ method_name }; #{ method } end"
     when Proc
-      base.define_method method_name, &getter
+      base.class_eval { define_method method_name, &method }
     else
       raise ArgumentError, 'expected String, Symbol or Proc'
     end
@@ -63,14 +63,13 @@ module Shapes
     base.named_scope :shape_scope, scope
   end
 
-  # Author: Florian Aßmann (flazy@fork.de) [2009-02-05]
+  # Author: Florian Aßmann (flazy@fork.de) [2009-02-06]
   def self.extend_model(base) #:nodoc:
-    if options = @@config[base.name]
-      base.instance_eval { include Acts::Shape::InstanceMethods }
-
+    if options = @config[base.name]
       install_options base, options
-      install_method base, :shape_name, options[:select_name]
       install_associations base
+      install_method base, :shape_name, options[:select_name]
+      install_method base, :expire_shapes_cache, 'shapes.each do |shape| shape.expire_cache end'
       install_hooks base
       install_scope base, options[:scope]
     end

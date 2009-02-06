@@ -16,6 +16,3 @@ module Shapes
 
   end
 end
-
-# load primitives
-Dir[File.join(File.dirname(__FILE__), 'primitives', '*.rb')].each { |primitive| require primitive}
