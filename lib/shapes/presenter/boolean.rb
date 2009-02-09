@@ -10,8 +10,7 @@ module Shapes
       def struct_form
         content_tag(:label, "Value (#{@resource.ident})") +
         hidden_field("resource[struct][#{@resource.ident}][ident]", @resource.ident) +
-        check_box_tag("resource[struct][#{@resource.ident}][value]", '1', @resource.value) +
-        hidden_field_tag("resource[struct][#{@resource.ident}][value]", '0')
+        check_box_tag("resource[struct][#{@resource.ident}][value]", '1', @resource.value)
       end
 
       def to_html(options, &block)
