@@ -3,6 +3,8 @@ module Shapes
   IDENT_MATCH = /^[a-zA-Z0-9_-]+$/
   IDENT_MATCH_WARNING = 'Ident must be lowercase and must not contain special characters or spaces.'
   IDENT_UNIQUENESS_WARNING = 'Ident must be unique.'
+  INTEGER_MIN_MAX_WARNING = 'Integer must be between #MIN# and #MAX#.'
+  NUMERIC_MIN_MAX_WARNING = 'Number must be '
 
   # TODO: Should be configurable.
   FILE_DIR = File.join Rails.public_path, 'shapes', 'files'
