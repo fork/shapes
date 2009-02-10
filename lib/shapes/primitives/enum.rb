@@ -5,6 +5,8 @@ module Shapes
       attr_accessor :value, :selected
       attr_reader :separator
 
+      attach_shadows
+
       def initialize(options = {})
         @separator  = options[:separator] || ','
         @value      = options[:value] || ''

@@ -1,0 +1,7 @@
+<%=
+  content_tag(:label, "Text (#{@resource.ident})") +
+  hidden_field("resource[struct][#{@resource.ident}][ident]", @resource.ident) +
+  text_field_tag("resource[struct][#{@resource.ident}][value]", @resource.value) +
+  content_tag(:label, "Separator (#{@resource.ident})") +
+  text_field_tag("resource[struct][#{@resource.ident}][separator]", @resource.separator)
+%>

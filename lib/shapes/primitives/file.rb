@@ -3,7 +3,7 @@ module Shapes
     class File < Shapes::Primitive
 
       attr_accessor :value, :file_dir, :tmp_file, :content_type, :width, :height
-
+      attach_shadows
       def initialize(options = {})
         @file_dir = generate_temp_name
         create_tmp_file options[:value]
