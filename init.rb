@@ -1,8 +1,13 @@
 require 'active_record'
+require "#{ File.dirname __FILE__ }/vendor/plugins/shadows/init"
 require "#{ File.dirname __FILE__ }/lib/shapes"
 require "#{ File.dirname __FILE__ }/lib/shapes/container"
 require "#{ File.dirname __FILE__ }/lib/shapes/resource"
 require "#{ File.dirname __FILE__ }/lib/shapes/primitive"
+
+Shapes::Resource.extend Shadows::Extension
+Shapes::Primitive.extend Shadows::Extension
+
 %w[array boolean datetime enum file float integer string].each do |primitive|
   require "#{ File.dirname __FILE__ }/lib/shapes/primitives/#{ primitive }.rb"
 end

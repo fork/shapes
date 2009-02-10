@@ -2,11 +2,14 @@ module Shapes
   module Primitives
     class String < Shapes::Primitive
       attr_accessor :value
+      attach_shadows :assigns => :attributes
       def initialize(options = {})
         @value = options[:value].to_s
         super
       end
-
+      def attributes
+        {:value => @value}
+      end
       def add_node_content
         xml_builder.cdata! @value
       end

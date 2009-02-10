@@ -4,7 +4,7 @@ module Shapes
     include Shapes::Container
 
     attr_accessor :struct, :struct_name, :struct_record
-
+    attach_shadows
     def self.generate_struct(name, method_array)
       const_set name, method_array.empty? ? ::Struct.new(nil) : ::Struct.new(*method_array)
     end

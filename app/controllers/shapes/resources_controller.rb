@@ -28,7 +28,11 @@ class Shapes::ResourcesController < Shapes::ShapesBase
         constantize.new(params.merge({:type => what.last})).build_resource
     parent = @shape.base.find_by_path params[:parent_path]
     parent << @resource
-    @resource.install_presenter(self)
+    if @resource.is_a?(Shapes::Primitives::Integer)
+      @resource 
+    else
+      @resource.install_presenter(self)
+    end
   end
 
   def create

@@ -3,7 +3,11 @@ class Shapes::ShapesController < Shapes::ShapesBase
   def index
     @shapes = Shape.find :all
   end
-
+  def shadow_test
+    foo = Shapes::Primitives::Integer.new
+    foo.value = 1
+    render :text => foo.to_s
+  end
   def new
     @shape = Shape.new
   end

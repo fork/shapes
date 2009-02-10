@@ -2,6 +2,7 @@ module Shapes
   module Primitives
     class Integer < Shapes::Primitive
       attr_accessor :value
+      attach_shadows :assigns => :attributes
       def initialize(options = {})
         @value = (options[:value] || 0).to_i
         super
@@ -15,7 +16,9 @@ module Shapes
         @value = @xml_node['value'].to_i
         super
       end
-
+      def attributes
+        {:value => @value}
+      end
       def update_attributes(params)
         @value = params[:value].to_i
         super
