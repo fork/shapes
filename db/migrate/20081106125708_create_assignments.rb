@@ -6,6 +6,9 @@ class CreateAssignments < ActiveRecord::Migration
       t.string :path, :null => false
       t.timestamps
     end
+    add_index :shape_assignments, 
+      [:resource_type, :resource_id], 
+      :unique => true
   end
 
   def self.down
