@@ -2,6 +2,10 @@ module Shapes
   module Primitives
     class Boolean < Shapes::Primitive
       attr_accessor :value
+      attach_shadows :assigns => :value
+      def attributes
+        { :value => @value }
+      end
       def initialize(options = {})
         @value = value_to_boolean(options[:value])
         super

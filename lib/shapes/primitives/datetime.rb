@@ -2,6 +2,10 @@ module Shapes
   module Primitives
     class Datetime < Shapes::Primitive
       attr_accessor :value
+      attach_shadows :assigns => :attributes
+      def attributes
+        { :value => @value }
+      end
       def initialize(options = {})
         @value = if options['value']
           params_to_datetime options['value']

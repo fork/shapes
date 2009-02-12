@@ -10,6 +10,10 @@ module Shapes
         remove_file if options[:remove_file] == '1'
         super
       end
+      
+      def attributes
+        { :value => 'void' }
+      end
 
       def node_attributes
         save_file if @tmp_file

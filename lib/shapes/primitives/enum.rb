@@ -5,13 +5,18 @@ module Shapes
       attr_accessor :value, :selected
       attr_reader :separator
 
-      attach_shadows
+      attach_shadows :assigns => :value
+
 
       def initialize(options = {})
         @separator  = options[:separator] || ','
         @value      = options[:value] || ''
         @selected   = options[:selected] || @value.first || ''
         super
+      end
+
+      def attributes
+        { :value => @value }
       end
 
       def node_attributes

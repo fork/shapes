@@ -2,6 +2,10 @@ module Shapes
   module Primitives
     class Array < Shapes::Primitive
       include Shapes::Container
-     end
+      attach_shadows
+      def attributes
+        {}
+      end
+    end
   end
 end
