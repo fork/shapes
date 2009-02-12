@@ -5,7 +5,8 @@ class Shapes::ResourcesController < Shapes::ShapesBase
   def edit
     @shape = Shape.find params[:id]
     @resource = @shape.base.find_by_path params[:path]
-    @resource.install_presenter(self)
+    #@resource.install_presenter(self)
+    @resource
   end
 
   def update
