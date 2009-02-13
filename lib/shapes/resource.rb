@@ -1,12 +1,15 @@
 module Shapes
   class Resource
 
-    attr_accessor :ident, :description, :xml_node, :xml_builder, :parent
-    attr_reader :presenter, :path, :from_xml, :add_node_content, :errors, :children, :options
+    attr_accessor :ident, :description, :xml_node, :xml_builder, :parent, :resource_type, :errors
+    attr_reader :presenter, :path, :from_xml, :add_node_content, :children, :options
+
+    include Shapes::Constraints
 
     def initialize(*args)
       @children, @errors, @new_resource = [], [], true
       @options = args.extract_options!
+      super #Constraint module
     end
 
     def children
@@ -55,7 +58,7 @@ module Shapes
     end
 
     def node_attributes
-      {'ident' => ident, 'description' => description}
+      super.merge 'ident' => ident, 'description' => description
     end
 
     def base
@@ -88,7 +91,9 @@ module Shapes
     def read_from_node
       @ident        = @xml_node['ident']
       @description  = @xml_node['description']
+      @resource_type  = @xml_node['resource-type']
       @new_resource = false
+      super #Constraint module
     end
 
     def new_resource?
@@ -113,18 +118,19 @@ module Shapes
     def validate
       validate_ident
       validate_ident_uniqueness
+      super #Constraint module
     end
     def validate_ident
       @errors << Shapes::Error.new({:path => path, :message => Shapes::IDENT_MATCH_WARNING}) unless ident.match(Shapes::IDENT_MATCH)
     end
 
-    def underscored_name
-      self.class.name.demodulize.underscore
+    def validate_ident_uniqueness
+      @errors << Shapes::Error.new({:path => path, :message => Shapes::IDENT_UNIQUENESS_WARNING}) if parent &&
+        parent.children.collect{|child| child.ident if child != self}.include?(ident)
     end
 
-    def validate_ident_uniqueness
-      errors << Shapes::Error.new({:path => path, :message => Shapes::IDENT_UNIQUENESS_WARNING}) if parent &&
-        parent.children.collect{|child| child.ident if child != self}.include?(ident)
+    def underscored_name
+      self.class.name.demodulize.underscore
     end
 
     def cache_file_path

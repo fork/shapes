@@ -26,6 +26,7 @@ module Shapes
           active_record.record_type = hash[:type]
           active_record.record_id = hash[:record_id]
           active_record.record = active_record.active_record_class.find_by_id hash[:record_id]
+          active_record.resource_type = 'ActiveRecord'
           active_record
         end
       end

@@ -1,7 +1,5 @@
 module Shapes::StructPrimitivesHelper
 
-  include Shapes::ShapesHelper
-
   def shape_struct_primitive_form(shape_struct_primitive, type, &block)
     path, method = (type == :edit) ?
       [shape_struct_shape_struct_primitive_path(shape_struct_primitive.shape_struct, shape_struct_primitive), :put] :

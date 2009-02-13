@@ -3,7 +3,7 @@ class CreateStructPrimitives < ActiveRecord::Migration
     create_table :shape_struct_primitives do |t|
       t.string :ident, :null => false
       t.string :primitive, :null => false
-      t.string :restrictions
+      t.string :constraints
       t.belongs_to :shape_struct
       t.timestamps
     end

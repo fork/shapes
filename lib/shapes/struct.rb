@@ -25,7 +25,7 @@ module Shapes
     end
 
     def node_attributes
-      super.merge 'resource-type' => 'Struct'
+      super.merge 'resource-type' => @resource_type
     end
 
     def read_from_node

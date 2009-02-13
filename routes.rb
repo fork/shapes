@@ -1,12 +1,23 @@
 connect '/shapes', :controller => 'shapes/shapes'
 
-with_options :controller => 'shapes/resources' do |resources|
-  resources.new_resource    'shapes/:id/new_resource/:parent_path',    :action => 'new'
-  resources.create_resource 'shapes/:id/create_resource/:parent_path', :action => 'create'
-  resources.select_resource 'shapes/:id/select/:parent_path',          :action => 'select'
-  resources.edit_resource   'shapes/:id/edit_resource/:path',          :action => 'edit'
-  resources.update_resource 'shapes/:id/update_resource/:path',        :action => 'update'
-  resources.delete_resource 'shapes/:id/delete_resource/:path',        :action => 'delete'
+with_options :controller => 'shapes/resources' do |resource|
+  resource.new_resource    'shapes/:id/new_resource/:parent_path',    :action => 'new'
+  resource.create_resource 'shapes/:id/create_resource/:parent_path', :action => 'create'
+  resource.select_resource 'shapes/:id/select/:parent_path',          :action => 'select'
+  resource.edit_resource   'shapes/:id/edit_resource/:path',          :action => 'edit'
+  resource.update_resource 'shapes/:id/update_resource/:path',        :action => 'update'
+  resource.delete_resource 'shapes/:id/delete_resource/:path',        :action => 'delete'
+end
+
+with_options :controller => 'shapes/constraints' do |constraint|
+  constraint.show_constraints  'shapes/:id/show_constraints/:path',         :action => 'show'
+  constraint.select_constraint 'shapes/:id/select_constraint/:path',        :action => 'select'
+  constraint.new_constraint    'shapes/:id/new_constraint/:path',           :action => 'new'
+  constraint.create_constraint 'shapes/:id/create_constraint/:path/',       :action => 'create'
+  constraint.edit_constraint   'shapes/:id/edit_constraint/:path/:type',    :action => 'edit'
+  constraint.update_constraint 'shapes/:id/update_constraint/:path',        :action => 'update'
+  constraint.delete_constraint 'shapes/:id/delete_constraint/:path/:type',  :action => 'delete'
+
 end
 
 resources :shapes,
