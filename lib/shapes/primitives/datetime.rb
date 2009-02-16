@@ -4,7 +4,10 @@ module Shapes
       attr_accessor :value
       attach_shadows :assigns => :attributes
       def attributes
-        { :value => @value }
+        { 
+          :value => @value,
+          :ident => @ident
+        }
       end
       def initialize(options = {})
         @value = if options['value']
