@@ -25,7 +25,6 @@ module Shapes
           struct.read_from_node
           struct.ident = node['ident'].to_s
           struct.description = node['description'].to_s
-          struct.resource_type = 'Struct'
           struct
         end
       end
@@ -36,6 +35,7 @@ module Shapes
           struct.ident = hash[:ident]
           struct.description = hash[:description]
           struct.struct_name = hash[:type]
+          struct.resource_type = 'Struct'
           build_children(hash).each do |child|
             struct << child
           end
