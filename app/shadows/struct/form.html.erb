@@ -1,5 +1,7 @@
 <%
   @resource.children.collect {|primitive|
-    primitive.render :form_struct
+%>
+<%=  primitive.render :form_struct %>
+<%
   }
 %>
