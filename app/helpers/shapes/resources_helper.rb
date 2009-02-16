@@ -1,7 +1,5 @@
 module Shapes::ResourcesHelper
 
-  include Shapes::ShapesHelper
-
   def resource_form(shape, resource, type, &block)
     url = (type == :edit) ?
       update_resource_path(:id => shape.id, :path => resource.path) :
@@ -16,4 +14,5 @@ module Shapes::ResourcesHelper
     select_tag :type,
       option_groups_from_collection_for_select(resource_type_collection, :options, :name, :name, :id)
   end
+
 end

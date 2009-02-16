@@ -25,6 +25,7 @@ module Shapes
           struct.read_from_node
           struct.ident = node['ident'].to_s
           struct.description = node['description'].to_s
+          struct.resource_type = 'Struct'
           struct
         end
       end

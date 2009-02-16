@@ -5,6 +5,7 @@ module Shapes
   IDENT_UNIQUENESS_WARNING = 'Ident must be unique.'
   INTEGER_MIN_MAX_WARNING = 'Integer must be between #MIN# and #MAX#.'
   NUMERIC_MIN_MAX_WARNING = 'Number must be '
+  TYPE_NOT_ALLOWED_WARNING = 'Type #TYPE# not allowed in this Array'
 
   # TODO: Should be configurable.
   FILE_DIR = File.join Rails.public_path, 'shapes', 'files'
@@ -70,6 +71,11 @@ module Shapes
     if options = @config[base.name]
       install_options base, options
       install_associations base
+      base.class_eval %Q"def to_shape_xml(options = {}, &block)
+        options = options.merge(acts_as_shape_options) if self.class.method_defined?(:acts_as_shape_options)
+        serializer = Shapes::Serialization::ActiveRecordSerializer.new(self, options)
+        block_given? ? serializer.to_s(&block) : serializer.to_s
+      end"
       install_method base, :shape_name, options[:select_name]
       install_method base, :expire_shapes_cache, 'shapes.each do |shape| shape.expire_cache end'
       install_hooks base

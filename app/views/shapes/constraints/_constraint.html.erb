@@ -1,0 +1,4 @@
+<%= h constraint.to_s %>
+<%= link_to 'Edit', edit_constraint_path(@shape, @resource.path, constraint.name) %>
+<%= link_to 'Delete', delete_constraint_path(@shape, @resource.path, constraint.name), :method => :delete %>
+<br />

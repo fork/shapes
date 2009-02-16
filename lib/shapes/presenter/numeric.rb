@@ -4,21 +4,13 @@ module Shapes
 
       def form
         content_tag(:label, 'Value') +
-        text_field(:resource, :value) +
-        content_tag(:label, 'Min') +
-        text_field(:resource, :min) +
-        content_tag(:label, 'Max') +
-        text_field(:resource, :max)
+        text_field(:resource, :value)
       end
 
       def struct_form
         content_tag(:label, "Value (#{@resource.ident})") +
         hidden_field("resource[struct][#{@resource.ident}][ident]", @resource.ident) +
-        text_field_tag("resource[struct][#{@resource.ident}][value]", @resource.value) +
-        content_tag(:label, "Min") +
-        text_field_tag("resource[struct][#{@resource.ident}][min]", @resource.min) +
-        content_tag(:label, "Max") +
-        text_field_tag("resource[struct][#{@resource.ident}][max]", @resource.max)
+        text_field_tag("resource[struct][#{@resource.ident}][value]", @resource.value)
       end
 
       def to_html(options, &block)

@@ -1,0 +1,3 @@
+<%= navigation %>
+<ul><%= render :partial => "shapes/constraints/constraint.html.erb", :collection => @resource.constraints %></ul>
+<%= link_to_add_constraint @shape, @resource %>

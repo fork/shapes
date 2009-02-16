@@ -12,6 +12,7 @@ Shapes::Primitive.extend Shadows::Extension
   require "#{ File.dirname __FILE__ }/lib/shapes/primitives/#{ primitive }.rb"
 end
 
+require "#{ File.dirname __FILE__ }/lib/shapes/serialization/active_record_serializer"
 module Shapes::Extension
   # Allow lazy loading of models while preserving configured models.
   #
@@ -31,6 +32,5 @@ ActiveRecord::Base.extend Shapes::Extension
 require 'RMagick' rescue nil
 
 require 'xml/libxml'
-require "#{ File.dirname __FILE__ }/lib/xml_serializer"
 
 require "#{ Rails.root }/config/shapes_config"

@@ -7,7 +7,7 @@ module Shapes
     end
 
     def node_attributes
-      super.merge 'resource-type' => 'Primitive'
+      super.merge 'resource-type' => @resource_type
     end
 
     def self.inherited(descendant)

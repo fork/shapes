@@ -19,7 +19,7 @@ module Shapes
       def to_list
         container_ul = yield(self) if block_given?
         content_tag(:li,
-          ["#{self.class.name.demodulize}: #{resource.ident}" , link_to_edit, link_to_select_resource, link_to_delete] * ' ' + container_ul.to_s , li_attributes)
+          ["#{self.class.name.demodulize}: #{resource.ident}", link_to_show_constraints, link_to_edit, link_to_select_resource, link_to_delete] * ' ' + container_ul.to_s , li_attributes)
       end
 
       #link_to needs...
@@ -44,6 +44,12 @@ module Shapes
         link_to('Delete', controller.send(:delete_resource_path,
           :id => resource.base.shape_id, :path => resource.path),
           :method => :delete)
+      end
+
+      def link_to_show_constraints
+        return if resource.applicable_constraints.empty?
+        link_to('Show constraints', controller.send(:show_constraints_path,
+          :id => resource.base.shape_id, :path => resource.path))
       end
 
       def link_to_edit

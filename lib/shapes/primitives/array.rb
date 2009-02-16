@@ -6,6 +6,10 @@ module Shapes
       def attributes
         {}
       end
+      def initialize(options = {})
+        @applicable_constraints = [Shapes::Constraints::TypecastedArray]
+        super
+      end
     end
   end
 end

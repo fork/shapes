@@ -23,6 +23,7 @@ module Shapes
           primitive = "Shapes::Primitives::#{hash[:type]}".constantize.new hash
           primitive.ident = hash[:ident]
           primitive.description = hash[:description]
+          primitive.resource_type = 'Primitive'
           primitive
         end
       end
