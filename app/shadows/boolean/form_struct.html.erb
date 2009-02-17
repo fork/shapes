@@ -1,5 +1,5 @@
 <%=
-  content_tag(:label, "Value (#{@resource.ident})") +
-  hidden_field("resource[struct][#{@resource.ident}][ident]", @resource.ident) +
-  check_box_tag("resource[struct][#{@resource.ident}][value]", '1', @resource.value)
+  content_tag(:label, "Value (#{@origin.ident})") +
+  hidden_field("resource[struct][#{@origin.ident}][ident]", @origin.ident) +
+  check_box_tag("resource[struct][#{@origin.ident}][value]", '1', @origin.value)
 %>

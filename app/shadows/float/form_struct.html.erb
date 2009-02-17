@@ -1,5 +1,5 @@
 <%=
-  content_tag(:label, "Value (#{@resource.ident})") +
-  hidden_field("resource[struct][#{@resource.ident}][ident]", @resource.ident) +
-  text_field_tag("resource[struct][#{@resource.ident}][value]", @resource.value)
+  content_tag(:label, "Value (#{@origin.ident})") +
+  hidden_field("resource[struct][#{@origin.ident}][ident]", @origin.ident) +
+  text_field_tag("resource[struct][#{@origin.ident}][value]", @origin.value)
 %>
