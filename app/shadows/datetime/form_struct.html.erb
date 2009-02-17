@@ -1,5 +1,5 @@
 <%=
-  content_tag(:label, "Datetime (#{@ident})") +
-  hidden_field("resource[struct][#{@ident}][ident]", @ident) +
-  select_datetime(@value, :prefix => "resource[struct][#{@ident}][value]", :start_year => Time.new.year.to_i+10, :end_year => 1900)
+  content_tag(:label, "Datetime (#{@origin.ident})") +
+  hidden_field("resource[struct][#{@origin.ident}][ident]", @origin.ident) +
+  select_datetime(@origin.value, :prefix => "resource[struct][#{@origin.ident}][value]", :start_year => Time.new.year.to_i+10, :end_year => 1900)
 %>

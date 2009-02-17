@@ -6,7 +6,7 @@ module Shapes
       def attributes
         { 
           :value => @value,
-          :ident => @ident
+          :ident => :ident
         }
       end
       def initialize(options = {})
