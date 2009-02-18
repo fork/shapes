@@ -12,7 +12,6 @@ module Shapes
       def ul_attributes
         super.merge 'shapeId' => resource.base.shape_id
       end
-
     end
   end
 end
