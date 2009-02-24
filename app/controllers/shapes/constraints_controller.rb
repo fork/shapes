@@ -2,10 +2,15 @@ class Shapes::ConstraintsController < Shapes::ShapesBase
 
   verify :method => :post, :only => [:create, :update]
   
-  before_filter :find_shape
-  before_filter :find_resource
-
+  before_filter :find_shape, :only => [:show, :select]
+  before_filter :find_resource, :only => [:show, :select]
+  
   def show
+  end
+
+  def show_struct_primitive
+    @resource = ShapeStructPrimitive.find(params[:id])
+    render :template => "/shapes/constraints/show"
   end
 
   def select

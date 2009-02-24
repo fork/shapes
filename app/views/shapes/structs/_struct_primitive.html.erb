@@ -2,4 +2,5 @@
   Ident: <%= struct_primitive.ident %><br />
   Primitive: <%= h struct_primitive.primitive %>
   <%= link_to 'Delete', shape_struct_shape_struct_primitive_path(struct_primitive.shape_struct, struct_primitive), :method => :delete %>
+  <%= link_to 'Constraints', "/shapes/struct_constraint/#{struct_primitive.id}" %>
 </li>
