@@ -1,6 +1,7 @@
 module Shapes
   module Presenter
     class Struct < Shapes::Presenter::Resource
+      include Shapes::Presenter::Container
 
       def form
         @resource.children.collect {|primitive|

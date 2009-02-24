@@ -7,7 +7,7 @@ class CreateAssignments < ActiveRecord::Migration
       t.timestamps
     end
     add_index :shape_assignments, 
-      [:resource_type, :resource_id], 
+      [:resource_type, :path], 
       :unique => true
   end
 

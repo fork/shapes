@@ -41,12 +41,10 @@ module Shapes
       @xml_builder ||= begin
         @options[:indent] ||= 2
         builder = @options[:builder] ||= ::Builder::XmlMarkup.new(:indent => 2)
-
         unless @options[:skip_instruct]
           builder.instruct!
           @options[:skip_instruct] = true
         end
-
         builder
       end
     end

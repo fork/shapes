@@ -11,7 +11,7 @@ module Shapes
         {:value => @value}
       end
       def add_node_content
-        xml_builder.cdata! @value
+        xml_builder.cdata! @value.strip
       end
 
       def read_from_node
