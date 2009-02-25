@@ -17,7 +17,8 @@ with_options :controller => 'shapes/constraints' do |constraint|
   constraint.edit_constraint   'shapes/:id/edit_constraint/:path/:type',    :action => 'edit'
   constraint.update_constraint 'shapes/:id/update_constraint/:path',        :action => 'update'
   constraint.delete_constraint 'shapes/:id/delete_constraint/:path/:type',  :action => 'delete'
-  constraint.struct_constraint  'shapes/struct_constraint/:id',      :action => 'show_struct_primitive'
+  constraint.show_struct_constraints  'shapes/show_struct_constraints/:id',      :action => 'show_struct_primitive'
+  constraint.select_struct_constraint 'shapes/select_struct_constraint/:id/:path', :action => 'select_struct_primitive'
 end
 
 resources :shapes,

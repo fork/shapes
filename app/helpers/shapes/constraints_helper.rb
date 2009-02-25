@@ -27,6 +27,11 @@ module Shapes::ConstraintsHelper
     link_to 'Add constraint', select_constraint_path(shape, resource.path)
   end
 
+  def link_to_add_struct_constraint(struct_primitive, resource)
+    return if(resource.left_constraints.empty?)
+    link_to 'Add constraint', select_struct_constraint_path(struct_primitive, struct_primitive.primitive)
+  end
+
   protected
 
   def primitive_checkboxes

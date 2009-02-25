@@ -1,6 +1,6 @@
 module Shapes
   module Constraints
-    attr_reader :constraints
+    attr_accessor :constraints
 
     def initialize(*args)
       @constraints = []

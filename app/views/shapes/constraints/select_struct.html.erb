@@ -1,0 +1,5 @@
+<%= navigation %>
+<% form_tag new_constraint_path(@shape, @resource.path) do -%>
+<%= select_tag :type,  options_for_select(@resource.select_constraint_type)  %>
+ <div><%= submit_tag 'Select' %></div>
+<% end -%>
