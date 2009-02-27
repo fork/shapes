@@ -36,8 +36,20 @@ class ShapeStructPrimitive < ActiveRecord::Base
     struct_resource << build_primitive
   end
 
-  protected
+  def get_constraints
+    if constraints
+      YAML.load(constraints).
+        map{|constraint| constraint = Shapes::Serialization::ConstraintDeserializer.
+          new(constraint).
+            deserialize[0]
+        }
+    else
+      []
+    end
+  end
 
+  protected
+  
   def format_of_primitive
     Shapes::Primitive.primitives.map(&:to_s).map(&:demodulize).include? primitive or
       errors.add :primitive, 'Wrong primitive format'

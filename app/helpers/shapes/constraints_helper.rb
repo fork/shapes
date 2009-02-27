@@ -22,6 +22,16 @@ module Shapes::ConstraintsHelper
           &block
   end
   
+  def struct_constraint_form(struct_primitive, type, &block)
+    url = (type == :edit) ?
+      update_struct_constraint_path(:id => struct_primitive.id) :
+      create_struct_constraint_path(:id => struct_primitive.id)
+    form_for :struct_primitive, struct_primitive,
+          :url => url,
+          :html => {:multipart => true},
+          &block
+  end
+  
   def link_to_add_constraint(shape, resource)
     return if(resource.left_constraints.empty?)
     link_to 'Add constraint', select_constraint_path(shape, resource.path)

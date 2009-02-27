@@ -10,15 +10,20 @@ with_options :controller => 'shapes/resources' do |resource|
 end
 
 with_options :controller => 'shapes/constraints' do |constraint|
-  constraint.show_constraints  'shapes/:id/show_constraints/:path',         :action => 'show'
-  constraint.select_constraint 'shapes/:id/select_constraint/:path',        :action => 'select'
-  constraint.new_constraint    'shapes/:id/new_constraint/:path',           :action => 'new'
-  constraint.create_constraint 'shapes/:id/create_constraint/:path/',       :action => 'create'
-  constraint.edit_constraint   'shapes/:id/edit_constraint/:path/:type',    :action => 'edit'
-  constraint.update_constraint 'shapes/:id/update_constraint/:path',        :action => 'update'
-  constraint.delete_constraint 'shapes/:id/delete_constraint/:path/:type',  :action => 'delete'
-  constraint.show_struct_constraints  'shapes/show_struct_constraints/:id',      :action => 'show_struct_primitive'
-  constraint.select_struct_constraint 'shapes/select_struct_constraint/:id/:path', :action => 'select_struct_primitive'
+  constraint.show_constraints         'shapes/:id/show_constraints/:path',          :action => 'show'
+  constraint.select_constraint        'shapes/:id/select_constraint/:path',         :action => 'select'
+  constraint.new_constraint           'shapes/:id/new_constraint/:path',            :action => 'new'
+  constraint.create_constraint        'shapes/:id/create_constraint/:path/',        :action => 'create'
+  constraint.edit_constraint          'shapes/:id/edit_constraint/:path/:type',     :action => 'edit'
+  constraint.update_constraint        'shapes/:id/update_constraint/:path',         :action => 'update'
+  constraint.delete_constraint        'shapes/:id/delete_constraint/:path/:type',   :action => 'delete'
+  constraint.show_struct_constraints  'shapes/show_struct_constraints/:id',         :action => 'show_struct_primitive'
+  constraint.select_struct_constraint 'shapes/select_struct_constraint/:id/:path',  :action => 'select_struct_primitive'
+  constraint.new_struct_constraint    'shapes/new_struct_constraint/:id',           :action => 'new_struct_primitive'
+  constraint.update_struct_constraint 'shapes/update_struct_constraint/:id',        :action => 'update_struct_primitive'
+  constraint.create_struct_constraint 'shapes/create_struct_constraint/:id',        :action => 'create_struct_primitive'
+  constraint.delete_struct_constraint 'shapes/delete_struct_constraint/:id',        :action => 'delete_struct_primitive'
+  constraint.edit_struct_constraint   'shapes/edit_struct_constraint/:id',          :action => 'edit_struct_primitive'
 end
 
 resources :shapes,

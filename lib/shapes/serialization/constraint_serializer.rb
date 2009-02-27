@@ -12,7 +12,7 @@ module Shapes
       def serialize
         @constraints.collect { |deserialized_constraint|
           deserialized_constraint.to_s
-        }.to_s
+        } * "|"
       end
 
       # Serializer class for deserialized constraints

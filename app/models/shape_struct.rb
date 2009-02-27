@@ -25,6 +25,7 @@ class ShapeStruct < ActiveRecord::Base
     find_by_shape_id nil
   end
 
+
   def struct_class
     method_array = shape_struct_primitives.collect do |shape_struct_primitive|
       shape_struct_primitive.ident.to_sym
