@@ -32,6 +32,9 @@ class ShapeStructPrimitive < ActiveRecord::Base
     primitive_resource = struct_resource.children.select{|child| child.ident == ident}.first
     primitive_resource and primitive_resource.destroy
   end
+  def check_and_alter_primitive_constraints(struct_resource)
+    put struct_resource
+  end
   def add_resource_to_xml(struct_resource)
     struct_resource << build_primitive
   end
@@ -48,18 +51,13 @@ class ShapeStructPrimitive < ActiveRecord::Base
     end
   end
   
-  def get_constraint_by_type(constraint_type)
-    consts = get_constraints
-    consts.each do |const|
-      return const if constraint_type == const.type
-    end
-  end
   
   def remove_constraint_by_type(constraint_type)
     consts = get_constraints
     consts.delete_if{|c| c.name == constraint_type}
     consts
   end
+  
   protected
   
   def format_of_primitive

@@ -2,8 +2,8 @@ class Shapes::ConstraintsController < Shapes::ShapesBase
 
   verify :method => :post, :only => [:create, :update]
   
-  before_filter :find_shape, :only => [:show, :select]
-  before_filter :find_resource, :only => [:show, :select]
+  before_filter :find_shape, :only => [:show, :select, :new, :update, :create, :delete]
+  before_filter :find_resource, :only => [:show, :select, :new, :update, :create, :delete]
   
   def show
   end
@@ -26,8 +26,6 @@ class Shapes::ConstraintsController < Shapes::ShapesBase
   
   def new_struct_primitive
     @struct_primitive = ShapeStructPrimitive.find(params[:id])
-    #@constraint = params[:type].constantize.new(params[:constraint])
-    #@struct_primitive.constraints << @constraint
     render :template => "shapes/constraints/new_struct_primitive"
   end
 
