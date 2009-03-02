@@ -37,7 +37,7 @@ class ShapeStructPrimitive < ActiveRecord::Base
   end
 
   def get_constraints
-    if constraints
+    if constraints && !constraints.blank?
       YAML.load(constraints).
         map{|constraint| constraint = Shapes::Serialization::ConstraintDeserializer.
           new(constraint).
@@ -47,7 +47,19 @@ class ShapeStructPrimitive < ActiveRecord::Base
       []
     end
   end
-
+  
+  def get_constraint_by_type(constraint_type)
+    consts = get_constraints
+    consts.each do |const|
+      return const if constraint_type == const.type
+    end
+  end
+  
+  def remove_constraint_by_type(constraint_type)
+    consts = get_constraints
+    consts.delete_if{|c| c.name == constraint_type}
+    consts
+  end
   protected
   
   def format_of_primitive

@@ -33,6 +33,27 @@ class Shapes::ConstraintsController < Shapes::ShapesBase
 
   def update_struct_primitive
     @struct_primitive = ShapeStructPrimitive.find(params[:id])
+    @constraint = dummy_resource(@struct_primitive).
+      find_constraint_by_type params[:type]
+    @constraint.update_attributes params[:constraint]
+    @sanitized_const_array = @struct_primitive.
+      remove_constraint_by_type params[:type]
+    @sanitized_const_array << "Shapes::Constraints::#{params[:type]}".
+      constantize.new(params[:constraint]).to_s
+    @struct_primitive.constraints = @sanitized_const_array
+    
+    @struct_primitive.save! and redirect_to show_struct_constraints_path(@struct_primitive) or
+      render :action => :edit_struct_primitive
+  end
+
+  def delete_struct_primitive
+    @struct_primitive = ShapeStructPrimitive.find(params[:id])
+    @resource = dummy_resource(@struct_primitive)
+    @sanitized_const_array = @struct_primitive.
+      remove_constraint_by_type params[:type]
+    @struct_primitive.constraints = @sanitized_const_array
+    @struct_primitive.save!
+    redirect_to show_struct_constraints_path(@struct_primitive)
   end
 
   def create_struct_primitive
@@ -46,14 +67,15 @@ class Shapes::ConstraintsController < Shapes::ShapesBase
         load(@struct_primitive.constraints)
     end
     @struct_primitive.constraints << @serialized
-    @struct_primitive.save!
-    @struct_primitive = ShapeStructPrimitive.find(params[:id])
-    render :text => YAML.load(@struct_primitive.constraints).class
+    @struct_primitive.save! and redirect_to show_struct_constraints_path(@struct_primitive) or
+      render :action => :new_struct_primitive
+     
   end
 
   def edit_struct_primitive
     @struct_primitive = ShapeStructPrimitive.find(params[:id])
     @resource = dummy_resource(@struct_primitive)
+    @constraint = @resource.find_constraint_by_type params[:type]
   end
 
   def new
