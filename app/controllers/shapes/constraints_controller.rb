@@ -2,8 +2,8 @@ class Shapes::ConstraintsController < Shapes::ShapesBase
 
   verify :method => :post, :only => [:create, :update]
   
-  before_filter :find_shape, :only => [:show, :select, :new, :update, :create, :delete]
-  before_filter :find_resource, :only => [:show, :select, :new, :update, :create, :delete]
+  before_filter :find_shape, :only => [:show, :select, :new, :update, :create, :delete, :edit]
+  before_filter :find_resource, :only => [:show, :select, :new, :update, :create, :delete, :edit]
   
   def show
   end
@@ -58,7 +58,7 @@ class Shapes::ConstraintsController < Shapes::ShapesBase
     @struct_primitive = ShapeStructPrimitive.find(params[:id])
     @serialized = params[:type].constantize.new(params[:constraint]).
       to_s
-    if @struct_primitive.constraints
+    if !@struct_primitive.constraints
       @struct_primitive.constraints = []
     else
       @struct_primitive.constraints = YAML.

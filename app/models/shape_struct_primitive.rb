@@ -11,9 +11,12 @@ class ShapeStructPrimitive < ActiveRecord::Base
   after_create {|primitive| primitive.alter_resource_in_xml(:add_resource_to_xml)}
 
   def build_primitive(hash = {})
-    Shapes::Builder::Primitive.
-      new(hash.merge({:ident => ident , :type => primitive})).
-      build_resource
+    # this only works when editing struct primitives
+    res = Shapes::Builder::Primitive.
+            new(hash.merge({:ident => ident , :type => primitive})).
+            build_resource
+    res.constraints = get_constraints
+    res
   end
 
   def alter_resource_in_xml(strategy)
@@ -32,11 +35,12 @@ class ShapeStructPrimitive < ActiveRecord::Base
     primitive_resource = struct_resource.children.select{|child| child.ident == ident}.first
     primitive_resource and primitive_resource.destroy
   end
-  def check_and_alter_primitive_constraints(struct_resource)
-    put struct_resource
-  end
   def add_resource_to_xml(struct_resource)
     struct_resource << build_primitive
+  end
+  
+  def check_and_alter_primitive_constraints(struct_resource)
+    put struct_resource
   end
 
   def get_constraints
