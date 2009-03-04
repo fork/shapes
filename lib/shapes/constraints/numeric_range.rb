@@ -6,7 +6,7 @@ module Shapes
 
       def initialize(options = {})
         @min, @max = options['min'].to_f, options['max'].to_f
-        super options.merge :attributes => [:min, :max]
+        super options.merge(:attributes => [:min, :max])
       end
 
       def update_attributes(options = {})
