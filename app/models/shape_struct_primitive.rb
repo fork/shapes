@@ -5,11 +5,13 @@ class ShapeStructPrimitive < ActiveRecord::Base
   validates_format_of :ident, :with => Shapes::IDENT_MATCH, :message => Shapes::IDENT_MATCH_WARNING
   validate :format_of_primitive
 
+
   belongs_to :shape_struct
 
   after_destroy {|primitive| primitive.alter_resource_in_xml(:remove_resource_from_xml)}
   after_create {|primitive| primitive.alter_resource_in_xml(:add_resource_to_xml)}
-
+  before_validation_on_update {|primitive| primitive.alter_resource_in_xml_with_checking(:check_and_alter_primitive_constraints)}
+  
   def build_primitive(hash = {})
     # this only works when editing struct primitives
     res = Shapes::Builder::Primitive.
@@ -31,16 +33,46 @@ class ShapeStructPrimitive < ActiveRecord::Base
       shape.save
     end
   end
+  def alter_resource_in_xml_with_checking(strategy)
+    shapes = []
+    shape_struct.shapes.each do |shape|
+      assignments = shape.shape_assignments.
+        find(:all, :conditions => {:resource_id => shape_struct.id, :resource_type => 'ShapeStruct'})
+      assignments.each do |assignment|
+        struct_resource = shape.base.find_by_path assignment.path
+        send(strategy, struct_resource)
+      end
+      shapes << shape
+    end
+    shapes.each do |sh|
+      unless sh.valid?
+        sh.errors.each do |err|
+          errors.add_to_base(err[1].to_s)
+        end
+      end
+    end
+    if errors.empty?
+      shapes.each do |sh|
+        sh.save
+      end
+    else
+      false
+    end
+  end
+
   def remove_resource_from_xml(struct_resource)
     primitive_resource = struct_resource.children.select{|child| child.ident == ident}.first
     primitive_resource and primitive_resource.destroy
   end
+  
   def add_resource_to_xml(struct_resource)
     struct_resource << build_primitive
   end
   
   def check_and_alter_primitive_constraints(struct_resource)
-    put struct_resource
+    primitive_resource = struct_resource.children.select{|child| child.ident == ident}.first
+    primitive_resource.constraints = [Shapes::Serialization::ConstraintDeserializer.new(self.constraints).deserialize[0]]
+    primitive_resource
   end
 
   def get_constraints

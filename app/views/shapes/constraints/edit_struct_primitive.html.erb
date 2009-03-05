@@ -1,5 +1,5 @@
 <%= navigation %>
-<%= error_messages_for 'shape' %>
+<%= error_messages_for 'struct_primitive' %>
 <% struct_constraint_form @struct_primitive, :edit do |form| %>
   <%= hidden_field_tag 'type', params[:type] %>
   <%= render :partial => "shapes/constraints/forms/#{params[:type].demodulize.underscore}" %>

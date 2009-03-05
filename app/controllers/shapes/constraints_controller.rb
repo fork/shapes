@@ -39,9 +39,11 @@ class Shapes::ConstraintsController < Shapes::ShapesBase
     @sanitized_const_array << "Shapes::Constraints::#{params[:type]}".
       constantize.new(params[:constraint]).to_s
     @struct_primitive.constraints = @sanitized_const_array
-    
-    @struct_primitive.save! and redirect_to show_struct_constraints_path(@struct_primitive) or
+    if @struct_primitive.save
+      redirect_to show_struct_constraints_path(@struct_primitive)
+    else
       render :action => :edit_struct_primitive
+    end
   end
 
   def delete_struct_primitive
