@@ -3,6 +3,7 @@
 * Rails Engines: http://rails-engines.org/
 * libxml: http://libxml.rubyforge.org/
 * Ruby on Rails >= 2.1: http://rubyonrails.org/
+* Shadows: http://github.com/boof/shadows (needs to be installed in RAILS_ROOT/vendor/plugins/shapes/vendor/plugins/shadows
 
 = Setup
 
