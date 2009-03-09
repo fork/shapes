@@ -1,4 +1,4 @@
-class FloatShadow < Shadows::Base
+class Shapes::Primitives::BooleanShadow < Shadows::Base
   def form
     render_shape(:form)
   end

@@ -1,4 +1,4 @@
-class ArrayShadow < Shadows::Base
+class Shapes::Primitives::DatetimeShadow < Shadows::Base
   def form
     render_shape(:form)
   end

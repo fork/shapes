@@ -1,4 +1,4 @@
-class EnumShadow < Shadows::Base
+class Shapes::Primitives::ArrayShadow < Shadows::Base
   def form
     render_shape(:form)
   end

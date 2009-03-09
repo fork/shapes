@@ -1,4 +1,4 @@
-class FileShadow < Shadows::Base
+class Shapes::Primitives::StringShadow < Shadows::Base
   def form
     render_shape(:form)
   end

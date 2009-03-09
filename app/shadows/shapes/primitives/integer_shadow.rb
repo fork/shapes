@@ -1,4 +1,4 @@
-class IntegerShadow < Shadows::Base
+class Shapes::Primitives::IntegerShadow < Shadows::Base
   def form
     render_shape(:form)
   end

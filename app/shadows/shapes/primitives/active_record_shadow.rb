@@ -1,4 +1,4 @@
-class BooleanShadow < Shadows::Base
+class Shapes::Primitives::ActiveRecordShadow < Shadows::Base
   def form
     render_shape(:form)
   end
