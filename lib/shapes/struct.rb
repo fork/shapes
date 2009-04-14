@@ -10,9 +10,9 @@ module Shapes
     end
 
     def self.struct_class(struct_name, method_array)
-      Shapes::Struct.const_defined?(struct_name.camelize) ?
-        "Shapes::Struct::#{struct_name.camelize}".constantize :
-        Shapes::Struct.generate_struct(struct_name.camelize, method_array)
+      Shapes::Struct.const_defined?(struct_name) ?
+        "Shapes::Struct::#{struct_name}".constantize :
+        Shapes::Struct.generate_struct(struct_name, method_array)
     end
 
     def struct_record
@@ -29,7 +29,7 @@ module Shapes
     end
 
     def read_from_node
-      self.struct_name = @xml_node.name.underscore.classify
+      self.struct_name = @xml_node.name.underscore.camelize
       self.struct = build_struct(@xml_node)
       super
     end
