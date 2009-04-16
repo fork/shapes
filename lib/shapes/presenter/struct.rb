@@ -5,7 +5,8 @@ module Shapes
 
       def form
         @resource.children.collect {|primitive|
-          primitive.presenter.struct_form
+          #primitive.presenter.struct_form
+          primitive.render :form_for_struct
         }
       end
 

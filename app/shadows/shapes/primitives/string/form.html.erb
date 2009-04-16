@@ -1,4 +1,12 @@
+<% if @origin.parent.is_a?(Shapes::Struct)  %>
+<%=
+  content_tag(:label, "Text (#{@origin.ident})") +
+  hidden_field("resource[struct][#{@origin.ident}][ident]", @origin.ident) +
+  text_area_tag("resource[struct][#{@origin.ident}][value]", @origin.value)
+%>
+<% else %>
 <%=
   content_tag(:label, 'Text') +
   text_area(:resource, :value)
 %>
+<% end %>
