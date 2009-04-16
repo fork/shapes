@@ -8,6 +8,7 @@ class Shapes::ResourcesController < Shapes::ShapesBase
   def edit
     @shape = Shape.find params[:id]
     @resource = @shape.base.find_by_path params[:path]
+    @resource.install_presenter(self)
     @resource
   end
 
@@ -26,6 +27,7 @@ class Shapes::ResourcesController < Shapes::ShapesBase
     @resource = "Shapes::Builder::#{what.first.camelize}".
         constantize.new(params.merge({:type => what.last})).build_resource
     parent = @shape.base.find_by_path params[:parent_path]
+    @resource.install_presenter(self)
     parent << @resource
     @resource
   end
