@@ -10,5 +10,6 @@
 <body>
   <p style="color: green"><%= flash[:notice] %></p>
   <%= yield %>
+  <%= javascript_include_tag '/shapes/javascripts/sortable_tree' %>
 </body>
 </html>
