@@ -1,0 +1,4 @@
+<%= link_to 'New resource', select_resource_path(:id => resource.base.shape_id, :parent_path => resource.path) %>
+<ul class="shapes<%= resource.class.name.demodulize %> shapesSortableList" id="<%= "#{path_to_css_selector(resource.path)}Ul" %>" path="<%= resource.path %>">
+<%= render :partial => "/shapes/resources/show", :collection => resource.children, :as => :resource %>
+</ul>

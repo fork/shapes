@@ -1,0 +1,4 @@
+<% @resource.children.collect { |primitive| %>
+  <%= render :partial => "/shapes/resources/#{primitive.underscored_name}/struct_form",
+    :locals => { :resource => primitive } %>
+<% } %>

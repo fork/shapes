@@ -1,0 +1,3 @@
+<label>Select ActiveRecord</label>
+<%= select :resource, :record_id, @resource.options_for_select %>
+<%= hidden_field :resource, :record_type %>
