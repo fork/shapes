@@ -5,9 +5,6 @@ module Shapes
       attr_accessor :value, :selected
       attr_reader :separator
 
-      attach_shadows :assigns => :value
-
-
       def initialize(options = {})
         @separator  = options[:separator] || ','
         @value      = options[:value] || ''
@@ -23,9 +20,9 @@ module Shapes
         super.merge 'selected' => selected, 'separator' => separator, 'value' => value
       end
 
-      def add_node_content
+      def build_node_content
         options.collect { |value|
-          xml_builder.tag! :option, {:value => value}
+          xml_builder.option({:value => value})
         }
       end
 
@@ -48,6 +45,6 @@ module Shapes
         super
       end
 
-     end
+    end
   end
 end

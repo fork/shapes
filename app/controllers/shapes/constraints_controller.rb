@@ -1,10 +1,10 @@
 class Shapes::ConstraintsController < Shapes::ShapesBase
 
   verify :method => :post, :only => [:create, :update]
-  
+
   before_filter :find_shape, :only => [:show, :select, :new, :update, :create, :delete, :edit]
   before_filter :find_resource, :only => [:show, :select, :new, :update, :create, :delete, :edit]
-  
+
   def show
   end
 
@@ -17,13 +17,13 @@ class Shapes::ConstraintsController < Shapes::ShapesBase
     @resource.constraints = @struct_primitive.get_constraints
     render :template => "/shapes/constraints/show"
   end
-  
+
   def select_struct_primitive
     @struct_primitive = ShapeStructPrimitive.find(params[:id])
     @resource = dummy_resource(@struct_primitive)
     render :template => "/shapes/constraints/select_struct"
   end
-  
+
   def new_struct_primitive
     @struct_primitive = ShapeStructPrimitive.find(params[:id])
     render :template => "shapes/constraints/new_struct_primitive"
@@ -104,7 +104,7 @@ class Shapes::ConstraintsController < Shapes::ShapesBase
     @resource.delete_constraint_by_name params[:type]
     @shape.save and redirect_to show_constraints_path(@shape, @resource.path)
   end
-  
+
   protected
 
   def dummy_resource(primitive)
@@ -112,4 +112,5 @@ class Shapes::ConstraintsController < Shapes::ShapesBase
     resource.constraints = primitive.get_constraints
     resource
   end
+
 end

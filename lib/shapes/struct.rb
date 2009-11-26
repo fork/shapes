@@ -4,7 +4,7 @@ module Shapes
     include Shapes::Container
 
     attr_accessor :struct, :struct_name, :struct_record
-    attach_shadows
+
     def self.generate_struct(name, method_array)
       const_set name, method_array.empty? ? ::Struct.new(nil) : ::Struct.new(*method_array)
     end
@@ -45,13 +45,6 @@ module Shapes
       free_struct
       children.each do |primitive|
         primitive.destroy
-      end
-      super
-    end
-
-    def install_presenter(controller)
-      children.each do |primitive|
-        primitive.install_presenter controller
       end
       super
     end

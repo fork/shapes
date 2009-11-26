@@ -3,14 +3,14 @@ module Shapes
     class File < Shapes::Primitive
 
       attr_accessor :value, :file_dir, :tmp_file, :content_type, :width, :height
-      attach_shadows
+
       def initialize(options = {})
         @file_dir = generate_temp_name
         create_tmp_file options[:value]
         remove_file if options[:remove_file] == '1'
         super
       end
-      
+
       def attributes
         { :value => 'void' }
       end
@@ -73,8 +73,9 @@ module Shapes
       end
 
       protected
+
       def create_tmp_file(file_obj)
-        return unless file_obj.is_a?(ActionController::UploadedTempfile) || file_obj.is_a?(ActionController::UploadedStringIO)
+        return unless file_obj.is_a?(Tempfile)
         tmp_file_path = ::File.join Shapes::FILE_TMP_DIR, @file_dir, sanitize_filename(file_obj.original_filename)
         ::FileUtils.mkpath ::File.dirname(tmp_file_path)
         if file_obj.respond_to?(:local_path) and file_obj.local_path and ::File.exists?(file_obj.local_path)
@@ -121,7 +122,7 @@ module Shapes
         filename = 'undefined' if filename.size == 0
         filename
       end
+
     end
   end
 end
-

@@ -16,7 +16,7 @@ module Shapes
       def validate(resource)
         resource.children.each do |child|
           unless(@types.include?(child.serialized_classname))
-            resource.errors = resource.errors.push Shapes::Error.new({:path => resource.path, :message => Shapes::TYPE_NOT_ALLOWED_WARNING.gsub(/#TYPE#/, "'#{child.serialized_classname}'")})
+            resource.errors = resource.errors.push Shapes::Error.new( Shapes::TYPE_NOT_ALLOWED_WARNING % child.serialized_classname, resource.path )
           end
         end
       end

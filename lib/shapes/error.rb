@@ -3,13 +3,13 @@ module Shapes
 
     attr_reader :path, :message
 
-    def initialize(options = {})
-      @path = options[:path].underscore if options[:path]
-      @message = options[:message] || ''
+    def initialize(message, path = '')
+      @path = path.underscore
+      @message = message
     end
 
     def show_message
-      path ? %Q{Error on object "#{path}": #{message}"} :
+      path ? %Q{Error on object "#{path}": #{message}} :
         message
     end
   end

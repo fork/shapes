@@ -1,14 +1,16 @@
 module Shapes
   module Primitives
     class Datetime < Shapes::Primitive
+
       attr_accessor :value
-      attach_shadows :assigns => :attributes
+
       def attributes
         { 
           :value => @value,
           :ident => :ident
         }
       end
+
       def initialize(options = {})
         @value = if options['value']
           params_to_datetime options['value']
@@ -33,6 +35,7 @@ module Shapes
       end
 
       protected
+
       def params_to_datetime(params)
         params = params.inject({}) { |m, p| m.merge p.first => p.last.to_i }
         values = params.values_at 'year', 'month', 'day', 'hour', 'minute'

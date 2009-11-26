@@ -39,14 +39,13 @@ module Shapes
       super
     end
 
-    # passes the xml_builder to each child and generates the xml of them
+    # passes the xml_builder to each child and generates the builder of them
     # Author: hm@fork.de
-    def add_node_content
-      children.collect{|child|
-        child.xml_builder = xml_builder
-        child.to_xml
+    def build_node_content(builder)
+      children.collect{ |child|
+        child.xml_builder = builder
+        child.build_xml
       }
-      super
     end
 
     def errors

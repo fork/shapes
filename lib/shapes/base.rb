@@ -31,11 +31,16 @@ module Shapes
       }
     end
 
-    def to_xml
-      args = ['base', node_attributes ]
-      xml_builder.tag!(*args) do
-        add_node_content
+    def build_xml
+      start = Time.now
+      @xml_builder = ::Nokogiri::XML::Builder.new do |xml|
+		    xml.base(node_attributes) {
+		      build_node_content xml
+		    }
       end
+      @xml_builder.to_xml
+      p "time time time #{Time.now - start}"
+      @xml_builder
     end
 
     protected

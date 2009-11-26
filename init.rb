@@ -1,14 +1,8 @@
 require 'active_record'
-require "#{ File.dirname __FILE__ }/vendor/plugins/shadows/engines_init"
 require "#{ File.dirname __FILE__ }/lib/shapes"
 require "#{ File.dirname __FILE__ }/lib/shapes/container"
 require "#{ File.dirname __FILE__ }/lib/shapes/resource"
 require "#{ File.dirname __FILE__ }/lib/shapes/primitive"
-
-Shadows::Base.load_paths << File.join(Rails.root, %w[ vendor plugins shapes app shadows ])
-
-Shapes::Resource.extend Shadows::Extension
-Shapes::Primitive.extend Shadows::Extension
 
 %w[array boolean datetime enum file float integer string].each do |primitive|
   require "#{ File.dirname __FILE__ }/lib/shapes/primitives/#{ primitive }.rb"
@@ -34,5 +28,6 @@ ActiveRecord::Base.extend Shapes::Extension
 require 'RMagick' rescue nil
 
 require 'xml/libxml'
+require 'nokogiri'
 
 require "#{ Rails.root }/config/shapes_config"

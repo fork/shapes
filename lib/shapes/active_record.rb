@@ -41,15 +41,15 @@ module Shapes
       super
     end
 
-    def to_xml
+    def build_xml
       assign_record if new_resource?
 
       attributes = {
         :ident        => ident,
         :description  => description,
-        :builder      => xml_builder
+        :xml_builder => @xml_builder
       }
-      record.to_shape_xml attributes if record
+      record.to_shapes_xml(attributes) if record
     end
 
     # assigns record to Shape

@@ -1,8 +1,8 @@
 module Shapes
   class Resource
 
-    attr_accessor :ident, :description, :xml_node, :xml_builder, :parent, :resource_type, :errors
-    attr_reader :presenter, :path, :from_xml, :add_node_content, :children, :options
+    attr_accessor :ident, :description, :xml_node, :parent, :resource_type, :errors, :xml_builder
+    attr_reader :path, :from_xml, :build_node_content, :children, :options
 
     include Shapes::Constraints
 
@@ -35,24 +35,10 @@ module Shapes
       child and child.find_by_path(idents * '#')
     end
 
-    # generates a new XML Builder for the specific resource
-    # Author: hm@fork.de
-    def xml_builder
-      @xml_builder ||= begin
-        @options[:indent] ||= 2
-        builder = @options[:builder] ||= ::Builder::XmlMarkup.new(:indent => 2)
-        unless @options[:skip_instruct]
-          builder.instruct!
-          @options[:skip_instruct] = true
-        end
-        builder
-      end
-    end
-
-    def to_xml
-      xml_builder.tag!(xml_node_name, node_attributes) do
-        add_node_content
-      end
+    def build_xml
+      xml_builder.send(xml_node_name, node_attributes) { |xml|
+        build_node_content
+      }
     end
 
     def node_attributes
@@ -98,37 +84,30 @@ module Shapes
       @new_resource
     end
 
-    # installs presenter for self and all children
-    # Author: hm@fork.de
-    def install_presenter(controller)
-      @presenter = "Shapes::Presenter::#{self.class.name.demodulize}".constantize.new self, controller
-      children.collect{|children|
-          children.install_presenter controller
-      }
-    end
-
     def dasherized_name
       underscored_name.dasherize
     end
     alias_method :xml_node_name, :dasherized_name
 
+    def underscored_name
+      self.class.name.demodulize.underscore
+    end
+
     protected
+
     def validate
       validate_ident
       validate_ident_uniqueness
       super #Constraint module
     end
+
     def validate_ident
-      @errors << Shapes::Error.new({:path => path, :message => Shapes::IDENT_MATCH_WARNING}) unless ident.match(Shapes::IDENT_MATCH)
+      @errors << Shapes::Error.new(Shapes::IDENT_MATCH_WARNING, path) unless ident.match(Shapes::IDENT_MATCH)
     end
 
     def validate_ident_uniqueness
-      @errors << Shapes::Error.new({:path => path, :message => Shapes::IDENT_UNIQUENESS_WARNING}) if parent &&
+      @errors << Shapes::Error.new(Shapes::IDENT_UNIQUENESS_WARNING, path) if parent &&
         parent.children.collect{|child| child.ident if child != self}.include?(ident)
-    end
-
-    def underscored_name
-      self.class.name.demodulize.underscore
     end
 
     def cache_file_path

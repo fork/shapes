@@ -2,50 +2,64 @@ module Shapes
   module Serialization
     class ActiveRecordSerializer < ActiveRecord::Serialization::Serializer
 
-      def builder
-        @builder ||= begin
-          options[:indent] ||= 2
-          builder = options[:builder] ||= Builder::XmlMarkup.new(:indent => options[:indent])
-          builder
-        end
-      end
-
-      def serialize
-        args = [@record.class.to_s.underscore.dasherize,
-          {'resource-type' => "ActiveRecord",
-          'record-id' => @record.id,
-          :ident => options[:ident],
-          :description => options[:description]}]
-
-        builder.tag!(*args) do
-          add_attributes
+      def build_xml
+        xml_builder.send(node_name, node_attributes) { |xml|
+          (serializable_attributes + serializable_method_attributes).each do |attribute|
+            attribute.build_xml
+          end
           procs = options.delete(:procs)
           add_includes { |association, records, opts| add_associations(association, records, opts) }
           options[:procs] = procs
           add_procs
-          yield builder if block_given?
+        }
+      end
+
+      protected
+
+      def xml_builder
+        @xml_builder ||= options.delete(:xml_builder)
+      end
+
+      def add_associations(association, records, opts)
+        if records.is_a?(Enumerable)
+          tag = association.to_s.dasherize
+          if records.empty?
+            xml_builder.array({ 'resource-type' => 'Primitive', :ident => tag })
+          else
+            xml_builder.array({ 'resource-type' => 'Primitive', :ident => tag }) do |xml|
+              association_name = association.to_s.singularize
+              records.each do |record|
+                record.to_shapes_xml(xml_builder)
+              end
+            end
+          end
+        else
+          if record = @record.send(association)
+            record.to_shapes_xml(xml_builder)
+          end
         end
       end
 
-      def add_attributes
-        (serializable_attributes + serializable_method_attributes).each do |attribute|
-          attribute.add_primitive
-        end
+      def node_attributes
+        {
+          'resource-type' => "ActiveRecord",
+          'record-id' => @record.id,
+          :ident => options[:ident],
+          :description => options[:description]
+        }
       end
 
-      # To replicate the behavior in ActiveRecord#attributes,
-      # :except takes precedence over :only.  If :only is not set
-      # for a N level model but is set for the N+1 level models,
-      # then because :except is set to a default value, the second
-      # level model can have both :except and :only set.  So if
-      # :only is set, always delete :except.
+      def node_name
+        @record.class.to_s.underscore.dasherize
+      end
+
       def serializable_attributes
-        serializable_attribute_names.collect { |name| Attribute.new(name, @record, {:xml_builder => builder}) }
+        serializable_attribute_names.collect { |name| Attribute.new(name, @record, xml_builder) }
       end
 
       def serializable_method_attributes
         Array(options[:methods]).inject([]) do |method_attributes, name|
-          method_attributes << MethodAttribute.new(name.to_s, @record, {:xml_builder => builder}) if @record.respond_to?(name.to_s)
+          method_attributes << MethodAttribute.new(name.to_s, @record, xml_builder) if @record.respond_to?(name.to_s)
           method_attributes
         end
       end
@@ -58,27 +72,6 @@ module Shapes
         end
       end
 
-      def add_associations(association, records, opts)
-        if records.is_a?(Enumerable)
-          tag = association.to_s
-          tag = tag.dasherize
-          if records.empty?
-            builder.tag!('array', 'resource-type' => 'Primitive', :ident => tag)
-          else
-            builder.tag!('array', 'resource-type' => 'Primitive', :ident => tag) do
-              association_name = association.to_s.singularize
-              records.each do |record|
-                record.to_shape_xml opts
-              end
-            end
-          end
-        else
-          if record = @record.send(association)
-            record.to_shape_xml
-          end
-        end
-      end
-
       def reformat_name(name)
         name = name.camelize if camelize?
         dasherize? ? name.dasherize : name
@@ -87,29 +80,29 @@ module Shapes
       class Attribute #:nodoc:
         attr_reader :name, :value, :type, :options
 
-        def initialize(name, record, options = {})
-          @name, @record = name, record
+        def initialize(name, record, xml_builder)
+          @name, @record, @xml_builder = name, record, xml_builder
 
           @type  = compute_type
           @value = compute_value
           @options = options
+          
         end
 
-        def add_primitive
-          primitive = Shapes::Builder::Primitive.
-            new(attribute_hash).build_resource
-          primitive.xml_builder = options[:xml_builder]
-          primitive.to_xml
+        def build_xml
+          primitive = Shapes::Builder::Primitive.new(attribute_hash).build_resource
+          primitive.xml_builder = @xml_builder
+          primitive.build_xml 
         end
-
+      
         def attribute_hash
-          {:value => @value, :ident => @name, :type => type.to_s.camelize}
+          { :value => @value, :ident => @name, :type => type.to_s.camelize }
         end
 
         protected
 
         def compute_type
-          type = @record.class.serialized_attributes.has_key?(name) ? :yaml : @record.class.columns_hash[name].type
+          type = @record.class.columns_hash[name].type
 
           case type
             when :text

@@ -5,7 +5,6 @@ class ShapeStructPrimitive < ActiveRecord::Base
   validates_format_of :ident, :with => Shapes::IDENT_MATCH, :message => Shapes::IDENT_MATCH_WARNING
   validate :format_of_primitive
 
-
   belongs_to :shape_struct
 
   after_destroy {|primitive| primitive.alter_resource_in_xml(:remove_resource_from_xml)}

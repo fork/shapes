@@ -20,8 +20,8 @@ class Shape < ActiveRecord::Base
 
   validate :validate_shape
 
-  before_update {|shape| shape.xml = shape.base.to_xml}
-  after_create {|shape| shape.xml = shape.base.to_xml}
+  before_update {|shape| shape.xml = shape.base.build_xml.to_xml}
+  after_create {|shape| shape.xml = shape.base.build_xml.to_xml}
 
   after_update :expire_cache
   after_destroy :expire_cache, :destroy_resources
@@ -39,20 +39,6 @@ class Shape < ActiveRecord::Base
   
   def cache_xml
     base.cache_xml
-  end
-
-  def self.find_and_install_presenter(name, controller, conditions = {})
-    shape = find_or_initialize_by_name(:name => name, *conditions)
-    shape.base.install_presenter controller
-    shape
-  end
-
-  def show(path, options = {}, &block)
-    if resource = base.find_by_path(path)
-      resource.presenter.to_html options, &block
-    else
-      path
-    end
   end
 
   protected

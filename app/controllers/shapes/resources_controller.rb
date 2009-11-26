@@ -8,14 +8,13 @@ class Shapes::ResourcesController < Shapes::ShapesBase
   def edit
     @shape = Shape.find params[:id]
     @resource = @shape.base.find_by_path params[:path]
-    @resource.install_presenter(self)
     @resource
   end
 
   def update
     @resource.update_attributes params[:resource]
     @shape.save and redirect_to shape_path(@shape) or
-      (@resource.install_presenter(self) and render :action => :edit)
+      render :action => :edit
   end
 
   def select
@@ -27,7 +26,6 @@ class Shapes::ResourcesController < Shapes::ShapesBase
     @resource = "Shapes::Builder::#{what.first.camelize}".
         constantize.new(params.merge({:type => what.last})).build_resource
     parent = @shape.base.find_by_path params[:parent_path]
-    @resource.install_presenter(self)
     parent << @resource
     @resource
   end
@@ -39,7 +37,7 @@ class Shapes::ResourcesController < Shapes::ShapesBase
     parent = @shape.base.find_by_path params[:parent_path]
     parent << @resource
     @shape.save and redirect_to shape_path(@shape) or
-      (@resource.install_presenter(self) and render :action => :new)
+      render :action => :new
   end
 
   def delete

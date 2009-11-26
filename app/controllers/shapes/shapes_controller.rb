@@ -36,7 +36,6 @@ class Shapes::ShapesController < Shapes::ShapesBase
 
   def show
     @shape = Shape.find params[:id]
-    @shape.base.install_presenter self
   end
 
   def xml
