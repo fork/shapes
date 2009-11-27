@@ -7,7 +7,7 @@ module Shapes
 
       def initialize(data)
         @data = data
-        @builder_strategy = if(data.is_a?(XML::Node))
+        @builder_strategy = if(data.is_a?(Nokogiri::XML::Element))
           StructFromXml.new
         else
           StructFromHash.new

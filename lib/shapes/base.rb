@@ -26,32 +26,31 @@ module Shapes
     # builds the objecttree defined by the resource xml node
     # Author: hm@fork.de
     def from_xml
-      @children = xml_doc.find('//base/*').collect{|child_node|
+      @children = xml_doc.xpath('//base/*').collect{ |child_node|
         build_child_from_xml child_node
       }
     end
 
+    def conterminate_path
+      @dirty = true
+    end
+
     def build_xml
-      start = Time.now
-      @xml_builder = ::Nokogiri::XML::Builder.new do |xml|
+      ::Nokogiri::XML::Builder.new do |xml|
 		    xml.base(node_attributes) {
-		      build_node_content xml
+		      @xml_builder= xml
+		      build_node_content
 		    }
       end
-      @xml_builder.to_xml
-      p "time time time #{Time.now - start}"
-      @xml_builder
     end
 
     protected
     # Returns stored XML document or generates a new one on-the-fly
     def xml_doc
        @xml_doc ||= unless @xml.blank?
-        ::XML::Parser.string(@xml).parse
+        Nokogiri.parse(@xml)
       else
-        doc       = ::XML::Document.new
-        doc.root  = ::XML::Node.new 'base'
-        doc
+        Nokogiri::XML::Document.new
       end
     rescue
       raise RuntimeError, 'expected document to parse'

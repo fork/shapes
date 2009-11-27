@@ -7,7 +7,7 @@ module Shapes
 
       def initialize(data)
         @data = data
-        @builder_strategy = if(data.is_a?(XML::Node))
+        @builder_strategy = if(data.is_a?(Nokogiri::XML::Element))
           ActiveRecordFromXml.new
         else
           ActiveRecordFromHash.new
@@ -20,7 +20,7 @@ module Shapes
 
       class ActiveRecordFromHash
         def build_object(hash)
-          active_record = Shapes::ActiveRecord.new hash
+          active_record = Shapes::ActiveRecord.new
           active_record.ident = hash[:ident]
           active_record.description = hash[:description]
           active_record.record_type = hash[:type]
@@ -33,7 +33,7 @@ module Shapes
 
       class ActiveRecordFromXml
         def build_object(node)
-          active_record = Shapes::ActiveRecord.new hash
+          active_record = Shapes::ActiveRecord.new
           active_record.xml_node = node
           active_record.read_from_node
           active_record

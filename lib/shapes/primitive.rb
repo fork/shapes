@@ -14,9 +14,5 @@ module Shapes
       @primitives << descendant
     end
 
-    #def partial_path
-    #  "#{super}/#{self.class.name.demodulize.underscore}"
-    #end
-
   end
 end

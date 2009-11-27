@@ -2,7 +2,7 @@ module Shapes
   class Resource
 
     attr_accessor :ident, :description, :xml_node, :parent, :resource_type, :errors, :xml_builder
-    attr_reader :path, :from_xml, :build_node_content, :children, :options
+    attr_reader :path, :from_xml, :build_node_content, :children, :options, :dirty
 
     include Shapes::Constraints
 
@@ -35,8 +35,13 @@ module Shapes
       child and child.find_by_path(idents * '#')
     end
 
+    #flag resource and all parents up to base as dirty
+    def conterminate_path
+      @dirty = true and @parent.conterminate_path
+    end
+
     def build_xml
-      xml_builder.send(xml_node_name, node_attributes) { |xml|
+      @xml_builder.send(xml_node_name, node_attributes) { |xml|
         build_node_content
       }
     end
@@ -68,6 +73,7 @@ module Shapes
 
     #don't update ident and description for structs or records
     def update_attributes(params)
+      conterminate_path
       @ident = params[:ident].to_s
       @description = params[:description].to_s
     end

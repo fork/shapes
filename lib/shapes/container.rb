@@ -15,6 +15,7 @@ module Shapes
     # accepts a resource and defines its relationship to self
     # Author: hm@fork.de
     def <<(child)
+      conterminate_path
       child.parent = self
       children << child
     end
@@ -27,7 +28,7 @@ module Shapes
 
     # FIXME: refactor Magic Number
     def from_xml
-      @xml_node.find('*[@resource-type="Struct"]|*[@resource-type="Primitive"]|*[@resource-type="ActiveRecord"]').collect{|child_node|
+      @xml_node.xpath('*[@resource-type="Struct"]|*[@resource-type="Primitive"]|*[@resource-type="ActiveRecord"]').collect{ |child_node|
         build_child_from_xml child_node
       }
     end
@@ -41,9 +42,9 @@ module Shapes
 
     # passes the xml_builder to each child and generates the builder of them
     # Author: hm@fork.de
-    def build_node_content(builder)
+    def build_node_content
       children.collect{ |child|
-        child.xml_builder = builder
+        child.xml_builder = @xml_builder
         child.build_xml
       }
     end
