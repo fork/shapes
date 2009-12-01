@@ -57,7 +57,7 @@ module Shapes
     # write xml to filesystem
     # Author: hm@fork.de
     def cache_xml
-      write_xml = to_xml
+      write_xml = build_xml.to_xml
       file = File.new "#{cache_file_path}.xml", 'w'
       file.puts write_xml
       file.close
