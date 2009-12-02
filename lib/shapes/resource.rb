@@ -37,7 +37,7 @@ module Shapes
 
     #flag resource and all parents up to base as dirty
     def conterminate_path
-      @dirty = true and @parent.conterminate_path
+      @dirty = true and @parent and @parent.conterminate_path
     end
 
     def build_xml
@@ -47,7 +47,8 @@ module Shapes
     end
 
     def node_attributes
-      super.merge 'ident' => ident, 'description' => description
+      attributes = super.merge 'ident' => ident
+      description.blank? ? attributes : attributes.merge({ 'description' => description })
     end
 
     def base

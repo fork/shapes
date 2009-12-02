@@ -29,24 +29,24 @@ module Shapes
             xml_builder.array({ 'resource-type' => 'Primitive', :ident => tag }) do |xml|
               association_name = association.to_s.singularize
               records.each do |record|
-                record.to_shapes_xml(xml_builder)
+                record.build_xml(xml_builder)
               end
             end
           end
         else
           if record = @record.send(association)
-            record.to_shapes_xml(xml_builder)
+            record.build_xml(xml_builder)
           end
         end
       end
 
       def node_attributes
-        {
+        attributes = {
           'resource-type' => "ActiveRecord",
           'record-id' => @record.id,
-          :ident => options[:ident],
-          :description => options[:description]
+          :ident => options[:ident]
         }
+        options[:description].blank? ? attributes : attributes.merge({ :description => options[:description] })
       end
 
       def node_name
