@@ -1,5 +1,7 @@
 module Shapes::ResourcesHelper
 
+  include Shapes::CommonHelper
+
   def resource_form(shape, resource, type, &block)
     url = (type == :edit) ?
       update_resource_path(:id => shape.id, :path => resource.path) :

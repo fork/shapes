@@ -46,6 +46,13 @@ class Shapes::ResourcesController < Shapes::ShapesBase
     redirect_to shape_path(@shape)
   end
 
+  def unfold
+    resource = @shape.base.find_by_path params[:path]
+    render :partial => '/shapes/resources/show', 
+    :collection => resource.children, 
+    :as => :resource
+  end
+
   def reorder_resource_with_prototype
     shape = Shape.find_by_id params.delete(:shape_id)
     resource = shape.base.find_by_path params.delete(:path)

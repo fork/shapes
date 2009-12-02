@@ -5,6 +5,7 @@ ActionController::Routing::Routes.draw do |map|
     resource.new_resource    'shapes/:id/new_resource/:parent_path',    :action => 'new'
     resource.create_resource 'shapes/:id/create_resource/:parent_path', :action => 'create'
     resource.select_resource 'shapes/:id/select/:parent_path',          :action => 'select'
+    resource.unfold_resource 'shapes/:id/unfold/:path',                 :action => 'unfold'
     resource.edit_resource   'shapes/:id/edit_resource/:path',          :action => 'edit'
     resource.update_resource 'shapes/:id/update_resource/:path',        :action => 'update'
     resource.delete_resource 'shapes/:id/delete_resource/:path',        :action => 'delete'
