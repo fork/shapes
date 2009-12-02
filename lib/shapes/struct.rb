@@ -74,7 +74,7 @@ module Shapes
 
     # FIXME: add docs here (with example?)
     def build_struct(node)
-      struct_values = node.find('struct/*[@resource-type="Primitive"]').to_a.collect{|primitive_node|
+      struct_values = node.xpath('struct/*[@resource-type="Primitive"]').to_a.collect{|primitive_node|
         [ primitive_node['ident'].to_sym, "Shapes::Builder::#{primitive_node['resource-type']}".
           constantize.new(primitive_node).build_resource ]
       }
