@@ -1,0 +1,3 @@
+<%= hidden_field_tag 'type', params[:type] %>
+<%= render :partial => "shapes/constraints/forms/#{params[:type].demodulize.underscore}" %>
+<%= form.submit %>

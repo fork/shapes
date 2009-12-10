@@ -1,0 +1,4 @@
+<% javascript_tag do -%>
+li = Element.extend(window.top.document.getElementById('<%= params[:css_id] %>'));
+Shapes.renderResource(li);
+<% end %>

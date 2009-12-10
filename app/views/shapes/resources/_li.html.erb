@@ -1,0 +1,7 @@
+<% edit_path = edit_resource_path(:id => resource.base.shape_id, :path => resource.path) %>
+<%= "#{resource.class.name.demodulize}: #{resource.ident}" %>
+<%= link_to_show_constraints resource %>
+<%= link_to 'Sort', '#', { :class => 'handle', :onclick => 'Shapes.closePropertyChangers()' } %>
+<%= link_to 'Edit', edit_path, { :onclick => "Shapes.renderUrlInElement(this, '#{ edit_path }'); return false;" } %>
+<%= link_to 'Delete', delete_resource_path(:id => resource.base.shape_id, :path => resource.path), { :onclick => "Shapes.renderUrlInElement(this, '/shapes/#{ resource.base.shape_id }/delete_confirmation/' + escape('#{ resource.path }')); return false;" } %>
+<%= render :partial => "/shapes/resources/#{resource.underscored_name}/li", :locals => { :resource => resource } %>

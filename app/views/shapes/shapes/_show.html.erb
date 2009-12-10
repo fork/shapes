@@ -1,0 +1,8 @@
+<% id = "#{path_to_css_selector(@shape.base.path)}Ul" %>
+
+<% content_tag :ul, :class => 'shapesBase shapesSortableList', 
+  :id => id, 
+  :path => @shape.base.path, :shapeId => @shape.id do %>
+  <%= render :partial => "/shapes/resources/show", :collection => @shape.base.children, :as => :resource %>
+<% end %>
+<%= javascript_tag "ShapesSortableUl.createSortable('#{ id }', '#{ @shape.id }', '#{ @shape.base.path }');" %>

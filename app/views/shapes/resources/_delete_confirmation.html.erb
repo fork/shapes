@@ -1,0 +1,3 @@
+Sure?
+<%= link_to 'yes', '#', { :onclick => "Shapes.deleteResourceLink(this, '#{ delete_resource_path(:id => params[:id], :path => params[:path]) }'); return false;" } %>
+<%= link_to 'no', '#', { :onclick => "Shapes.renderResource(Shapes.parentLiFor(this)); return false;" } %>

@@ -1,0 +1,5 @@
+<% path = new_resource_path(@shape, params[:parent_path]) %>
+<% form_tag path, { :onsubmit => "Shapes.remoteForm(this, '#{ path }'); return false;" } do -%>
+<%= resource_type_select @resource_type_collection  %>
+<%= submit_tag 'Select' %>
+<% end -%>

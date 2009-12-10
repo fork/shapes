@@ -1,0 +1,5 @@
+<% new_path = new_constraint_path(@shape, @resource.path) %>
+<% form_tag new_path, { :onsubmit => "Shapes.remoteForm(this, '#{ new_path }'); return false;" } do -%>
+<%= select_tag :type,  options_for_select(@resource.select_constraint_type)  %>
+<div><%= submit_tag 'Select' %></div>
+<% end %>

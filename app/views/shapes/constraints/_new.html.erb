@@ -1,0 +1,4 @@
+<%= error_messages_for 'shape' %>
+<% constraint_form @shape, @resource, :new do |form| %>
+<%= render :partial => '/shapes/constraints/form', :locals => { :form => form } %>
+<% end %>

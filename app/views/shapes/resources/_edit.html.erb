@@ -1,0 +1,9 @@
+<%= error_messages_for 'shape' %>
+<% resource_form @shape, @resource, :edit do |form| %>
+    <label for="ident">Ident </label>
+    <%= text_field :resource, :ident %>
+    <label for="description">Description </label>
+    <%= text_area :resource, :description %>
+    <%= render :partial => "/shapes/resources/#{@resource.underscored_name}/form" %>
+    <%= form.submit %>
+<% end %>
