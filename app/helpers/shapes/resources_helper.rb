@@ -8,7 +8,7 @@ module Shapes::ResourcesHelper
       create_resource_path(:id => shape.id, :parent_path => params[:parent_path])
     form_for :shape, shape,
           :url => url,
-          :html => {:multipart => true},
+          :html => { :name => 'resourceform', :id => 'resourceform', :onsubmit => "Shapes.remoteForm(this, '#{ url }'); return false;" },
           &block
   end
 

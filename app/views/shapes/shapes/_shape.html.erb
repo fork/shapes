@@ -1,5 +1,6 @@
+<li>
 <%= h shape.name %>
-<%= link_to 'Show', shape_path(shape) %>
+<%= link_to 'Show', shape_path(shape), { :onclick => "new Ajax.Updater('content', '#{ shape_path(shape) }', { method: 'get', evalScripts: true }); return false;" } %>
 <%= link_to 'Edit', edit_shape_path(shape) %>
 <%= link_to 'Delete', shape_path(shape), :method => :delete %>
-<br />
+</li>

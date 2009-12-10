@@ -12,6 +12,4 @@ class ShapeAssignment < ActiveRecord::Base
     resource and resource.destroy and shape.save
   end
 
-  
-
 end

@@ -7,7 +7,8 @@ module Shapes::CommonHelper
 
   def link_to_show_constraints(resource)
     unless resource.applicable_constraints.empty?
-      link_to 'Show constraints', show_constraints_path(:id => resource.base.shape_id, :path => resource.path)
+      show_contraints_url = show_constraints_path(:id => resource.base.shape_id, :path => resource.path)
+      link_to 'Show constraints', show_contraints_url, { :onclick => "Shapes.renderUrlInElement(this, '#{show_contraints_url}'); return false;" }
     end
   end
 

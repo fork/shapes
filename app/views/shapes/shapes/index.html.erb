@@ -1,4 +1,6 @@
-<div style="width:20%;float:left;">
 <%= navigation %>
-<%= render :partial => "shapes/shapes/shape.html.erb", :collection => @shapes %>
+<div id="content">
+  <ul>
+    <%= render :partial => "shapes/shapes/shape", :collection => @shapes %>
+  </ul>
 </div>

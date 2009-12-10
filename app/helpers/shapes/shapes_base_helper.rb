@@ -1,5 +1,7 @@
 module Shapes::ShapesBaseHelper
 
+  include Shapes::CommonHelper
+
   def shape_form(shape, type, &block)
     path, method = (type == :edit) ?
       [shape_path(shape), :put] :

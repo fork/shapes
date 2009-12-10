@@ -1,5 +1,7 @@
 module Shapes::StructsHelper
 
+  include Shapes::CommonHelper
+
   def shape_struct_form(shape_struct, type, &block)
     if @shape
       path, method = (type == :edit) ?

@@ -3,22 +3,45 @@ class Shapes::ResourcesController < Shapes::ShapesBase
   verify :method => :post, :only => [:create, :update]
   
   before_filter :find_shape, :except => :reorder_resource_with_prototype
-  before_filter :find_resource, :only => [:edit, :update, :delete]
+  before_filter :find_resource, :only => [:edit, :update, :delete, :render_resource]
 
   def edit
     @shape = Shape.find params[:id]
     @resource = @shape.base.find_by_path params[:path]
     @resource
+    respond_to do |format|
+      format.html
+      format.js { render :partial => 'shapes/resources/edit' }
+    end
   end
 
   def update
     @resource.update_attributes params[:resource]
-    @shape.save and redirect_to shape_path(@shape) or
-      render :action => :edit
+    if @shape.save
+      respond_to do |format|
+        format.html do        
+          if what.last == 'file'
+            render :nothing => true
+          else
+            redirect_to shape_path(@shape)
+          end
+        end
+        format.js { render :partial => '/shapes/resources/li', :locals => { :resource => @resource } }
+      end
+    else
+      respond_to do |format|
+        format.html { render :action => :edit }
+        format.js { render :partial => 'shapes/resources/edit' }
+      end
+    end
   end
 
   def select
     @resource_type_collection = resource_type_hash(@shape)
+    respond_to do |format|
+      format.html
+      format.js { render :partial => 'shapes/resources/select', :locals => { :resource => @resource } }
+    end
   end
 
   def new
@@ -28,6 +51,10 @@ class Shapes::ResourcesController < Shapes::ShapesBase
     parent = @shape.base.find_by_path params[:parent_path]
     parent << @resource
     @resource
+    respond_to do |format|
+      format.html
+      format.js { render :partial => 'shapes/resources/new' }
+    end
   end
 
   def create
@@ -36,14 +63,44 @@ class Shapes::ResourcesController < Shapes::ShapesBase
         constantize.new(params['resource'].merge({:type => what.last})).build_resource
     parent = @shape.base.find_by_path params[:parent_path]
     parent << @resource
-    @shape.save and redirect_to shape_path(@shape) or
-      render :action => :new
+    if @shape.save
+      respond_to do |format|
+        format.html do        
+          if what.last == 'file'
+            render :nothing => true
+          else
+            redirect_to shape_path(@shape)
+          end
+        end
+        format.js { render :partial => "/shapes/resources/li", :locals => { :resource => parent } }
+      end
+    else
+      respond_to do |format|
+        format.html { render :action => :new }
+        format.js { render :partial => 'shapes/resources/new' }
+      end
+    end
   end
 
   def delete
     @resource.destroy
     @shape.save
-    redirect_to shape_path(@shape)
+    respond_to do |format|
+      format.html { redirect_to shape_path(@shape) }
+      format.js { render :nothing => true }
+    end
+  end
+
+  def render_resource
+    respond_to do |format|
+      format.js { render :partial => "/shapes/resources/li", :locals => { :resource => @resource } }
+    end
+  end
+
+  def delete_confirmation
+    respond_to do |format|
+      format.js { render :partial => "/shapes/resources/delete_confirmation", :locals => { :resource => @resource } }
+    end
   end
 
   def unfold

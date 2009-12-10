@@ -80,7 +80,8 @@ module Shapes
     end
 
     def read_from_node
-      @ident        = @xml_node['ident']
+      # save ident twice to reset ident in case of a collation. Ident is a special case here because it is part of the resource ID.
+      @ident        = @_ident = @xml_node['ident']
       @description  = @xml_node['description']
       @resource_type  = @xml_node['resource-type']
       @new_resource = false
@@ -113,8 +114,9 @@ module Shapes
     end
 
     def validate_ident_uniqueness
-      @errors << Shapes::Error.new(Shapes::IDENT_UNIQUENESS_WARNING, path) if parent &&
-        parent.children.collect{|child| child.ident if child != self}.include?(ident)
+      if parent && parent.children.collect{|child| child.ident if child != self}.include?(ident)
+        @errors << Shapes::Error.new(Shapes::IDENT_UNIQUENESS_WARNING, path) and (@ident = @_ident)
+      end
     end
 
     def cache_file_path

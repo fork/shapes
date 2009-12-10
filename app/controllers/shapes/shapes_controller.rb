@@ -36,6 +36,10 @@ class Shapes::ShapesController < Shapes::ShapesBase
 
   def show
     @shape = Shape.find params[:id]
+    respond_to do |format|
+      format.html { @noscript = true }
+      format.js { render :partial => '/shapes/shapes/show' }
+    end
   end
 
   def xml

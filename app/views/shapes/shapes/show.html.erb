@@ -1,8 +1,3 @@
 <%= navigation %>
 <%= error_messages_for 'shape' %>
-<% content_tag :ul, :class => 'shapesBase shapesSortableList', 
-  :id => "#{path_to_css_selector(@shape.base.path)}Ul", 
-  :path => @shape.base.path, :shapeId => @shape.id do %>
-  <%= render :partial => "/shapes/resources/show", :collection => @shape.base.children, :as => :resource %>
-<% end %>
-<%= javascript_include_tag '/shapes/javascripts/sortable_tree' %>
+<%= render :partial => '/shapes/shapes/show' %>

@@ -1,8 +1,4 @@
-<li class="<%= resource.class.name.demodulize.camelize(:lower) %> shapesResource" id="<%= "#{path_to_css_selector(resource.path)}Li" %>" path="<%= resource.path %>">
-  <%= "#{resource.class.name.demodulize}: #{resource.ident}" %>
-  <%= link_to_show_constraints resource %>
-  <%= link_to 'Edit', edit_resource_path(:id => resource.base.shape_id, :path => resource.path) %>
-  <%= link_to('Delete', delete_resource_path(:id => resource.base.shape_id, :path => resource.path),
-          :method => :delete) %>
-  <%= render :partial => "/shapes/resources/#{resource.underscored_name}/li", :locals => { :resource => resource } %>
+<% css_id = "#{path_to_css_selector(resource.path)}Li_#{ show_counter }" %>
+<li class="<%= resource.class.name.demodulize.camelize(:lower) %> shapesResource sortable" id="<%= css_id %>" path="<%= resource.path %>">
+<%= render :partial => "/shapes/resources/li", :locals => { :resource => resource } %>
 </li>

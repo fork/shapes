@@ -1,5 +1,7 @@
 module Shapes::ConstraintsHelper
 
+  include Shapes::CommonHelper
+
   def primitive_checkbox_array
     content_tag :ul, primitive_checkboxes
   end
@@ -18,28 +20,15 @@ module Shapes::ConstraintsHelper
       create_constraint_path(:id => shape.id, :path => resource.path)
     form_for :shape, shape,
           :url => url,
-          :html => {:multipart => true},
+          :html => { :onsubmit => "Shapes.remoteForm(this, '#{ url }'); return false;", :multipart => true },
           &block
-  end
-  
-  def struct_constraint_form(struct_primitive, type, &block)
-    url = (type == :edit) ?
-      update_struct_constraint_path(:id => struct_primitive.id) :
-      create_struct_constraint_path(:id => struct_primitive.id)
-    form_for :struct_primitive, struct_primitive,
-          :url => url,
-          :html => {:multipart => true},
-          &block
-  end
-  
-  def link_to_add_constraint(shape, resource)
-    return if(resource.left_constraints.empty?)
-    link_to 'Add constraint', select_constraint_path(shape, resource.path)
   end
 
-  def link_to_add_struct_constraint(struct_primitive, resource)
+  def link_to_add_constraint(shape, resource)
     return if(resource.left_constraints.empty?)
-    link_to 'Add constraint', select_struct_constraint_path(struct_primitive, struct_primitive.primitive)
+    select_path = select_constraint_path(shape, resource.path)
+    link_to 'Add constraint', select_path, 
+      { :onclick => "Shapes.renderUrlInElement(this,'#{ select_path }'); return false;" }
   end
 
   protected
@@ -66,4 +55,5 @@ module Shapes::ConstraintsHelper
     content_tag :li,
       name + check_box_tag("constraint[types][]", type, @constraint.types.include?(type))
   end
+
 end
