@@ -1,0 +1,5 @@
+<% javascript_tag do %>
+  li = Element.extend(window.top.document.getElementById('<%= params[:css_id] %>'));
+  parent.Shapes.renderResource(li);
+  parent.Shapes.remoteFormOnSuccess(li);
+<% end %>

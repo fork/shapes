@@ -1,0 +1,13 @@
+<%= render :partial => '/shapes/resources/li_content', 
+          :locals => { :resource => resource } %>
+<%   
+  # set li path again to avoid a wrong path due to resource.update
+  # changing the ident would cause an invalid path
+  # register li in sortable again
+%>
+
+<%= javascript_tag "li = $('#{ ul_css_id resource.path }').up('li');" +
+    "li.setAttribute('path', '#{ resource.path }');" + 
+    "li.removeClassName('propertyChanger');" +
+    "container = li.up('ul');" + 
+    "ShapesSortableUl.createSortable(container.id, container.up('li').getAttribute('path'));" %>

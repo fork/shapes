@@ -1,0 +1,9 @@
+<h1><%= shape.name %></h1>
+<ul>  
+  <li class="subNavIcon add">
+    <%=  link_to_new_resource_for_base shape.base %>
+  </li>
+  <li class="subNavIcon add">
+    <%= link_to 'Add local struct', new_shape_shape_struct_path(shape) %>
+  </li>
+</ul>

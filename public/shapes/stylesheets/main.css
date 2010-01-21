@@ -1,0 +1,466 @@
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-family: helvetica, arial, verdana, geneva, sans-serif;
+	font-style: normal;
+	line-height: 0.9em;
+	font-weight: normal;
+	font-variant: normal;
+	color: #404040;
+}
+
+body {
+  background-color: #858482;
+  padding: 10px;
+  font-size: 80%;
+}
+
+#shapes {
+  border-top: 1px solid #FFF;
+  background: url(/shapes/images/navigation/bg_shadow.png) repeat-x #FFF;
+  margin-bottom: 5px;
+}
+
+#shapes #content {
+  padding: 10px;
+}
+
+#shapes .shadowLine {
+  height: 3px;
+  padding-bottom: 10px;
+  background: url(/shapes/images/bottom_line_shadow.png) repeat-x;
+}
+#shapes .shadowLine.bottom {
+  margin: 0 10px;
+}
+
+.clearBoth {
+  clear: both;
+}
+
+#backToTopLink {
+  margin-left: 5px;
+  color: #FFF;
+}
+
+/** main navigation **/
+#shapesNavigation {
+  height: 94px;
+}
+
+#shapesNavigation ul{
+  height: 44px;
+  position: relative;
+  top: 49px;
+  list-style-type: none;
+  margin-left: 10px;
+}
+
+#shapesNavigation li {
+  float: left;
+  padding: 3px 1px 0 1px;
+  margin-left: 5px;
+  background: url(/shapes/images/navigation/tab_side.png) repeat-x 0 3px ;
+}
+
+#shapesNavigation li.active {
+  background: url(/shapes/images/navigation/tab_active_side.png) repeat-x;
+}
+
+#shapesNavigation li a {
+  text-decoration:none;
+  float:left;
+  display:block;
+  height: 42px;
+  background: url(/shapes/images/navigation/tab_bg.png) repeat-x;
+}
+
+#shapesNavigation li.active a {
+  background: url(/shapes/images/navigation/tab_active_bg.png) repeat-x;
+}
+
+#shapesNavigation li a span {
+  display:block;
+  padding: 12px 20px 0 20px;
+  font-size: 150%;
+}
+
+#shapesNavigation li a.plus span {
+  padding: 5px 5px 5px 6px;
+  background: url(/shapes/images/navigation/dotted_line.png) no-repeat 0 6px;
+}
+
+#shapesNavigation li a.plus span span {
+  display: block;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 1px solid #FFF;
+  background-image: none;
+}
+
+#shapesNavigation li a:hover.plus span span {
+  border: 1px solid #EEE;
+  background: url(/shapes/images/navigation/plus_shadow.png) repeat-x;
+}
+
+#shapesNavigation li a.plus span span img {
+  margin: 9px 0 0 9px;
+}
+
+/** subnavigation **/
+#subnavigation {
+  height: 50px;
+}
+
+#subnavigation h1 {
+  font-size: 200%;
+  display: block;
+  float: left;
+  padding: 10px 30px 0 15px;
+}
+
+#subnavigation ul li.subNavIcon{
+  height: 27px;
+  display: block;
+  float: left;
+  background: url(/shapes/images/navigation/dotted_line.png) no-repeat;
+}
+
+#subnavigation ul li.subNavIcon a{
+  display: block;
+  padding: 10px 10px 5px 40px;
+  text-decoration: none;
+}
+
+#subnavigation ul li.subNavIcon a:hover{
+  text-decoration: underline;
+}
+
+#subnavigation ul li.subNavIcon.edit a{
+  background: url(/shapes/images/icons/edit.png) no-repeat 14px 7px;
+}
+
+#subnavigation ul li.subNavIcon.delete a{
+  background: url(/shapes/images/icons/delete.png) no-repeat 18px 10px;
+}
+
+#subnavigation ul li.subNavIcon.add a{
+  background: url(/shapes/images/icons/add.png) no-repeat 18px 10px;
+}
+
+#subnavigation ul{
+  list-style-type: none;
+  padding-top: 10px;
+}
+
+/** list **/
+#shapes #content ul {
+  list-style-type: none;
+} 
+
+#shapes li.dottedLiLine {
+  display: block;
+  background: url(/shapes/images/list/dotted_line.png) repeat-x;
+}
+
+#shapes #content span.liContent {
+  height: 42px;
+  display: block;
+  border-bottom:0;
+}
+
+#shapes #content span.deleteConfirm {
+  background-color: #E17375;
+}
+#shapes #content span.deleteConfirm span.text{
+  color: #FFF;
+}
+
+#shapes #content span.liContent span.text {
+  margin: 15px 15px 0 10px;
+  float:left;
+  display: block;
+}
+
+#shapes #content span.resourcePreview{
+  font-style: italic;
+}
+
+#shapes #content span.resourceName, #shapes #content span.resourceNumbering {
+  font-size: 90%;
+  width: 55px;
+}
+
+#shapes #content span.resourceName.Array{
+  margin-top: 10px !important;
+  height: 22px;
+  background: url(/shapes/images/icons/folder.png) no-repeat;
+  text-indent: -200px;
+}
+
+#shapes #content .deleteConfirm span.resourceName.Array{
+  background-image: url(/shapes/images/icons/folder_delete_confirm.png);
+}
+
+#shapes #content span.resourceName.Struct{
+  margin-top: 10px !important;
+  height: 22px;
+  background: url(/shapes/images/icons/struct.png) no-repeat;
+  text-indent: -200px;
+}
+
+#shapes #content .deleteConfirm span.resourceName.Struct{
+  background-image: url(/shapes/images/icons/struct_delete_confirm.png);
+}
+
+#shapes #content span.resourcePreview.String { color: #895d3c; }
+#shapes #content span.resourcePreview.Boolean { color: #520e81; }
+#shapes #content span.resourcePreview.Integer { color: #760000; }
+#shapes #content span.resourcePreview.Float { color: #0f5a00; }
+#shapes #content span.resourcePreview.Datetime { color: #305254; }
+
+#shapes #content span.indent {
+  display:block;
+  width: 40px;
+  height: 42px;
+  margin:0 !important;
+  padding:0 !important;
+  float: left;
+  background: url(/shapes/images/list/indent_dotted_line.png) #F3F3F3;
+}
+
+#shapes #content span.indent img {
+  margin: 15px 0 0 15px;
+}
+
+#shapes #content span.liContentWithHover:hover{
+  background-color: #E6E6E6;
+}
+
+/** form **/
+#shapes #content input {
+  color: #666;
+}
+
+#shapes #content input.textField {
+  border: 1px solid #666;
+  padding: 2px;
+  width: 50%;
+  background: url(/shapes/images/form/input_bg.png) repeat-x #FFF;
+}
+
+#shapes #content select {
+  padding: 2px;
+  border: 1px solid #666;
+}
+
+#shapes #content select optgroup{
+  font-weight: bold;
+}
+
+#shapes #content select optgroup option{
+  text-indent: 10px;
+}
+
+
+#shapes #content textarea {
+  border: 1px solid #666;
+  padding: 2px;
+  width: 50%;
+  height: 100px;
+  background: url(/shapes/images/form/textarea_bg.png) repeat-x #FFF;
+}
+
+#shapes #content span.formContainer label {
+  margin-right: 5px;
+  width: 120px;
+  display: block;
+  float: left;
+}
+
+#shapes #content span.formContainer{
+  display: block;
+  background: url(/shapes/images/list/indent_dotted_line.png) #F3F3F3;
+}
+
+#shapes #content span.form span.formBlock{
+  display: block;
+  margin-bottom: 10px;
+}
+
+#shapes #content .formBlock ul{
+  float: left;
+  margin-bottom: 10px;
+}
+
+#shapes #content span.editFormHeadline {
+  background-color: #D1DBE1;
+}
+
+#shapes #content span.newFormHeadline {
+  background-color: #C8D3C7;
+}
+
+#shapes #content span.form{
+  display: block;
+  padding: 10px;
+}
+
+#shapes #content span.editForm span.form{
+  background-color: #E2ECF3;
+}
+
+#shapes #content span.newForm span.form{
+  background-color: #DFECDE;
+}
+
+#shapes #content .form .submitForm {
+  width: 22px;
+  height: 22px;
+}
+
+#shapes #content .form .cancelForm {
+  width: 22px;
+  height: 22px;
+  display: block;
+  float: left;
+  margin-right: 10px;
+  background: url(/shapes/images/icons/cancel_li_hover.png) no-repeat;
+}
+
+#shapes #content .form .cancelForm:hover {
+  background: url(/shapes/images/icons/cancel_hover.png) no-repeat;
+}
+#shapes #content #uploadtarget {
+  width:0;
+  height:0;
+  border:0 solid #fff;
+}
+
+/** error messages **/
+#shapes div.errorExplanation {
+  background-color: #E17375;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+#shapes div.errorExplanation h2, #shapes div.errorExplanation p, #shapes div.errorExplanation ul li{
+  color: #FFF;
+}
+
+#shapes div.errorExplanation p{
+  padding: 10px 0;
+}
+
+/** icons **/
+#shapes #content span.icons {
+  float: right;
+  display:block;
+  height: 40px;
+  margin-top: 1px;
+}
+
+#shapes #content span.liContentWithHover span.icons {
+  background-color: #F5F5F5;
+}
+
+#shapes #content span.liContentWithHover:hover span.icons {
+  background-color: #E6E6E6;
+}
+
+#shapes #content .icon {
+  width: 22px;
+  height: 22px;
+  margin: 9px 4px 0 4px;
+  display:block;
+  float: left;
+}
+
+#shapes #content span.icons a.icon.delete {
+  background: url(/shapes/images/icons/delete.png) no-repeat 7px 7px;
+}
+#shapes #content .liContent:hover span.icons a.icon.delete {
+  background: url(/shapes/images/icons/delete_li_hover.png) no-repeat;
+}
+#shapes #content .liContent span.icons a:hover.icon.delete {
+  background: url(/shapes/images/icons/delete_hover.png) no-repeat;
+}
+
+#shapes #content span.icons a.icon.edit {
+  background: url(/shapes/images/icons/edit.png) no-repeat 5px 5px;
+}
+#shapes #content .liContent:hover span.icons a.icon.edit {
+  background: url(/shapes/images/icons/edit_li_hover.png) no-repeat;
+}
+#shapes #content .liContent span.icons a:hover.icon.edit {
+  background: url(/shapes/images/icons/edit_hover.png) no-repeat;
+}
+
+#shapes #content span.icons a.icon.constraints {
+  background: url(/shapes/images/icons/constraints.png) no-repeat 5px 5px;
+}
+#shapes #content .liContent:hover span.icons a.icon.constraints {
+  background: url(/shapes/images/icons/constraints_li_hover.png) no-repeat;
+}
+#shapes #content .liContent span.icons a:hover.icon.constraints {
+  background: url(/shapes/images/icons/constraints_hover.png) no-repeat;
+}
+
+#shapes #content span.icons a.icon.add {
+  background: url(/shapes/images/icons/add.png) no-repeat 6px 6px;
+}
+#shapes #content .liContent:hover span.icons a.icon.add {
+  background: url(/shapes/images/icons/add_li_hover.png) no-repeat;
+}
+#shapes #content .liContent span.icons a:hover.icon.add {
+  background: url(/shapes/images/icons/add_hover.png) no-repeat;
+}
+
+#shapes #content span.icons a.icon.confirm {
+  background: url(/shapes/images/icons/confirm.png) no-repeat 6px 6px;
+}
+#shapes #content .liContent:hover span.icons a.icon.confirm {
+  background: url(/shapes/images/icons/confirm_li_hover.png) no-repeat;
+}
+#shapes #content .liContent span.icons a:hover.icon.confirm {
+  background: url(/shapes/images/icons/confirm_hover.png) no-repeat;
+}
+
+#shapes #content span.icons a.icon.cancel {
+  background: url(/shapes/images/icons/cancel.png) no-repeat 6px 6px;
+}
+#shapes #content .liContent:hover span.icons a.icon.cancel {
+  background: url(/shapes/images/icons/cancel_li_hover.png) no-repeat;
+}
+#shapes #content .liContent span.icons a:hover.icon.cancel {
+  background: url(/shapes/images/icons/cancel_hover.png) no-repeat;
+}
+
+#shapes #content span.icons a.icon.show {
+  background: url(/shapes/images/icons/show.png) no-repeat 5px 5px;
+}
+#shapes #content .liContent:hover span.icons a.icon.show {
+  background: url(/shapes/images/icons/show_li_hover.png) no-repeat;
+}
+#shapes #content .liContent span.icons a:hover.icon.show {
+  background: url(/shapes/images/icons/show_hover.png) no-repeat;
+}
+
+#shapes #content span.icons a.icon.handle {
+  cursor:move;
+  background: url(/shapes/images/icons/drag.png) no-repeat 5px 7px;
+}
+#shapes #content .liContent:hover span.icons a.icon.handle {
+  background: url(/shapes/images/icons/drag_li_hover.png) no-repeat;
+}
+#shapes #content .liContent span.icons a:hover.icon.handle {
+  background: url(/shapes/images/icons/drag_hover.png) no-repeat;
+}
+#shapes #content li.unfolded a.icon.foldIcon {
+  background: url(/shapes/images/icons/fold.png) no-repeat 7px 7px;
+}
+#shapes #content li.folded a.icon.foldIcon {
+  background: url(/shapes/images/icons/unfold.png) no-repeat 7px 7px;
+}

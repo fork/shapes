@@ -1,0 +1,5 @@
+<% javascript_tag do %> 
+  span = Element.extend(window.top.document.getElementById('resourceform')).up('span.form');
+  span.select('div#errorExplanation').all(function(n) { n.remove(); });
+  span.insert({ top: "<%= error_messages_for('shape').gsub(/\"/, "'") %>" });
+<% end %>
