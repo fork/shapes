@@ -27,6 +27,10 @@ module Shapes
         super
       end
 
+      def preview
+        @value ? 'True' : 'False'
+      end
+
       protected
 
       def value_to_boolean(value)

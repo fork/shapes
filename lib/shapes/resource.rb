@@ -2,7 +2,7 @@ module Shapes
   class Resource
 
     attr_accessor :ident, :description, :xml_node, :parent, :resource_type, :errors, :xml_builder
-    attr_reader :path, :from_xml, :build_node_content, :children, :options, :dirty
+    attr_reader :path, :from_xml, :build_node_content, :children, :options, :dirty, :preview
 
     include Shapes::Constraints
 
@@ -55,6 +55,12 @@ module Shapes
       @parent.base
     end
 
+    def base?; false; end
+
+    def depth
+      @depth ||= parent.depth + 1
+    end
+
     # write xml to filesystem
     # Author: hm@fork.de
     def cache_xml
@@ -92,20 +98,31 @@ module Shapes
       @new_resource
     end
 
+    #is true if the parent resource is a struct
+    def struct_resource?
+      parent.is_a? Shapes::Struct
+    end
+
     def dasherized_name
       underscored_name.dasherize
     end
     alias_method :xml_node_name, :dasherized_name
 
     def underscored_name
-      self.class.name.demodulize.underscore
+      name.underscore
+    end
+
+    def name
+      self.class.name.demodulize
     end
 
     protected
 
     def validate
-      validate_ident
-      validate_ident_uniqueness
+      if @dirty || @new_resource
+        validate_ident
+        validate_ident_uniqueness
+      end
       super #Constraint module
     end
 
@@ -114,7 +131,7 @@ module Shapes
     end
 
     def validate_ident_uniqueness
-      if parent && parent.children.collect{|child| child.ident if child != self}.include?(ident)
+      if parent && parent.children.collect{ |child| child.ident if child != self }.include?(@ident)
         @errors << Shapes::Error.new(Shapes::IDENT_UNIQUENESS_WARNING, path) and (@ident = @_ident)
       end
     end

@@ -3,6 +3,7 @@ module Shapes
     class Datetime < Shapes::Primitive
 
       attr_accessor :value
+      alias_method :value, :preview
 
       def attributes
         { 
@@ -15,7 +16,7 @@ module Shapes
         @value = if options['value']
           params_to_datetime options['value']
         else
-          DateTime.ordinal Time.new.year
+          today
         end
         super
       end
@@ -25,7 +26,7 @@ module Shapes
       end
 
       def read_from_node
-        @value = DateTime.parse @xml_node['value']
+        @value = @xml_node['value'].blank? ? today : DateTime.parse(@xml_node['value'])
         super
       end
 
@@ -34,7 +35,15 @@ module Shapes
         super
       end
 
+      def preview
+        I18n.l @value
+      end
+
       protected
+
+      def today
+        DateTime.ordinal Time.new.year
+      end
 
       def params_to_datetime(params)
         params = params.inject({}) { |m, p| m.merge p.first => p.last.to_i }

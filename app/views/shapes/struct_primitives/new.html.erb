@@ -1,8 +1,24 @@
-<%= navigation %>
+<div id="subnavigation">
+  <h1>New primitive</h1>
+</div>
+<div class="shadowLine"></div>
+<span class="formContainer newForm">
+  <span class="form">
+    <%= error_messages_for 'shape_struct_primitive' %>
+    <% shape_struct_primitive_form @shape_struct_primitive, :new do |form| %>
 
-<% shape_struct_primitive_form @shape_struct_primitive, :new do |form| %>
-<%= error_messages_for 'shape_struct_primitive' %>
-Ident: <%= form.text_field :ident %><br />
-Primitive: <%= form.select :primitive, @primitive_opts %><br />
-<%= form.submit %>
-<% end %>
+    <span class="formBlock">
+      <label for="name">Ident </label>
+      <%= form.text_field :ident, { :class => 'textField' } %>
+    </span>
+    <span class="formBlock">
+      <label for="name">Primitive </label>
+      <%= form.select :primitive, @primitive_opts %>
+    </span>
+    <span class="formBlock">
+      <label for="submit">&nbsp;</label>
+      <input type="image" value="Save changes" name="commit" class="submitForm" id="submit" src="/shapes/images/icons/confirm_li_hover.png" />      
+    </span>
+    <% end %>
+  </span>
+</span>

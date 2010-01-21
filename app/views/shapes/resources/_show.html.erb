@@ -1,4 +1,0 @@
-<% css_id = "#{path_to_css_selector(resource.path)}Li_#{ show_counter }" %>
-<li class="<%= resource.class.name.demodulize.camelize(:lower) %> shapesResource sortable" id="<%= css_id %>" path="<%= resource.path %>">
-<%= render :partial => "/shapes/resources/li", :locals => { :resource => resource } %>
-</li>

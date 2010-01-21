@@ -1,4 +1,8 @@
-<label>Text</label>
-<%= text_area :resource, :value %>
-<%= content_tag :label, 'Separator' %>
-<%= text_field :resource, :separator %>
+<span class="formBlock">
+  <label>Text</label>
+  <%= text_area :resource, :value %>
+</span>
+<span class="formBlock">
+  <label>Separator</label>
+  <%= text_field :resource, :separator, { :class => 'textField' } %>
+</span>

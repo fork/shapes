@@ -20,7 +20,7 @@ module Shapes::ConstraintsHelper
       create_constraint_path(:id => shape.id, :path => resource.path)
     form_for :shape, shape,
           :url => url,
-          :html => { :onsubmit => "Shapes.remoteForm(this, '#{ url }'); return false;", :multipart => true },
+          :html => { :onsubmit => "Shapes.remoteForm(Shapes.parentLiFor(this), this, '#{ url }'); return false;", :multipart => true },
           &block
   end
 
@@ -28,7 +28,7 @@ module Shapes::ConstraintsHelper
     return if(resource.left_constraints.empty?)
     select_path = select_constraint_path(shape, resource.path)
     link_to 'Add constraint', select_path, 
-      { :onclick => "Shapes.renderUrlInElement(this,'#{ select_path }'); return false;" }
+      { :onclick => "Shapes.openPropertyChanger(Shapes.parentLiFor(this)); Shapes.renderUrlInElement(Shapes.parentLiFor(this), '#{ select_path }'); return false;" }
   end
 
   protected
@@ -53,7 +53,7 @@ module Shapes::ConstraintsHelper
 
   def checkbox_li(name, type)
     content_tag :li,
-      name + check_box_tag("constraint[types][]", type, @constraint.types.include?(type))
+      check_box_tag("constraint[types][]", type, @constraint.types.include?(type)) + " #{ name }"
   end
 
 end

@@ -1,3 +1,5 @@
-<label>Value (<%= resource.ident %>)</label>
-<%= hidden_field "resource[struct][#{resource.ident}][ident]", resource.ident %>
-<%= check_box_tag "resource[struct][#{resource.ident}][value]", '1', resource.value %>
+<span class="formBlock">
+  <label>Value (<%= resource.ident %>)</label>
+  <%= hidden_field "resource[struct][#{resource.ident}][ident]", resource.ident %>
+  <%= check_box_tag "resource[struct][#{resource.ident}][value]", '1', resource.value %>
+</span>

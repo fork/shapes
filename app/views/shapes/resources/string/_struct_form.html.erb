@@ -1,3 +1,5 @@
-<label>Text (<%= resource.ident %>)</label>
-<%= hidden_field "resource[struct][#{resource.ident}][ident]" , resource.ident %>
-<%= text_area_tag "resource[struct][#{resource.ident}][value]", resource.value %>
+<span class="formBlock">
+  <label>Text (<%= resource.ident %>)</label>
+  <%= hidden_field "resource[struct][#{resource.ident}][ident]" , resource.ident %>
+  <%= text_area_tag "resource[struct][#{resource.ident}][value]", resource.value %>
+</span>

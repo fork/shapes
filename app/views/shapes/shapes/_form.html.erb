@@ -1,4 +1,9 @@
 <%= error_messages_for 'shape' %>
-<label for="name">Ident </label>
-<%= form.text_field :name %><br />
-<%= form.submit %>
+<span class="formBlock">
+  <label for="name">Ident </label>
+  <%= form.text_field :name, { :class => 'textField' } %>
+</span>
+<span class="formBlock">
+  <label for="submit">&nbsp;</label>
+  <input type="image" value="Save changes" name="commit" class="submitForm" id="submit" src="/shapes/images/icons/confirm_li_hover.png" />      
+</span>

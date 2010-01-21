@@ -18,4 +18,27 @@ module Shapes::StructsHelper
           &block
   end
 
+  def link_to_delete_struct(struct)
+    link_to '', shape_struct_path(struct), 
+      { :method => :delete, 
+        :class => 'icon delete', 
+        :title => 'Delete struct', 
+        :confirm => 'Are you sure?' }
+  end
+  
+  def link_to_edit_struct(struct)
+    link_to '', shape_struct_path(struct), 
+      { :class => 'icon edit', 
+        :title => 'Edit struct' }
+  end
+
+  def link_to_delete_shape_struct_primitive(primitive)
+    link_to '', 
+      shape_struct_shape_struct_primitive_path(primitive.shape_struct, primitive),
+      { :method => :delete, 
+        :class => 'icon delete', 
+        :title => 'Delete primitive',
+        :confirm => 'Are you sure?' }
+  end
+
 end

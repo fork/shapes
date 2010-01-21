@@ -3,9 +3,11 @@ class Shapes::ShapesController < Shapes::ShapesBase
   def index
     @shapes = Shape.find :all
   end
+
   def new
     @shape = Shape.new
   end
+
   def create
     @shape = Shape.new params[:shape]
     if @shape.save
@@ -18,6 +20,7 @@ class Shapes::ShapesController < Shapes::ShapesBase
   def edit
     @shape = Shape.find params[:id]
   end
+
   def update
     @shape = Shape.find params[:id]
     @shape.update_attributes params[:shape]
@@ -37,7 +40,10 @@ class Shapes::ShapesController < Shapes::ShapesBase
   def show
     @shape = Shape.find params[:id]
     respond_to do |format|
-      format.html { @noscript = true }
+      format.html do
+        @noscript = true
+        render :template => '/shapes/shapes/_show', :layout => true
+      end
       format.js { render :partial => '/shapes/shapes/show' }
     end
   end
@@ -54,4 +60,5 @@ class Shapes::ShapesController < Shapes::ShapesBase
     xml ? render(:xml => xml) :
       render(:text => '', :status => 404)
   end
+
 end

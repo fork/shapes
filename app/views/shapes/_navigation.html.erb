@@ -1,13 +1,6 @@
-<ul>
-  <li><h3>Shapes</h3></li>
-  <li><%= link_to 'List Shapes', shapes_path %></li>
-  <li><%= link_to 'New Shape', new_shape_path %></li>
-  <%= new_resource_link @shape %>
-  <%= new_shape_shape_struct_link @shape %>
-
-  <li><h3>Structs</h3></li>
-  <li><%= link_to 'List Structs', shape_structs_path %></li>
-  <li><%= link_to 'New Struct', new_shape_struct_path %></li>
-  <%= new_primitive_link @shape_struct %>
-</ul>
-<hr />
+<div id="shapesNavigation">
+  <ul>
+    <%= shapes_navigation_item 'Shapes', shapes_path, 'Add shape', new_shape_path, !structs_active? %>
+    <%= shapes_navigation_item 'Structs', shape_structs_path, 'Add struct', new_shape_struct_path, structs_active? %>
+  </ul>
+</div>

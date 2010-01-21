@@ -1,3 +1,10 @@
-Sure?
-<%= link_to 'yes', '#', { :onclick => "Shapes.deleteResourceLink(this, '#{ delete_resource_path(:id => params[:id], :path => params[:path]) }'); return false;" } %>
-<%= link_to 'no', '#', { :onclick => "Shapes.renderResource(Shapes.parentLiFor(this)); return false;" } %>
+<span class="liContent deleteConfirm">
+  <%= resource_indentation resource.depth %>
+  <%= show_resource_name resource.name %>
+  <%= show_resource_ident resource.ident %>
+  <span class="text">Delete this Rescource?</span>
+  <span class="icons">
+  <%= link_to_confirm_delete_resource params %>
+  <%= link_to_cancel_delete_resource %>
+  </span>
+</span>

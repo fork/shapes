@@ -1,9 +1,26 @@
-<%= error_messages_for 'shape' %>
-<% resource_form @shape, @resource, :edit do |form| %>
-    <label for="ident">Ident </label>
-    <%= text_field :resource, :ident %>
-    <label for="description">Description </label>
-    <%= text_area :resource, :description %>
+<span class="liContent editFormHeadline">
+  <%= resource_indentation @resource.depth %>
+  <%= show_resource_name @resource.name %>
+  <%= show_resource_ident @resource.ident %>
+</span>
+<span class="formContainer editForm" style="padding-left:<%= resource_form_indentation @resource.depth %>px">
+  <span class="form">
+  <%= error_messages_for 'shape' %>
+  <% resource_form @shape, @resource, :edit do |form| %>
+    <span class="formBlock">
+      <label for="resource_ident">Ident </label>
+      <%= text_field :resource, :ident, { :class => 'textField' } %>
+    </span>
+    <span class="formBlock">
+      <label for="resource_description">Description </label>
+      <%= text_field :resource, :description, { :class => 'textField' } %>
+    </span>
     <%= render :partial => "/shapes/resources/#{@resource.underscored_name}/form" %>
-    <%= form.submit %>
-<% end %>
+    <span class="formBlock">
+      <label for="submit">&nbsp;</label>
+      <input type="image" value="Save changes" name="commit" class="submitForm" id="submit" src="/shapes/images/icons/confirm_li_hover.png" />      
+      <%= link_to_cancel_form %>
+    </span>
+  <% end %>
+  </span>
+</span>

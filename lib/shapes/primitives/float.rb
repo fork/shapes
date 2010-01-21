@@ -4,6 +4,10 @@ module Shapes
 
       include Shapes::Numeric
 
+      def preview
+        @value
+      end
+
       def attributes
         { :value => @value }
       end

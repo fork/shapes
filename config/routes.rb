@@ -8,7 +8,7 @@ ActionController::Routing::Routes.draw do |map|
     resource.unfold_resource 'shapes/:id/unfold/:path',                 :action => 'unfold'
     resource.edit_resource   'shapes/:id/edit_resource/:path',          :action => 'edit'
     resource.render_resource 'shapes/:id/render_resource/:path',        :action => 'render_resource'
-    resource.delete_confirmation 'shapes/:id/delete_confirmation/:path',:action => 'delete_confirmation'
+    resource.resource_delete_confirmation 'shapes/:id/delete_confirmation/:path',:action => 'delete_confirmation'
     resource.update_resource 'shapes/:id/update_resource/:path',        :action => 'update'
     resource.delete_resource 'shapes/:id/delete_resource/:path',        :action => 'delete'
   end
@@ -18,7 +18,7 @@ ActionController::Routing::Routes.draw do |map|
     constraint.select_constraint        'shapes/:id/select_constraint/:path',         :action => 'select'
     constraint.new_constraint           'shapes/:id/new_constraint/:path',            :action => 'new'
     constraint.create_constraint        'shapes/:id/create_constraint/:path/',        :action => 'create'
-    constraint.edit_constraint          'shapes/:id/edit_constraint/:path/:type',     :action => 'edit'
+    constraint.edit_constraint          'shapes/:id/edit_constraint/:path',           :action => 'edit'
     constraint.update_constraint        'shapes/:id/update_constraint/:path',         :action => 'update'
     constraint.delete_constraint        'shapes/:id/delete_constraint/:path/:type',   :action => 'delete'
   end

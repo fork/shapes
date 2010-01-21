@@ -1,3 +1,10 @@
-<%= navigation %>
-Name: <%= @shape_struct.name %><br />
-<ul><%= render :partial => "/shapes/structs/struct_primitive.html.erb", :collection => @shape_struct.shape_struct_primitives %></ul>
+<div id="subnavigation">
+  <h1><%= @shape_struct.name %></h1>
+  <ul>  
+    <li class="subNavIcon add">
+      <%= link_to 'Add primitive', new_shape_struct_shape_struct_primitive_path(@shape_struct) %>
+    </li>
+  </ul>
+</div>
+<div class="shadowLine"></div>
+<ul><%= render :partial => "/shapes/structs/struct_primitive", :collection => @shape_struct.shape_struct_primitives %></ul>

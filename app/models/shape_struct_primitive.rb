@@ -9,22 +9,19 @@ class ShapeStructPrimitive < ActiveRecord::Base
 
   after_destroy {|primitive| primitive.alter_resource_in_xml(:remove_resource_from_xml)}
   after_create {|primitive| primitive.alter_resource_in_xml(:add_resource_to_xml)}
-  before_validation_on_update {|primitive| primitive.alter_resource_in_xml_with_checking(:check_and_alter_primitive_constraints)}
   
   def build_primitive(hash = {})
     # this only works when editing struct primitives
-    res = Shapes::Builder::Primitive.
-            new(hash.merge({:ident => ident , :type => primitive})).
-            build_resource
-    res.constraints = get_constraints
-    res
+    Shapes::Builder::Primitive.
+      new(hash.merge({ :ident => ident , :type => primitive })).
+      build_resource
   end
 
   def alter_resource_in_xml(strategy)
     # do not iterate over the assignments to avoid saving a Shape more than once
     shape_struct.shapes.each do |shape|
       assignments = shape.shape_assignments.
-        find(:all, :conditions => {:resource_id => shape_struct.id, :resource_type => 'ShapeStruct'})
+        find(:all, :conditions => { :resource_id => shape_struct.id, :resource_type => 'ShapeStruct' })
       assignments.each do |assignment|
         struct_resource = shape.base.find_by_path assignment.path
         send(strategy, struct_resource)
@@ -34,7 +31,7 @@ class ShapeStructPrimitive < ActiveRecord::Base
   end
 
   def remove_resource_from_xml(struct_resource)
-    primitive_resource = struct_resource.children.select{|child| child.ident == ident}.first
+    primitive_resource = struct_resource.children.select{ |child| child.ident == ident }.first
     primitive_resource and primitive_resource.destroy
   end
   
@@ -48,4 +45,5 @@ class ShapeStructPrimitive < ActiveRecord::Base
     Shapes::Primitive.primitives.map(&:to_s).map(&:demodulize).include? primitive or
       errors.add :primitive, 'Wrong primitive format'
   end
+
 end

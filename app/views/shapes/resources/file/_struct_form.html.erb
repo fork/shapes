@@ -1,4 +1,9 @@
-<label>File (<%= resource.ident %>)</label>
-<%= hidden_field "resource[struct][#{resource.ident}][ident]", resource.ident %>
-<%= file_field_tag "resource[struct][#{resource.ident}][value]" %>
-<%= check_box_tag "resource[struct][#{resource.ident}][remove_file]" %>
+<span class="formBlock">
+  <label>File (<%= resource.ident %>)</label>
+  <%= hidden_field "resource[struct][#{resource.ident}][ident]", resource.ident %>
+  <%= file_field_tag "resource[struct][#{resource.ident}][value]" %>
+</span>
+<span class="formBlock">
+  <label>Delete file</label>
+  <%= check_box_tag "resource[struct][#{resource.ident}][remove_file]" %>
+</span>

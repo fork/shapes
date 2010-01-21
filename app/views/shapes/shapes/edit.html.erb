@@ -1,5 +1,11 @@
-<%= navigation %>
-
-<% shape_form(@shape, :edit) do |form| %>
-<%= render :partial => 'form.html.erb', :object => form %>
-<% end %>
+<div id="subnavigation">
+  <h1>Edit shape</h1>
+</div>
+<div class="shadowLine"></div>
+<span class="formContainer editForm">
+  <span class="form">
+  <% shape_form(@shape, :edit) do |form| %>
+  <%= render :partial => 'form.html.erb', :object => form %>
+  <% end %>
+  </span>
+</span>

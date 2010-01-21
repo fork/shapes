@@ -3,14 +3,11 @@ class Shapes::ResourcesController < Shapes::ShapesBase
   verify :method => :post, :only => [:create, :update]
   
   before_filter :find_shape, :except => :reorder_resource_with_prototype
-  before_filter :find_resource, :only => [:edit, :update, :delete, :render_resource]
+  before_filter :find_resource, :only => [:edit, :update, :delete, :render_resource, :delete_confirmation]
 
   def edit
-    @shape = Shape.find params[:id]
-    @resource = @shape.base.find_by_path params[:path]
-    @resource
     respond_to do |format|
-      format.html
+      format.html { render :template => 'shapes/resources/_edit', :layout => true }
       format.js { render :partial => 'shapes/resources/edit' }
     end
   end
@@ -20,17 +17,29 @@ class Shapes::ResourcesController < Shapes::ShapesBase
     if @shape.save
       respond_to do |format|
         format.html do        
-          if what.last == 'file'
-            render :nothing => true
+          if params[:css_id]
+            render :template => '/shapes/resources/iframe', 
+              :locals => { :css_id => params[:css_id] },
+              :layout => 'shapes/iframe'
           else
             redirect_to shape_path(@shape)
           end
         end
-        format.js { render :partial => '/shapes/resources/li', :locals => { :resource => @resource } }
+        format.js { render :partial => '/shapes/resources/li_content_js', 
+          :locals => { :resource => @resource }
+        }
       end
     else
       respond_to do |format|
-        format.html { render :action => :edit }
+        format.html do
+          if params[:css_id]
+            render :template => '/shapes/resources/iframe_error', 
+              :locals => { :css_id => params[:css_id] },
+              :layout => 'shapes/iframe'
+          else
+            render :template => 'shapes/resources/_edit', :layout => true
+          end
+        end
         format.js { render :partial => 'shapes/resources/edit' }
       end
     end
@@ -38,9 +47,10 @@ class Shapes::ResourcesController < Shapes::ShapesBase
 
   def select
     @resource_type_collection = resource_type_hash(@shape)
+    @parent = @shape.base.find_by_path params[:parent_path]
     respond_to do |format|
-      format.html
-      format.js { render :partial => 'shapes/resources/select', :locals => { :resource => @resource } }
+      format.html { render :template => 'shapes/resources/_select', :layout => true }
+      format.js { render :partial => 'shapes/resources/select' }
     end
   end
 
@@ -52,7 +62,7 @@ class Shapes::ResourcesController < Shapes::ShapesBase
     parent << @resource
     @resource
     respond_to do |format|
-      format.html
+      format.html { render :template => 'shapes/resources/_new.html.erb', :layout => true }
       format.js { render :partial => 'shapes/resources/new' }
     end
   end
@@ -66,17 +76,28 @@ class Shapes::ResourcesController < Shapes::ShapesBase
     if @shape.save
       respond_to do |format|
         format.html do        
-          if what.last == 'file'
-            render :nothing => true
+          if params[:css_id]
+            render :template => '/shapes/resources/iframe', 
+              :locals => { :css_id => params[:css_id] },
+              :layout => 'shapes/iframe'
           else
             redirect_to shape_path(@shape)
           end
         end
-        format.js { render :partial => "/shapes/resources/li", :locals => { :resource => parent } }
+        format.js { render :partial => "/shapes/resources/li_content_js",
+          :locals => { :resource => parent } }
       end
     else
       respond_to do |format|
-        format.html { render :action => :new }
+        format.html do
+          if params[:css_id]
+            render :template => '/shapes/resources/iframe_error', 
+              :locals => { :css_id => params[:css_id] },
+              :layout => 'shapes/iframe'
+          else
+            render :template => 'shapes/resources/_new', :layout => true
+          end
+        end
         format.js { render :partial => 'shapes/resources/new' }
       end
     end
@@ -93,19 +114,21 @@ class Shapes::ResourcesController < Shapes::ShapesBase
 
   def render_resource
     respond_to do |format|
-      format.js { render :partial => "/shapes/resources/li", :locals => { :resource => @resource } }
+      format.js { render :partial => "/shapes/resources/li_content_js", 
+        :locals => { :resource => @resource } }
     end
   end
 
   def delete_confirmation
     respond_to do |format|
-      format.js { render :partial => "/shapes/resources/delete_confirmation", :locals => { :resource => @resource } }
+      format.js { render :partial => "/shapes/resources/delete_confirmation", 
+        :locals => { :resource => @resource } }
     end
   end
 
   def unfold
     resource = @shape.base.find_by_path params[:path]
-    render :partial => '/shapes/resources/show', 
+    render :partial => '/shapes/resources/li', 
     :collection => resource.children, 
     :as => :resource
   end

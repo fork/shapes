@@ -1,4 +1,9 @@
-<label>File</label>
-<%= file_field :resource, :value %>
-<%= check_box_tag 'resource[remove_file]' %>
+<span class="formBlock">
+  <label>File</label>
+  <%= file_field :resource, :value %>
+</span>
+<span class="formBlock">
+  <label>Delete file</label>
+  <%= check_box_tag 'resource[remove_file]' %>
+</span>
 <%= javascript_tag('Shapes.prepareFormForAjaxUpload();') %>

@@ -1,31 +1,43 @@
 var Shapes = {
   id: function(){
-   return $$('ul.shapesBase').first().readAttribute('shapeId');
+   return $('shapeUl').readAttribute('shape_id');
   },
-  toggleArrayContent: function(id, shape_id, path) {
+  path: function(){
+   return $('shapeUl').readAttribute('path');
+  },
+  toggleArrayContent: function(id, path) {
+    parent_li = $(id).up('li');
     if($(id).childElements().length > 0){
       //fold/remove all child elements
       $(id).update('');
+      parent_li.removeClassName('unfolded');
+      parent_li.addClassName('folded');
     } else {
-      new Ajax.Updater(id, '/shapes/' + shape_id + '/unfold/' + escape(path), { 
+      new Ajax.Updater(id, '/shapes/' + Shapes.id() + '/unfold/' + escape(path), { 
         method: 'get',
+        evalScripts: true,
         onComplete:function(request){
-          ShapesSortableUl.createSortable(id, shape_id, path);
+          parent_li.removeClassName('folded');
+          parent_li.addClassName('unfolded');
+          ShapesSortableUl.createSortable(id, path);
         }
       });
     }
   },
-  //insert iFrame and change form target
+  //insert iFrame, change form target, onsubmit and enctype
   prepareFormForAjaxUpload: function(){
-    $('resourceform').insert({
-      bottom: new Element('iframe', { name: 'uploadtarget', id: 'uploadtarget', src: '#', style: 'width:0;height:0;border:0px solid #fff;' })
+    form = $('resourceform');
+    css_id = form.up('li').readAttribute('id');
+    form.writeAttribute('action', form.readAttribute('action') + '?css_id=' + css_id );
+    form.writeAttribute('onsubmit', '');
+    form.writeAttribute('enctype', 'multipart/form-data');
+    form.insert({
+      bottom: new Element('iframe', { name: 'uploadtarget', id: 'uploadtarget', src: '#' })
     });
-    $('resourceform').writeAttribute('target', 'uploadtarget');
-    $('resourceform').writeAttribute('onsubmit', '');
-    $('resourceform').writeAttribute('enctype', 'multipart/form-data');
+    form.writeAttribute('target', 'uploadtarget');
   },
   //close all other "property changers" e.g. forms
-  closePropertyChangers: function(){
+  closeAllPropertyChangers: function(){
     $$('.propertyChanger').each(function(obj) {
       obj.removeClassName('propertyChanger');
       render_resource_path = '/shapes/' + Shapes.id() + '/render_resource/' + escape(obj.readAttribute('path'));
@@ -33,66 +45,85 @@ var Shapes = {
     });
     return true;
   },
-  renderUrlInElement: function(element, url){
-    li = Shapes.parentLiFor(element)
-    if(Shapes.closePropertyChangers()){
-      new Ajax.Updater(li.id, url, {
-        method: 'get', 
-        parameters: {},
-        evalScripts: true,
-        onSuccess: function(request){ li.addClassName('propertyChanger'); }
-      });
+  openPropertyChanger: function(element){
+    if(Shapes.closeAllPropertyChangers()){
+      element.addClassName('propertyChanger');
     }
   },
-  remoteForm: function(element, url){
-    li = Shapes.parentLiFor(element);    
-    new Ajax.Updater(li.id, url, 
-      { asynchronous:true, 
-        evalScripts:true, 
-        parameters:Form.serialize(element) } );
+  //renders an url in an element, changes folded/unfolded status
+  renderUrlInElement: function(element, url){
+    new Ajax.Updater(element.id, url, {
+      method: 'get', 
+      parameters: {},
+      evalScripts: true,
+      onSuccess: function(request){ 
+        if(element.hasClassName('unfolded')){
+          element.removeClassName('unfolded');
+          element.addClassName('folded');
+        }
+      }
+    });
+  },
+  remoteForm: function(element, form, url){
+    new Ajax.Updater(element.id, url, 
+      { asynchronous: true, 
+        evalScripts: true, 
+        parameters: Form.serialize(form),
+        onSuccess: function(request){
+          Shapes.remoteFormOnSuccess(element);
+        }
+      });
+  },
+  remoteFormOnSuccess: function(li){
+    new Effect.Highlight(li.id, {});
   },
   parentLiFor: function(element){
-    return Element.extend(element).up('li');
+    element = Element.extend(element);
+    return element.up('li') || element;
   },
-  // Resources
   deleteResourceLink: function(element, url){
     li = Shapes.parentLiFor(element)
     new Ajax.Updater(li.id, url, { asynchronous:true, 
-      evalScripts:true, 
-      onComplete:function(request){ li.remove(); }
+      evalScripts: true, 
+      onComplete: function(request){ li.remove(); }
     });
   },
   renderResource:function(li){
     render_resource_path = '/shapes/' + Shapes.id() + '/render_resource/' + escape(li.readAttribute('path'));
     new Ajax.Updater(li.id, render_resource_path, { 
-      method: 'get', 
-      onSuccess: function(request){ li.removeClassName('propertyChanger'); }
+      method: 'get',
+      evalScripts: true,
+      onSuccess: function(request){
+        new Effect.Highlight(li.id, {});
+      }
     });
   }
-
 }
-
 
 /** Sortable list **/
 var ShapesSortableUl = {
-  createSortable: function(ul_id, shape_id, path){
-      Sortable.create(ul_id , {onUpdate:function(){
-        new Ajax.Request('/shapes/resources/reorder_resource_with_prototype', {handle:'handle', only: 'sortable', asynchronous:true, evalScripts:true, onComplete:function(request){
-            new Effect.Highlight(ul_id,{});
+  createSortable: function(ul_id, path){
+    Sortable.create(ul_id , { handle: 'handle',
+      onUpdate: function(){
+        new Ajax.Request('/shapes/resources/reorder_resource_with_prototype', {
+          only: 'sortable', 
+          asynchronous: true, 
+          evalScripts: true, 
+          onComplete: function(request){
             ShapesSortableUl.reordertId(ul_id);
-            }, parameters:Sortable.serialize(ul_id) + '&path=' + escape(path) + '&shape_id=' + shape_id})
-        }
+            new Effect.Highlight(ul_id, {});
+          },
+          parameters: Sortable.serialize(ul_id) + '&path=' + escape(path) + '&shape_id=' + Shapes.id() 
+        })
+      }
     });
   },
   reordertId: function(ul_id){
     sortableLiArray = $$('ul#' + ul_id + ' > li.shapesResource')
     if(sortableLiArray.size() > 1) {
       sortableLiArray.each(function(obj, index) {
-        ShapesSortableUl.changeLiClass(obj, index, ul_id);
+        obj.setAttribute('id', ul_id.gsub('Ul', 'Li') + '_' + index);
       });
     }
-  },
-  changeLiClass: function(li, index, ul_id){
-      li.setAttribute('id', ul_id + '_' + index);
   }
 }

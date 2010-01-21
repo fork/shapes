@@ -1,7 +1,19 @@
-<%= navigation %>
-
-<% shape_struct_form @shape_struct, :new do |form| %>
-<%= error_messages_for 'shape_struct' %>
-<%= form.text_field :name %><br />
-<%= form.submit %>
-<% end %>
+<div id="subnavigation">
+  <h1>New struct</h1>
+</div>
+<div class="shadowLine"></div>
+<span class="formContainer newForm">
+  <span class="form">
+    <%= error_messages_for 'shape_struct' %>
+    <% shape_struct_form @shape_struct, :new do |form| %>
+    <span class="formBlock">
+      <label for="name">Name</label>
+      <%= form.text_field :name, { :class => 'textField' } %>
+    </span>
+    <span class="formBlock">
+      <label for="submit">&nbsp;</label>
+      <input type="image" value="Save changes" name="commit" class="submitForm" id="submit" src="/shapes/images/icons/confirm_li_hover.png" />      
+    </span>
+    <% end %>
+  </span>
+</span>

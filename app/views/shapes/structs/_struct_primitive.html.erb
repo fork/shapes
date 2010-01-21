@@ -1,6 +1,8 @@
-<li>
-  Ident: <%= struct_primitive.ident %><br />
-  Primitive: <%= h struct_primitive.primitive %>
-  <%= link_to 'Delete', shape_struct_shape_struct_primitive_path(struct_primitive.shape_struct, struct_primitive), :method => :delete %>
-  <%= link_to 'Constraints', "/shapes/show_struct_constraints/#{struct_primitive.id}" %>
+<li class="dottedLiLine">
+  <span class="liContent liContentWithHover">
+    <%= show_resource_name struct_primitive.primitive %>
+    <%= show_resource_ident struct_primitive.ident %>
+    <span class="icons">
+      <%= link_to_delete_shape_struct_primitive struct_primitive %>
+    </span>
 </li>

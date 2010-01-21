@@ -1,2 +1,49 @@
-<ul><%= render :partial => '/shapes/constraints/constraint', :collection => @resource.constraints %></ul>
-<%= link_to_add_constraint @shape, @resource %>
+<span class="liContent editFormHeadline">
+  <%= resource_indentation @resource.depth %>
+  <%= show_resource_name @resource.name %>
+  <%= show_resource_ident @resource.ident %>
+  <span class="icons">
+    <%= icon_to_cancel_form %>
+  </span>
+</span>
+<span class="formContainer editForm" style="padding-left:<%= resource_form_indentation @resource.depth %>px">
+  <span class="form">
+
+    <% edit_path = edit_constraint_path(@shape, @resource.path) %>
+    <% form_tag edit_path, { :onsubmit => "Shapes.remoteForm(Shapes.parentLiFor(this), this, '#{ edit_path }'); return false;" } do -%>
+    <span class="formBlock">
+      <label>Used constraints</label>
+      <% if @resource.constraints.blank? %>
+        -
+      <% else %>
+        <%= select_tag :type,  options_for_select(@resource.constraints.collect { |c| [ c.name,  c.name ] })  %>      
+      </span>
+      <span class="formBlock">
+        <label for="submit">Delete selected</label>
+        <input type="checkbox" value="delete" name="delete" />
+      </span>
+      <span class="formBlock">
+        <label for="submit">&nbsp;</label>
+        <input type="image" value="Edit constraint" class="submitForm" id="submit" name="edit" src="/shapes/images/icons/edit_li_hover.png" />
+      <% end %>
+    </span>
+    <% end %>
+
+    <% new_path = new_constraint_path(@shape, @resource.path) %>
+    <% form_tag new_path, { :onsubmit => "Shapes.remoteForm(Shapes.parentLiFor(this), this, '#{ new_path }'); return false;" } do -%>
+    <span class="formBlock">
+      <label>Add constraint</label>
+      <% if @resource.left_constraints.blank? %>
+        -
+      <% else %>
+      <%= select_tag :type,  options_for_select(@resource.select_constraint_type)  %>
+      </span>
+      <span class="formBlock">
+        <label for="submit">&nbsp;</label>
+        <input type="image" value="Add constraint" class="submitForm" id="submit" name="add" src="/shapes/images/icons/add_li_hover.png" />
+      <% end %>
+    </span>
+    <% end %>
+
+  </span>
+</span>

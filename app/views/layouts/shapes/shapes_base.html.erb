@@ -7,9 +7,16 @@
   <title>Shapes</title>
   <%= javascript_include_tag :defaults %>
   <%= javascript_include_tag '/shapes/javascripts/main.js' %>
+  <%= stylesheet_link_tag '/shapes/stylesheets/main.css' %>
 </head>
 <body>
-  <p style="color: green"><%= flash[:notice] %></p>
-  <%= yield %>
+<div id="shapes">
+  <%= render :partial => 'shapes/navigation' %>
+  <div id="content">
+    <%= yield %>
+  </div>
+  <div class="shadowLine bottom"></div>
+</div>
+<a href="#shapes" onclick="Effect.ScrollTo('shapes'); return false;" id="backToTopLink">Back to top</a>
 </body>
 </html>

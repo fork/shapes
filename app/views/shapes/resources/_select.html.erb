@@ -1,5 +1,19 @@
-<% path = new_resource_path(@shape, params[:parent_path]) %>
-<% form_tag path, { :onsubmit => "Shapes.remoteForm(this, '#{ path }'); return false;" } do -%>
-<%= resource_type_select @resource_type_collection  %>
-<%= submit_tag 'Select' %>
-<% end -%>
+<span class="liContent newFormHeadline">
+  <%= resource_indentation @parent.depth %>
+  <%= show_resource_name @parent.name %>
+  <%= show_resource_ident @parent.ident %>
+</span>
+<span class="formContainer newForm" style="padding-left:<%= resource_form_indentation @parent.depth %>px">
+  <span class="form">
+    <% path = new_resource_path(@shape, params[:parent_path]) %>
+    <% form_tag path, { :onsubmit => "Shapes.remoteForm(Shapes.parentLiFor(this), this, '#{ path }'); return false;" } do -%>
+    <span class="formBlock">
+      <%= resource_type_select @resource_type_collection  %>
+    </span>
+    <span class="formBlock">
+      <input type="image" value="Save changes" name="commit" class="submitForm" id="submit" src="/shapes/images/icons/confirm_li_hover.png" />      
+      <%= link_to_cancel_form %>
+    </span>
+    <% end -%>
+  </span>
+</span>

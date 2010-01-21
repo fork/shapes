@@ -17,6 +17,8 @@ module Shapes
     def base
       self
     end
+    
+    def base?; true; end
 
     # Author: hm@fork.de
     def shape
@@ -30,6 +32,8 @@ module Shapes
         build_child_from_xml child_node
       }
     end
+
+    def depth; 0; end
 
     def conterminate_path
       @dirty = true

@@ -27,6 +27,10 @@ module Shapes
         super
       end
 
+      def preview
+        @value.length < 20 ? @value : "#{@value[0, 19]} ..."
+      end
+
     end
   end
 end

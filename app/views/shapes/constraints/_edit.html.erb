@@ -1,4 +1,16 @@
-<%= error_messages_for 'shape' %>
-<% constraint_form @shape, @resource, :edit do |form| %>
-<%= render :partial => '/shapes/constraints/form', :locals => { :form => form } %>
-<% end %>
+<span class="liContent editFormHeadline">
+  <%= resource_indentation @resource.depth %>
+  <%= show_resource_name @resource.name %>
+  <%= show_resource_ident @resource.ident %>
+  <span class="icons">
+    <%= icon_to_cancel_form %>
+  </span>
+</span>
+<span class="formContainer editForm" style="padding-left:<%= resource_form_indentation @resource.depth %>px">
+  <span class="form">
+    <%= error_messages_for 'shape' %>
+    <% constraint_form @shape, @resource, :edit do |form| %>
+    <%= render :partial => '/shapes/constraints/form', :locals => { :form => form } %>
+    <% end %>
+  </span>
+</span>

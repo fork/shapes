@@ -1,5 +1,9 @@
-<label>Text (<%= resource.ident %>)</label>
-<%= hidden_field "resource[struct][#{resource.ident}][ident]", resource.ident %>
-<%= text_field_tag "resource[struct][#{resource.ident}][value]", resource.value %>
-<%= content_tag :label, "Separator (#{resource.ident})" %>
-<%= text_field_tag "resource[struct][#{resource.ident}][separator]", resource.separator %>
+<span class="formBlock">
+  <label>Text (<%= resource.ident %>)</label>
+  <%= hidden_field "resource[struct][#{resource.ident}][ident]", resource.ident %>
+  <%= text_field_tag "resource[struct][#{resource.ident}][value]", resource.value, { :class => 'textField' } %>
+</span>
+<span class="formBlock">
+  <label>Separator (<%= resource.ident %>)</label>
+  <%= text_field_tag "resource[struct][#{resource.ident}][separator]", resource.separator, { :class => 'textField' } %>
+</span>

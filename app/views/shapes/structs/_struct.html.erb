@@ -1,4 +1,11 @@
-<%= h struct.name %>
-<%= link_to 'Show', shape_struct_path(struct) %>
-<%= link_to 'Delete', shape_struct_path(struct), :method => :delete %>
-<br />
+<li class="dottedLiLine">
+  <span class="liContent liContentWithHover">
+    <span class="text">
+      <%= h struct.name %> <%= "(local &raquo; #{ struct.shape.name })" if struct.shape %>
+    </span>
+    <span class="icons">
+      <%= link_to_edit_struct struct %>
+      <%= link_to_delete_struct struct %>
+    </span>
+  </span>
+</li>

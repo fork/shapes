@@ -1,6 +1,0 @@
-<%= h constraint.to_s %>
-<% edit_path = edit_constraint_path(@shape, @resource.path, constraint.name) %>
-<% delete_path =  delete_constraint_path(@shape, @resource.path, constraint.name) %>
-<%= link_to 'Edit', edit_path, { :onclick => "Shapes.renderUrlInElement(this, '#{ edit_path }'); return false;" } %>
-<%= link_to 'Delete', delete_path, { :onclick => "Shapes.renderUrlInElement(this,'#{ delete_path }'); return false;" } %>
-<br />
