@@ -36,7 +36,7 @@ module Shapes
     # destroys self and calls destroy on each child
     # Author: hm@fork.de
     def destroy
-      children.each { |child| child.destroy }
+      children.collect{ |c| c }.map(&:destroy)
       super
     end
 
