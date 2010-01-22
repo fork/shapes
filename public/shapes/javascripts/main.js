@@ -97,8 +97,16 @@ var Shapes = {
         new Effect.Highlight(li.id, {});
       }
     });
+  },
+  openFormForBaseElement:function(path){
+    if($('baseUl').down('li')){
+      Shapes.openPropertyChanger($('baseUl').down('li')); 
+      Shapes.renderUrlInElement($('baseUl').down('li'), path);
+    }
   }
 }
+
+
 
 /** Sortable list **/
 var ShapesSortableUl = {

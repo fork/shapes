@@ -58,7 +58,7 @@ module Shapes::CommonHelper
   def link_to_new_resource_for_base(base_resource)
     path = select_resource_path :id => base_resource.shape_id, :parent_path => base_resource.path
     link_to 'Add resource', path, 
-      { :onclick => "Shapes.openPropertyChanger($('baseUl').down('li')); Shapes.renderUrlInElement($('baseUl').down('li'), '#{ path }'); return false;", 
+      { :onclick => "Shapes.openFormForBaseElement('#{ path }'); return false;", 
         :title => 'Add resource' }
   end
 
