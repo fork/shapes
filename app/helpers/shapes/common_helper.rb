@@ -133,7 +133,7 @@ module Shapes::CommonHelper
     content_tag :li,
       render(:partial => '/shapes/resources/li_content', :locals => { :resource => resource }),
       :class => css_classes,
-      :id => resource.base? ? 'baseUl' : li_css_id(resource.parent.path, counter),
+      :id => resource.base? ? 'baseUl_0' : li_css_id(resource.parent.path, counter),
       :path => resource.path
   end
 
