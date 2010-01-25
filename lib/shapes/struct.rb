@@ -19,11 +19,6 @@ module Shapes
       @struct_record ||= ShapeStruct.find_by_name(struct_name)
     end
 
-    # TODO
-    def struct
-     # @struct ||=
-    end
-
     def node_attributes
       super.merge 'resource-type' => @resource_type
     end
@@ -36,14 +31,14 @@ module Shapes
 
     def update_attributes(params)
       params[:struct] and params[:struct].each do |key, value|
-        children.select{|p| p.ident == key}.first.update_attributes value
+        children.select{ |p| p.ident == key }.first.update_attributes value
       end
       super
     end
 
     def destroy
       free_struct
-      children.each do |primitive|
+      children.collect{ |c| c }.each do |primitive|
         primitive.destroy
       end
       super
@@ -68,7 +63,7 @@ module Shapes
     # Author: hm@fork.de
     def free_struct
       assignment = struct_record.shape_assignments.
-        find(:first, :conditions => {:shape_id => base.shape.id, :path => path})
+        find(:first, :conditions => { :shape_id => base.shape.id, :path => path })
       assignment and assignment.destroy
     end
 

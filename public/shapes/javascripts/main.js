@@ -89,8 +89,11 @@ var Shapes = {
     });
   },
   renderResource:function(li){
-    render_resource_path = '/shapes/' + Shapes.id() + '/render_resource/' + escape(li.readAttribute('path'));
-    new Ajax.Updater(li.id, render_resource_path, { 
+    Shapes.render_resource_path(li, li.readAttribute('path'));
+  },
+  renderResource:function(li, path){
+    render_resource_path = '/shapes/' + Shapes.id() + '/render_resource/' + escape(path);
+    new Ajax.Updater(li.id, render_resource_path, {
       method: 'get',
       evalScripts: true,
       onSuccess: function(request){
@@ -105,8 +108,6 @@ var Shapes = {
     }
   }
 }
-
-
 
 /** Sortable list **/
 var ShapesSortableUl = {
