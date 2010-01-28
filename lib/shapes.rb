@@ -37,7 +37,12 @@ module Shapes
 
   # Author: Florian Aßmann (flazy@fork.de) [2009-02-05]
   def self.install_associations(base)
-    base.has_many :shape_assignments, :dependent => :destroy
+    base.has_many :shape_assignments, :dependent => :destroy do
+      def find_first_by_path_and_shape(path, shape)
+        find :first, 
+          :conditions => { :path => path, :shape_id => shape }
+      end
+    end
     base.has_many :shapes, :through => :shape_assignments
   end
   # Author: Florian Aßmann (flazy@fork.de) [2009-02-05]

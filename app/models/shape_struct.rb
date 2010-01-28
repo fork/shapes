@@ -11,7 +11,13 @@ class ShapeStruct < ActiveRecord::Base
 
   has_many :shape_assignments,
     :as => :resource,
-    :dependent => :destroy
+    :dependent => :destroy do
+    def find_first_by_path_and_shape(path, shape)
+      find :first, 
+        :conditions => { :path => path, :shape_id => shape }
+    end
+  end
+
   has_many :shapes,
     :through => :shape_assignments
 

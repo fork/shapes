@@ -2,8 +2,9 @@ module Shapes
   class Struct < Shapes::Resource
 
     include Shapes::Container
+    include Shapes::Assignment
 
-    attr_accessor :struct, :struct_name, :struct_record
+    attr_accessor :struct, :struct_name, :record
 
     def self.generate_struct(name, method_array)
       const_set name, method_array.empty? ? ::Struct.new(nil) : ::Struct.new(*method_array)
@@ -15,8 +16,8 @@ module Shapes
         Shapes::Struct.generate_struct(struct_name, method_array)
     end
 
-    def struct_record
-      @struct_record ||= ShapeStruct.find_by_name(struct_name)
+    def record
+      @record ||= ShapeStruct.find_by_name(struct_name)
     end
 
     def node_attributes
@@ -36,36 +37,7 @@ module Shapes
       super
     end
 
-    def destroy
-      free_struct
-      children.collect{ |c| c }.each do |primitive|
-        primitive.destroy
-      end
-      super
-    end
-
-    def to_xml
-      assign_struct
-      super
-    end
-
     private
-
-    # assigns Struct to Shape
-    # Author: hm@fork.de
-    def assign_struct
-      assignment = struct_record.shape_assignments.
-        build(:shape => base.shape, :path => path) and
-      assignment.save
-    end
-
-    # destroys assignment
-    # Author: hm@fork.de
-    def free_struct
-      assignment = struct_record.shape_assignments.
-        find(:first, :conditions => { :shape_id => base.shape.id, :path => path })
-      assignment and assignment.destroy
-    end
 
     # FIXME: add docs here (with example?)
     def build_struct(node)

@@ -20,9 +20,10 @@ class Shape < ActiveRecord::Base
 
   validate :validate_shape
 
-  before_update {|shape| shape.xml = shape.base.build_xml.to_xml}
-  after_create {|shape| shape.xml = shape.base.build_xml.to_xml}
+  before_update { |shape| shape.xml = shape.base.build_xml.to_xml }
+  after_create { |shape| shape.xml = shape.base.build_xml.to_xml }
 
+  after_save { |shape| shape.base.after_save }
   after_update :expire_cache
   after_destroy :expire_cache, :destroy_resources
 
@@ -53,4 +54,5 @@ class Shape < ActiveRecord::Base
   def destroy_resources
     base.destroy
   end
+
 end

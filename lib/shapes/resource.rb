@@ -2,7 +2,7 @@ module Shapes
   class Resource
 
     attr_accessor :ident, :description, :xml_node, :parent, :resource_type, :errors, :xml_builder
-    attr_reader :path, :from_xml, :build_node_content, :children, :options, :dirty, :preview
+    attr_reader :path, :from_xml, :build_node_content, :children, :options, :dirty, :preview, :after_save
 
     include Shapes::Constraints
 
@@ -16,13 +16,14 @@ module Shapes
       @children ||= []
     end
 
-    # builds a path based on the idents up to the base resource, separated by #
+    # builds a path based on idents up to base resource, separated by #
+    # accepts optional ident
     # Author: hm@fork.de
-    def path
+    def path(old_ident = false)
       # FIXME: Do this without exception!
       #"#{ @parent.path unless @parent == self }##{ ident }"
       # rescue base path
-      "#{@parent.path rescue ''}##{ident}"
+      "#{@parent.path rescue ''}##{old_ident || ident}"
     end
 
     # accepts a string ("#foo#bar#foobar") and tries to find the appropriate resource in the branch

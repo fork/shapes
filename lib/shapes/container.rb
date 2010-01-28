@@ -1,5 +1,4 @@
 module Shapes
-
   module Container
 
     # accepts a xml node, builds a resource based on this node and adds this object to childrens
@@ -37,6 +36,12 @@ module Shapes
     # Author: hm@fork.de
     def destroy
       children.collect{ |c| c }.map(&:destroy)
+      super
+    end
+
+    # call after_save method for each child
+    def after_save
+      children.map(&:after_save)
       super
     end
 

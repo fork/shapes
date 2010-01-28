@@ -1,6 +1,8 @@
 module Shapes
   class ActiveRecord < Shapes::Resource
 
+    include Shapes::Assignment
+
     attr_accessor :record_id, :record_type, :record
 
     # Returns class name of record
@@ -36,36 +38,13 @@ module Shapes
       super
     end
 
-    def destroy
-      free_record
-      super
-    end
-
     def build_xml
-      assign_record if new_resource?
-
       attributes = {
         :ident        => ident,
         :description  => description,
         :xml_builder => @xml_builder
       }
       record.to_shapes_xml(attributes) if record
-    end
-
-    # assigns record to Shape
-    # Author: hm@fork.de
-    def assign_record
-      assignment = record.shape_assignments.
-        build(:shape => base.shape, :path => path)
-      assignment.save
-    end
-
-    # destroys assignments
-    # Author: hm@fork.de
-    def free_record
-      assignment = record.shape_assignments.
-        find(:first, :conditions => {:shape_id => base.shape.id, :path => path})
-      assignment and assignment.destroy
     end
 
   end
