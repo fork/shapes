@@ -19,7 +19,8 @@ class Shapes::ResourcesController < Shapes::ShapesBase
         format.html do        
           if params[:css_id]
             render :template => '/shapes/resources/iframe', 
-              :locals => { :css_id => params[:css_id] },
+              :locals => { :css_id => params[:css_id],
+                :resource => @resource },
               :layout => 'shapes/iframe'
           else
             redirect_to shape_path(@shape)
@@ -34,7 +35,8 @@ class Shapes::ResourcesController < Shapes::ShapesBase
         format.html do
           if params[:css_id]
             render :template => '/shapes/resources/iframe_error', 
-              :locals => { :css_id => params[:css_id] },
+              :locals => { :css_id => params[:css_id],
+                :resource => @resource },
               :layout => 'shapes/iframe'
           else
             render :template => 'shapes/resources/_edit', :layout => true
@@ -78,7 +80,8 @@ class Shapes::ResourcesController < Shapes::ShapesBase
         format.html do        
           if params[:css_id]
             render :template => '/shapes/resources/iframe', 
-              :locals => { :css_id => params[:css_id] },
+              :locals => { :css_id => params[:css_id],
+                :resource => parent },
               :layout => 'shapes/iframe'
           else
             redirect_to shape_path(@shape)
@@ -92,7 +95,8 @@ class Shapes::ResourcesController < Shapes::ShapesBase
         format.html do
           if params[:css_id]
             render :template => '/shapes/resources/iframe_error', 
-              :locals => { :css_id => params[:css_id] },
+              :locals => { :css_id => params[:css_id],
+                :resource => parent },
               :layout => 'shapes/iframe'
           else
             render :template => 'shapes/resources/_new', :layout => true
