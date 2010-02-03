@@ -16,7 +16,7 @@ module Shapes::CommonHelper
     link_to span, url, { :class => 'plus', :title => title }
   end
   def structs_active?
-    request.env['REQUEST_PATH'].match(/structs/)
+    request.path.match(/structs/)
   end
 
   def link_to_handle(resource)
