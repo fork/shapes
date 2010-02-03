@@ -5,15 +5,6 @@
 * Ruby on Rails >= 2.3: http://rubyonrails.org/
 
 = Setup
-
-Install Shapes:
-  $ script/plugin install ...
-
-Generate plugin migrations:
   $ ruby vendor/plugins/shapes/install.rb
   $ rake shapes:sync
   $ rake db:migrate
-
-Add Routing to your <tt>config/routes.rb</tt>:
-  map.from_plugin :plugin_name
-
