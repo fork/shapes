@@ -3,7 +3,7 @@ module Shapes
 
     include Shapes::Container
 
-    attr_reader :xml, :ident, :shape_id, :shape
+    attr_reader :xml, :ident, :shape_id, :shape, :xml_doc
 
     def initialize(xml, ident, shape_id)
       super
@@ -44,7 +44,21 @@ module Shapes
       end
     end
 
+    #all resources are clonable except ActiveRecords and Structs
+    #file values an the corresponding files won't get cloned
+    def purged_xml_for_clone
+      xml_doc.search('*[@resource-type="Struct"]','*[@resource-type="ActiveRecord"]').unlink
+      xml_doc.search('file[@resource-type="Primitive"]').each do |file|
+        file['value'] = ''
+        file['width'] = ''
+        file['height'] = ''
+        file['content_type'] = ''
+      end
+      xml_doc
+    end
+
     protected
+
     # Returns stored XML document or generates a new one on-the-fly
     def xml_doc
        @xml_doc ||= unless @xml.blank?

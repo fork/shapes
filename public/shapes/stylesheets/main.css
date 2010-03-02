@@ -398,6 +398,16 @@ body {
   background: url(/shapes/images/icons/edit_hover.png) no-repeat;
 }
 
+#shapes #content span.icons a.icon.clone {
+  background: url(/shapes/images/icons/clone.png) no-repeat 5px 5px;
+}
+#shapes #content .liContent:hover span.icons a.icon.clone {
+  background: url(/shapes/images/icons/clone_li_hover.png) no-repeat;
+}
+#shapes #content .liContent span.icons a:hover.icon.clone {
+  background: url(/shapes/images/icons/clone_hover.png) no-repeat;
+}
+
 #shapes #content span.icons a.icon.constraints {
   background: url(/shapes/images/icons/constraints.png) no-repeat 5px 5px;
 }

@@ -1,0 +1,12 @@
+<div id="subnavigation">
+  <h1>Clone shape</h1>
+</div>
+<div class="shadowLine"></div>
+<span class="formContainer editForm">
+  <span class="form">
+  <% shape_form(@shape, :clone) do |form| %>
+  <%= error_messages_for 'clone' %>
+  <%= render :partial => 'form.html.erb', :object => form %>
+  <% end %>
+  </span>
+</span>

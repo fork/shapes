@@ -2,6 +2,8 @@ module Shapes
   module Primitives
     class File < Shapes::Primitive
 
+      require 'tempfile'
+
       attr_accessor :value, :file_dir, :tmp_file, :content_type, :width, :height
 
       def initialize(options = {})

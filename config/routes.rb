@@ -30,6 +30,13 @@ ActionController::Routing::Routes.draw do |map|
       :controller => 'shapes/structs'
   end
 
+  map.clone_shape 'shapes/:id/clone_shape',
+    :controller => 'shapes/shapes',
+    :action => 'clone'
+  map.dup_shape 'shapes/:id/dup_shape',
+    :controller => 'shapes/shapes',
+    :action => 'dup'
+
   map.resources :shape_structs,
     :path_prefix => '/shapes',
     :controller => 'shapes/structs' do |shape_structs|

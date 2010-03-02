@@ -31,6 +31,21 @@ class Shapes::ShapesController < Shapes::ShapesBase
     end
   end
 
+  def dup
+    @shape = Shape.find params[:id]
+  end
+
+  def clone
+    @shape = Shape.find(params[:id])
+    @clone = Shape.new params[:shape]
+    @clone.xml = @shape.base.purged_xml_for_clone.to_s
+    if @clone.save
+      redirect_to shapes_path
+    else
+      render :action => 'dup'
+    end
+  end
+
   def destroy
     @shape = Shape.find params[:id]
     @shape.destroy unless @shape.nil?
