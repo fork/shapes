@@ -14,9 +14,7 @@ module Shapes
 
     # overwrites the base method of Shapes::Resource that would call the base method of the parent resource
     # Author: hm@fork.de
-    def base
-      self
-    end
+    def base; self; end
     
     def base?; true; end
 
@@ -35,14 +33,12 @@ module Shapes
 
     def depth; 0; end
 
-    def conterminate_path
-      @dirty = true
-    end
+    def conterminate_path; @dirty = true; end
 
     def build_xml
-      ::Nokogiri::XML::Builder.new do |xml|
+      xml_builder do |xml|
 		    xml.base(node_attributes) {
-		      @xml_builder= xml
+		      @xml_builder = xml
 		      build_node_content
 		    }
       end

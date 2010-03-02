@@ -37,6 +37,6 @@ ActionController::Routing::Routes.draw do |map|
         :controller => 'shapes/struct_primitives'
   end
 
-  map.connect 'shapes/xml/*path',
-    :controller => 'shapes/shapes', :action => 'xml'
+  map.connect 'shapes/cache/*path',
+    :controller => 'shapes/shapes', :action => 'cache'
 end

@@ -48,17 +48,21 @@ class Shapes::ShapesController < Shapes::ShapesBase
     end
   end
 
-  def xml
-    path = params[:path].collect{|ident| ident.gsub(/\.xml/, '')} || nil
-    @shape = Shape.find_by_name path.first
-    if path.empty? && @shape
-      xml = @shape.cache_xml
-    elsif !path.blank? && @shape
-      resource = @shape.base.find_by_path(path * '#')
-      xml = resource.cache_xml if resource
+  def cache
+    path = params[:path].collect{ |ident| ident.split('.').first }
+    if !path.empty? and resource = Shape.find_by_name(path.first)
+      resource = resource.base.find_by_path(path * '#') if path.length > 1
     end
-    xml ? render(:xml => xml) :
-      render(:text => '', :status => 404)
+    if resource
+      #could not use responder to determine format due to route globbing
+      format = params[:path].last.split('.').last
+      case format
+        when 'json' then render :json => resource.cache_json
+        else render :xml => resource.cache_xml
+      end
+    else
+      render :nothing => true, :status => 404
+    end
   end
 
 end

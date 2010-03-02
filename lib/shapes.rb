@@ -14,7 +14,7 @@ module Shapes
   SELECT_OPTION_STRUCT = Struct.new(:name, :id)
   SELECT_OPTION_GROUP_STRUCT = Struct.new(:name, :options)
 
-  CACHE_PATH = File.join Rails.public_path, 'shapes', 'xml'
+  CACHE_PATH = File.join Rails.public_path, 'shapes', 'cache'
 
   # Default options for acts_as_shape.
   DEFAULT_OPTS = {

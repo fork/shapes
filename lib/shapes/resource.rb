@@ -42,9 +42,14 @@ module Shapes
     end
 
     def build_xml
-      @xml_builder.send(xml_node_name, node_attributes) { |xml|
+      xml_builder.send(xml_node_name, node_attributes) { |xml|
         build_node_content
       }
+      xml_builder
+    end
+
+    def xml_builder(&block)
+      @xml_builder ||= ::Nokogiri::XML::Builder.new(&block)
     end
 
     def node_attributes
