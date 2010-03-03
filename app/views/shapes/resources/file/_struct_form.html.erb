@@ -1,5 +1,9 @@
 <span class="formBlock">
-  <label>File (<%= resource.ident %>)</label>
+  <label>Attribute</label>
+  <span><%= resource.ident %></span>
+</span>
+<span class="formBlock">
+  <label>File</label>
   <%= hidden_field "resource[struct][#{resource.ident}][ident]", resource.ident %>
   <%= file_field_tag "resource[struct][#{resource.ident}][value]" %>
 </span>

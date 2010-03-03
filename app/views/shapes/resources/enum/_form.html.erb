@@ -1,8 +1,16 @@
 <span class="formBlock">
   <label>Text</label>
-  <%= text_area :resource, :value %>
+  <%= text_field :resource, :value %>
 </span>
 <span class="formBlock">
   <label>Separator</label>
   <%= text_field :resource, :separator, { :class => 'textField' } %>
+</span>
+<span class="formBlock">
+  <label>Selected</label>
+  <div id="enum_select_container">&nbsp;</div>
+  <% javascript_tag do %>
+    Shapes.enumSelectObserver('resource_value', 'resource_separator', 'enum_select', 'resource[selected]');
+    Shapes.enumSelect('enum_select', new Array(<%= @resource.options.collect{ |option| "'#{option}'" } * ',' %>), 'resource[selected]', '<%= @resource.selected %>');
+  <% end %> 
 </span>

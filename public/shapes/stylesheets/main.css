@@ -5,7 +5,6 @@
   font-family: helvetica, arial, verdana, geneva, sans-serif;
 	font-style: normal;
 	line-height: 0.9em;
-	font-weight: normal;
 	font-variant: normal;
 	color: #404040;
 }
@@ -116,6 +115,7 @@ body {
 
 #subnavigation h1 {
   font-size: 200%;
+  font-weight: normal;
   display: block;
   float: left;
   padding: 10px 30px 0 15px;
@@ -162,6 +162,13 @@ body {
 
 #shapes li.dottedLiLine {
   display: block;
+  background: url(/shapes/images/list/dotted_line.png) repeat-x;
+}
+
+#shapes span.dottedLine {
+  display: block;
+  height: 1px;
+  margin-bottom: 10px;
   background: url(/shapes/images/list/dotted_line.png) repeat-x;
 }
 

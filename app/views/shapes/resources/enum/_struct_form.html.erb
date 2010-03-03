@@ -1,9 +1,21 @@
 <span class="formBlock">
-  <label>Text (<%= resource.ident %>)</label>
+  <label>Attribute</label>
+  <span><%= resource.ident %></span>
+</span>
+<span class="formBlock">
+  <label>Text</label>
   <%= hidden_field "resource[struct][#{resource.ident}][ident]", resource.ident %>
   <%= text_field_tag "resource[struct][#{resource.ident}][value]", resource.value, { :class => 'textField' } %>
 </span>
 <span class="formBlock">
-  <label>Separator (<%= resource.ident %>)</label>
+  <label>Separator</label>
   <%= text_field_tag "resource[struct][#{resource.ident}][separator]", resource.separator, { :class => 'textField' } %>
+</span>
+<span class="formBlock">
+  <label>Selected</label>
+  <div id="resource_struct_<%= resource.ident %>_select_container">&nbsp;</div>
+  <% javascript_tag do %>
+    Shapes.enumSelectObserver('resource_struct_<%= resource.ident %>_value', 'resource_struct_<%= resource.ident %>_separator', 'resource_struct_<%= resource.ident %>_select', 'resource[struct][<%= resource.ident %>][selected]');
+    Shapes.enumSelect('resource_struct_<%= resource.ident %>_select', new Array(<%= resource.options.collect{ |option| "'#{option}'" } * ',' %>), 'resource[struct][<%= resource.ident %>][selected]', '<%= resource.selected %>');
+  <% end %> 
 </span>

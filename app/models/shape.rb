@@ -35,7 +35,7 @@ class Shape < ActiveRecord::Base
   def expire_cache
     filename = name_changed? ? name_was : name
     FileUtils.rm_rf(File.join(Shapes.cache_dir_path, filename))
-    FileUtils.rm_f(File.join(Shapes.cache_dir_path, "#{filename}.*"))
+    FileUtils.rm_f(File.join(Shapes.cache_dir_path, "#{filename}.xml"))
   end
 
   def cache_xml
