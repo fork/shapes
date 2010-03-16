@@ -89,9 +89,9 @@ var Shapes = {
     });
   },
   renderResource: function(li){
-    Shapes.render_resource_path(li, li.readAttribute('path'));
+    Shapes.renderResourceWithPath(li, li.readAttribute('path'));
   },
-  renderResource: function(li, path){
+  renderResourceWithPath: function(li, path){
     render_resource_path = '/shapes/' + Shapes.id() + '/render_resource/' + escape(path);
     new Ajax.Updater(li.id, render_resource_path, {
       method: 'get',
