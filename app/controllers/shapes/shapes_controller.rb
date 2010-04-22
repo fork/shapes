@@ -40,6 +40,9 @@ class Shapes::ShapesController < Shapes::ShapesBase
     @clone = Shape.new params[:shape]
     @clone.xml = @shape.base.purged_xml_for_clone.to_s
     if @clone.save
+      # reload clone to have shape id in value object
+      @clone.reload
+      @clone.base.after_clone
       redirect_to shapes_path
     else
       render :action => 'dup'

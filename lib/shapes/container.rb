@@ -45,6 +45,12 @@ module Shapes
       super
     end
 
+    # write all assignments
+    def after_clone
+      children.map(&:after_clone)
+      super
+    end
+
     # passes the xml_builder to each child and generates the builder of them
     # Author: hm@fork.de
     def build_node_content

@@ -2,7 +2,7 @@ module Shapes
   class Resource
 
     attr_accessor :ident, :description, :xml_node, :parent, :resource_type, :errors, :xml_builder
-    attr_reader :path, :from_xml, :build_node_content, :children, :options, :dirty, :preview, :after_save
+    attr_reader :path, :from_xml, :build_node_content, :children, :options, :dirty, :preview, :after_save, :after_clone
 
     include Shapes::Constraints
 

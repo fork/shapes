@@ -4,6 +4,7 @@ module Shapes
     include Shapes::Container
 
     attr_reader :xml, :ident, :shape_id, :shape, :xml_doc
+    attr_accessor :apply_assignments
 
     def initialize(xml, ident, shape_id)
       super
@@ -44,10 +45,14 @@ module Shapes
       end
     end
 
-    #all resources are clonable except ActiveRecords and Structs
+    #all resources are clonable except ActiveRecords and local Structs
     #file values an the corresponding files won't get cloned
     def purged_xml_for_clone
-      xml_doc.search('*[@resource-type="Struct"]','*[@resource-type="ActiveRecord"]').unlink
+      local_structs_regex = []
+      shape.local_structs.each do | struct |
+        local_structs_regex << struct.name.underscore.downcase.dasherize
+      end
+      xml_doc.search('*[@resource-type="ActiveRecord"]', *local_structs_regex.uniq).unlink
       xml_doc.search('file[@resource-type="Primitive"]').each do |file|
         file['value'] = ''
         file['width'] = ''
