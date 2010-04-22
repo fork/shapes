@@ -98,9 +98,9 @@ module Shapes::CommonHelper
     content_tag :span, '', { :class => 'icon' }
   end
 
-  def show_resource_name(name)
-    content_tag :span, name,
-      { :class => "text resourceName #{ name}" }
+  def show_resource_name(name, struct_name = nil)
+    content_tag :span, struct_name || name,
+      { :class => "text resourceName #{ name }" }
   end
 
   def show_resource_ident(ident)
