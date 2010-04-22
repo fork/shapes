@@ -1,7 +1,8 @@
 <% unless resource.base? %>
 <span class="liContent liContentWithHover">
   <%= resource_indentation resource.depth %>
-  <%= show_resource_name resource.name %>
+  <% struct_name = resource.struct_name if(resource.respond_to? :struct_name) %>
+  <%= show_resource_name resource.name, struct_name %>
   <%= show_resource_ident resource.ident %>
   <%= link_to_fold_resource resource %>
   <span class="text resourcePreview <%= resource.name %>">

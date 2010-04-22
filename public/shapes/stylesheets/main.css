@@ -197,7 +197,8 @@ body {
 
 #shapes #content span.resourceName, #shapes #content span.resourceNumbering {
   font-size: 90%;
-  width: 55px;
+  min-width: 45px;
+  font-style: italic;
 }
 
 #shapes #content span.resourceName.Array{
@@ -215,7 +216,7 @@ body {
   margin-top: 10px !important;
   height: 22px;
   background: url(/shapes/images/icons/struct.png) no-repeat;
-  text-indent: -200px;
+  padding: 5px 0 0 35px
 }
 
 #shapes #content .deleteConfirm span.resourceName.Struct{
