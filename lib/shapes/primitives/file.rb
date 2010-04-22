@@ -82,6 +82,7 @@ module Shapes
         ::FileUtils.mkpath ::File.dirname(tmp_file_path)
         if file_obj.respond_to?(:local_path) and file_obj.local_path and ::File.exists?(file_obj.local_path)
           ::FileUtils.copy_file file_obj.local_path, tmp_file_path
+          ::FileUtils.chmod 0644, tmp_file_path
         elsif file_obj.respond_to?(:read)
           ::File.open(tmp_file_path, 'wb') { |f| f.write(file_obj.read) }
         else
