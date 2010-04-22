@@ -9,7 +9,7 @@ class Shape < ActiveRecord::Base
   end
 
   has_many :shape_assignments,
-    :dependent => :destroy
+    :dependent => :delete_all
   has_many :resources,
     :through => :shape_assignments,
     :source => :resource

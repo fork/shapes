@@ -1,19 +1,24 @@
 module Shapes
   module Assignment
 
+    def create_assignment
+      assignment = record.shape_assignments.
+        build(:shape => base.shape, :path => path) and
+        assignment.save
+    end
+
     def destroy
       destroy_assignment
-      children.collect{ |c| c }.each do |primitive|
-        primitive.destroy
-      end
       super
+    end
+
+    def after_clone
+      create_assignment
     end
 
     def after_save
       if new_resource?
-        assignment = record.shape_assignments.
-          build(:shape => base.shape, :path => path) and
-        assignment.save
+        create_assignment
       elsif @ident != @_ident
         assignment = record.shape_assignments.
           find_first_by_path_and_shape(path(@_ident), base.shape)
@@ -26,7 +31,7 @@ module Shapes
     def destroy_assignment
       assignment = record.shape_assignments.
         find_first_by_path_and_shape(path, base.shape)
-      assignment and assignment.destroy
+      assignment and assignment.delete
     end
 
   end

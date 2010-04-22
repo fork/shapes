@@ -21,16 +21,12 @@ class ShapeStruct < ActiveRecord::Base
   has_many :shapes,
     :through => :shape_assignments
 
-  named_scope :global, :conditions => {:shape_id => nil}
+  named_scope :global, :conditions => { :shape_id => nil }
+  named_scope :local, :conditions => 'shape_id <> NULL'
 
   belongs_to :shape
 
   alias_method :primitives, :shape_struct_primitives
-
-  def global
-    find_by_shape_id nil
-  end
-
 
   def struct_class
     method_array = shape_struct_primitives.collect do |shape_struct_primitive|
