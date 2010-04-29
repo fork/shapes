@@ -205,7 +205,7 @@ body {
   margin-top: 10px !important;
   height: 22px;
   background: url(/shapes/images/icons/folder.png) no-repeat;
-  text-indent: -200px;
+  text-indent: -2000px;
 }
 
 #shapes #content .deleteConfirm span.resourceName.Array{
