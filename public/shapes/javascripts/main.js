@@ -75,7 +75,7 @@ var Shapes = {
       });
   },
   remoteFormOnSuccess: function(li){
-    new Effect.Highlight(li.id, {});
+    new Effect.Highlight(li.id, { restorecolor: '#FFFFFF', endcolor: '#FFFFFF', keepBackgroundImage: true  });
   },
   parentLiFor: function(element){
     element = Element.extend(element);
@@ -97,7 +97,7 @@ var Shapes = {
       method: 'get',
       evalScripts: true,
       onSuccess: function(request){
-        new Effect.Highlight(li.id, {});
+        new Effect.Highlight(li.id, { restorecolor: '#FFFFFF', endcolor: '#FFFFFF', keepBackgroundImage: true });
       }
     });
   },
