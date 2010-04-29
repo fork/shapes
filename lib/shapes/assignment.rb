@@ -14,14 +14,18 @@ module Shapes
 
     def after_clone
       create_assignment
+      super
     end
 
     def after_save
+      assignment = record.shape_assignments.
+          find_first_by_path_and_shape(path(@_ident), base.shape)
+
       if new_resource?
         create_assignment
-      elsif @ident != @_ident
+      elsif path(true) != path
         assignment = record.shape_assignments.
-          find_first_by_path_and_shape(path(@_ident), base.shape)
+          find_first_by_path_and_shape(path(true), base.shape)
         assignment.path = path
         assignment.save
       end

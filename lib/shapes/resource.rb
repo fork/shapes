@@ -19,11 +19,11 @@ module Shapes
     # builds a path based on idents up to base resource, separated by #
     # accepts optional ident
     # Author: hm@fork.de
-    def path(old_ident = false)
+    def path(old = false)
       # FIXME: Do this without exception!
       #"#{ @parent.path unless @parent == self }##{ ident }"
       # rescue base path
-      "#{@parent.path rescue ''}##{old_ident || ident}"
+      "#{@parent.path(old) rescue ''}##{ old ? @_ident : @ident}"
     end
 
     # accepts a string ("#foo#bar#foobar") and tries to find the appropriate resource in the branch

@@ -8,7 +8,8 @@ module Shapes
 
     def initialize(xml, ident, shape_id)
       super
-      @xml, @ident, @shape_id = xml, ident, shape_id
+      @xml, @shape_id = xml, shape_id
+      @ident = @_ident = ident
       @collected_errors = []
       from_xml
     end

@@ -38,6 +38,11 @@ class Shape < ActiveRecord::Base
     FileUtils.rm_f(File.join(Shapes.cache_dir_path, "#{filename}.xml"))
   end
 
+  def update_attributes_with_base(params)
+    base.update_attributes({ :ident => params[:name] })
+    update_attributes params
+  end
+
   def cache_xml
     base.cache_xml
   end

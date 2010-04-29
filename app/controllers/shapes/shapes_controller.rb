@@ -23,8 +23,7 @@ class Shapes::ShapesController < Shapes::ShapesBase
 
   def update
     @shape = Shape.find params[:id]
-    @shape.update_attributes params[:shape]
-    if @shape.save
+    if @shape.update_attributes_with_base params[:shape]
       redirect_to shapes_path
     else
       render :action => 'edit'
